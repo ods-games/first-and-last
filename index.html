@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106230806';
+  var BUILD = '20261106231438';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -147,6 +147,7 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 /* duo: the buttons stand in a column at the right edge, beside the sideways clock */
 .duo #tools{position:absolute;z-index:5;right:8px;top:50%;transform:translateY(-50%);flex-direction:column;gap:6px}
 .duo #tools .icon-btn{width:28px;height:28px}
+.duo #tools .icon-btn svg{transform:rotate(90deg)} /* lie sideways like the clock */
 .icon-btn{width:40px;height:40px;border:3px solid var(--ink);border-radius:12px;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:0}
 .icon-btn svg{width:22px;height:22px}
 #exitBtn{display:none}
