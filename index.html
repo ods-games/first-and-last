@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106215850';
+  var BUILD = '20261106220336';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -59,7 +59,10 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 #home{position:relative;overflow-y:auto;overflow-x:hidden;background:var(--sky);padding:0}
 .gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .deco{position:absolute;inset:0;pointer-events:none;z-index:0}
-.deco .cl{position:absolute;background:var(--paper);border-radius:999px}
+.deco .cl{position:absolute;width:var(--w);height:calc(var(--w) * .28);background:var(--paper);border-radius:999px;opacity:.9}
+.deco .cl::before,.deco .cl::after{content:"";position:absolute;background:var(--paper);border-radius:50%}
+.deco .cl::before{width:calc(var(--w) * .42);height:calc(var(--w) * .42);left:calc(var(--w) * .14);bottom:calc(var(--w) * .1)}
+.deco .cl::after{width:calc(var(--w) * .3);height:calc(var(--w) * .3);left:calc(var(--w) * .48);bottom:calc(var(--w) * .1)}
 .deco .ft{position:absolute;width:34px;height:34px;border:3px solid var(--ink);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;opacity:.55;box-shadow:0 3px 0 var(--ink);animation:bob 4s ease-in-out infinite}
 #home > *:not(.deco){position:relative;z-index:1}
 .home-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-block:10px}
@@ -81,7 +84,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .ln{position:relative;z-index:2;margin:0 calc(-26 * var(--u));flex:none;width:calc(58 * var(--u));height:calc(58 * var(--u));box-sizing:border-box;border-radius:50%;background:var(--yellow);border:calc(3.5 * var(--u)) solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:calc(44 * var(--u));line-height:1;padding-bottom:calc(6 * var(--u));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) .06s both}
 .ribbon{font-family:var(--korean);font-size:17px;color:var(--ink);letter-spacing:1px;text-align:center;white-space:pre-line;line-height:1.4}
 html[lang="ko"] .ribbon{white-space:nowrap}
-.stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;height:clamp(96px,14vh,136px);margin-top:0;margin-bottom:-20px;flex:none}
+.stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;flex:0 1 136px;min-height:80px;height:auto;margin-top:0;margin-bottom:-20px}
 .stage .hc{height:100%;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%}
 .stage .hc:last-child{animation-delay:-1.3s}
 .stage svg{height:100%;width:auto;overflow:visible}
@@ -294,7 +297,7 @@ html.on-game,html.on-game body{background:#FFF4E8}
 <body>
 <div id="app">
   <section id="home" class="screen">
-    <div class="deco" aria-hidden="true"><div class="cl" style="left:-20px;top:120px;width:120px;height:30px"></div><div class="cl" style="right:-30px;top:190px;width:150px;height:34px"></div><div class="ft" style="left:5%;top:33%;background:#FFE07A;--r:-10deg;transform:rotate(-10deg);animation-delay:0s">A</div><div class="ft" style="left:85%;top:30%;background:#BDEBD8;--r:9deg;transform:rotate(9deg);animation-delay:-1s">Q</div></div>
+    <div class="deco" aria-hidden="true"><div class="cl" style="--w:78px;left:6%;top:16%"></div><div class="cl" style="--w:96px;right:5%;top:41%"></div><div class="ft" style="left:5%;top:33%;background:#FFE07A;--r:-10deg;transform:rotate(-10deg);animation-delay:0s">A</div><div class="ft" style="left:85%;top:30%;background:#BDEBD8;--r:9deg;transform:rotate(9deg);animation-delay:-1s">Q</div></div>
     <div class="home-top gut">
       <button class="pill" id="langBtn" type="button"></button>
       <div class="rt">
