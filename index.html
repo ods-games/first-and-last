@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106214312';
+  var BUILD = '20261106214642';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -49,7 +49,7 @@ body{margin:0;font:14px system-ui,sans-serif}
   --korean:'Jua','Fredoka',ui-rounded,system-ui,sans-serif;
 }
 html,body{height:100%}
-body{background:var(--page);color:var(--ink);font-family:var(--display);overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+body{word-break:keep-all;overflow-wrap:break-word;background:var(--page);color:var(--ink);font-family:var(--display);overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 #app{height:100%;max-width:480px;margin:0 auto;display:flex;flex-direction:column;background:var(--sky);position:relative;overflow:hidden;user-select:none;-webkit-user-select:none}
@@ -267,6 +267,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 @keyframes spin{to{transform:rotate(360deg)}}
 .diag-probe{position:fixed;top:env(safe-area-inset-top,0px);bottom:env(safe-area-inset-bottom,0px);left:0;width:1px;pointer-events:none;visibility:hidden}
 #diag{position:fixed;left:6px;right:6px;bottom:6px;z-index:99;max-height:46%;overflow:auto;margin:0;padding:8px;border-radius:10px;background:rgba(30,20,15,.88);color:#fff;font:11px/1.35 ui-monospace,Menlo,monospace;white-space:pre-wrap;user-select:text;-webkit-user-select:text}
+.nb{display:inline-block;white-space:nowrap}
 .score{font-size:40px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums}
 
 @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
@@ -281,7 +282,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 </style>
 
-<style>html,body{background:#D6EEFF}#app{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);bottom:0;height:auto;margin:0 auto}</style>
+<style>html,body{background:linear-gradient(#D6EEFF 50%,#CDEFBE 50%) fixed}html.on-game,html.on-game body{background:linear-gradient(#D6EEFF 50%,#FFF4E8 50%) fixed}#app{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);bottom:0;height:auto;margin:0 auto}</style>
 </head>
 <body>
 <div id="app">
@@ -387,7 +388,7 @@ function baseOf(w) {
 const STR = {
   ko: {
     langBtn: 'English', soundOn: '소리 켬', soundOff: '소리 끔', sfx: '효과음', music: '음악', paused: '일시정지', resume: '계속하기', rules: '규칙', fs: '전체 화면', fsExit: '전체 화면 끄기',
-    tagline: '세상 모든 단어, 그 시작과 끝',
+    tagline: '세상 모든 단어,|그 시작과 끝',
     solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드', soloSub: 'AI 토리와 대결', duoSub: '한 폰으로 둘이서', onlineSub: '친구와 각자 폰으로', soonBadge: '준비 중',
     soloNote: 'AI 토끼 토리와 대결해요. 힌트를 한 번 쓸 수 있어요.',
     duoNote: '한 폰을 가운데 두고 마주 앉아서 해요. 먼저 부저를 누른 사람이 입력해요.',
@@ -422,7 +423,7 @@ const STR = {
   },
   en: {
     langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', sfx: 'Sounds', music: 'Music', paused: 'Paused', resume: 'Resume', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
-    tagline: 'All the words in the world, from first to last.',
+    tagline: 'All the words in the world,|from first to last.',
     solo: 'Solo', duo: 'Duo', online: 'Online', soloSub: 'Play Tori the AI', duoSub: 'Two players, one phone', onlineSub: 'Each on your own phone', soonBadge: 'Soon',
     soloNote: 'Play against Tori the AI rabbit. You get one hint per game.',
     duoNote: 'Two players face each other over one phone. Whoever buzzes first gets to type.',
@@ -778,7 +779,7 @@ function schedMusic() {
 const fsOK = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled) && !/iPhone|iPad|iPod/.test(navigator.userAgent);
 function applyLang() {
   document.documentElement.lang = lang;
-  document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
+  document.querySelectorAll('[data-t]').forEach(el => { const v = t(el.dataset.t); if (v.includes('|')) el.innerHTML = v.split('|').map(c => `<span class="nb">${esc(c.trim())}</span>`).join(' '); else el.textContent = v; });
   $('langBtn').textContent = t('langBtn');
   renderToggles();
   $('diffNote').textContent = t('note_' + diff);
@@ -846,6 +847,7 @@ $('goAI').onclick = () => { primeSpeech(); sfx('pick'); newGame('ai'); };
 $('goDuo').onclick = () => { primeSpeech(); sfx('pick'); newGame('duo'); };
 $('goOnline').onclick = () => { primeSpeech(); sfx('pick'); createRoom(); };
 function goHome() {
+  document.documentElement.classList.remove('on-game');
   document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
   leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; }
 
@@ -882,6 +884,7 @@ function nameOf(p) { if (G.mode === 'ai') return p === 0 ? t('me') : t('ai'); if
 const paused = () => !$('ov').hidden;
 
 function newGame(mode) {
+  document.documentElement.classList.add('on-game');
   stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
