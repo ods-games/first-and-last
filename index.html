@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="First&amp;Last">
 <meta name="theme-color" content="#D6EEFF">
 <meta name="description" content="시작 글자와 끝 글자로 하는 영어 단어 대결 게임">
@@ -13,13 +13,13 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
-:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);box-sizing:border-box}
 body{margin:0;font:14px system-ui,sans-serif}
 [hidden]{display:none!important}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106170420';
+  var BUILD = '20261106171028';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -256,6 +256,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 </style>
 
+<style>html,body{background:#D6EEFF}</style>
 </head>
 <body>
 <div id="app">
