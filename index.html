@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106220640';
+  var BUILD = '20261106220805';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -50,7 +50,8 @@ body{margin:0;font:14px system-ui,sans-serif}
   --display:'Fredoka','Jua',ui-rounded,system-ui,sans-serif;
   --korean:'Jua','Fredoka',ui-rounded,system-ui,sans-serif;
 }
-html,body{height:100%}
+html,body{height:100%;overscroll-behavior:none}
+#app{overscroll-behavior:none}
 body{word-break:keep-all;overflow-wrap:break-word;background:var(--page);color:var(--ink);font-family:var(--display);overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
@@ -58,7 +59,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .screen{flex:1;display:flex;flex-direction:column;min-height:0}
 
 /* ---------- home: title screen. Sky on top, a grass field below that the cast stands on; modes sit in the field ---------- */
-#home{position:relative;overflow-y:auto;overflow-x:hidden;background:var(--sky);padding:0}
+#home{position:relative;overflow-y:auto;overflow-x:hidden;overscroll-behavior:none;background:var(--sky);padding:0}
 .gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .deco{position:absolute;inset:0;pointer-events:none;z-index:0}
 .deco .cl{position:absolute;width:var(--w);height:calc(var(--w) * .28);background:var(--paper);border-radius:999px;opacity:.9}
