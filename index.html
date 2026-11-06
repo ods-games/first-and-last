@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107005614';
+  var BUILD = '20261107010132';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1101,10 +1101,7 @@ function roulette(forced) {
 }
 function startPlay() {
   G.phase = 'play'; G.input = ['', ''];
-  /* the rule line only shows for someone's first few games; after that the middle is just the word board */
-  let plays = 0; try { plays = +localStorage.getItem('fl-plays') || 0; localStorage.setItem('fl-plays', plays + 1); } catch (e) { }
-  const intro = !isDuo() && plays < 3;
-  setCenter(`${intro ? `<div class="msg">${esc(t('startEnd', { S: G.start.toUpperCase(), E: G.end.toUpperCase() }))}<small>${esc(t('fight'))}</small></div>` : ''}<div class="words"></div>`);
+  setCenter('<div class="words"></div>');
   refreshWords();
   setFace(0, 'idle'); setFace(1, 'idle'); renderPanels(); startClock(); scheduleAI(); startIdle(); sfx('go');
 }
