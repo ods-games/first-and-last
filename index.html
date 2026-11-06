@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107011654';
+  var BUILD = '20261107013152';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -468,7 +468,7 @@ const STR = {
     buzz: '도전!', cancel: '취소', waiting: '{name} 입력 중...', pass: '{name} 차례예요! 10초 안에 입력', timeout: '시간이 지났어요',
     thinking: '생각 중...',
     winYou: '승리!', loseYou: '패배', draw: '무승부', winName: '{name} 승리!', timeUp: '시간 종료',
-    again: '다시 하기', hintLabel: '힌트', hintOut: '힌트가 나왔어요!', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', tapShort: '눌러서 듣기', home: '홈으로', quit: '그만하기', endQ: '매치를 끝내고 나갈까요?', none: '없음', ok: '확인',
+    again: '다시 하기', hintLabel: '힌트', hintOut: '힌트가 나왔어요!', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', tapShort: '눌러서 듣기', home: '홈으로', quit: '그만하기', endQ: '매치를 끝낼까요?', none: '없음', ok: '확인',
     tut1: '두 사람이 알파벳을 하나씩 고르면, 룰렛이 시작 글자와 끝 글자를 정해요',
     tut2: '조건에 맞는 영어 단어를 3번 먼저 쓰면 승리! 상대가 쓴 단어는 못 써요',
     tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(STARTING), 과거형(STARTED) 등은 안 돼요. 제한 시간은 3분이에요',
@@ -503,7 +503,7 @@ const STR = {
     buzz: 'I got it!', cancel: 'Cancel', waiting: '{name} is typing...', pass: '{name}, your turn! 10 seconds', timeout: 'Time ran out',
     thinking: 'Thinking...',
     winYou: 'You win!', loseYou: 'You lose', draw: 'Draw', winName: '{name} wins!', timeUp: 'Time up',
-    again: 'Play again', hintLabel: 'Hint', hintOut: 'A hint appeared!', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', tapShort: 'Tap to hear', home: 'Home', quit: 'Quit', endQ: 'End the match and leave?', none: 'none', ok: 'OK',
+    again: 'Play again', hintLabel: 'Hint', hintOut: 'A hint appeared!', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', tapShort: 'Tap to hear', home: 'Home', quit: 'Quit', endQ: 'End the match?', none: 'none', ok: 'OK',
     tut1: 'Each player picks a letter. The roulette decides which one starts the word and which one ends it',
     tut2: 'Be the first to write 3 words that fit! You can’t use a word your opponent already used',
     tut3: 'Words need 3+ letters, base forms only. No plurals (CATS), -ing forms (STARTING) or past tense (STARTED). Each game lasts 3 minutes',
@@ -1253,7 +1253,7 @@ function scheduleAI() {
   G.aiDue = Date.now() + cfg.base * f * (.75 + Math.random() * .5) * 1000;
   const tick = () => {
     if (G.phase !== 'play') return;
-    if (paused()) G.aiDue += 500;
+    if (paused()) { G.aiDue += 500; G.aiId = setTimeout(tick, 500); return; } /* paused: Tori waits quietly */
     if (Date.now() >= G.aiDue) return aiMove();
     if (G.aiDue - Date.now() < 2500 && !document.querySelector('.bubble.b1')) { bubble(1, t('thinking'), 2400); voice(1, 'hmm'); }
     G.aiId = setTimeout(tick, 500);
