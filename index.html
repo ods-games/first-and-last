@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106194154';
+  var BUILD = '20261106200033';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -132,6 +132,9 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .tools{position:absolute;z-index:4;right:max(10px,env(safe-area-inset-right,0px));bottom:12px;display:flex;gap:6px}
 .icon-btn{width:40px;height:40px;border:3px solid var(--ink);border-radius:12px;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:0}
 .icon-btn svg{width:22px;height:22px}
+#exitBtn{display:none}
+.online #exitBtn{display:flex}
+.online #pauseBtn{display:none}
 .tog{display:inline-flex;align-items:center;gap:6px}
 .tog svg{width:20px;height:20px;flex:none}
 .tog[aria-pressed="false"]{background:var(--muted);color:#8A7466}
@@ -328,6 +331,7 @@ button.chip{cursor:pointer;color:var(--ink)}
       <div class="tools">
         <button class="icon-btn tog" data-tog="sfx" type="button"></button>
         <button class="icon-btn tog" data-tog="music" type="button"></button>
+        <button class="icon-btn" id="exitBtn" type="button" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/></svg></button>
         <button class="icon-btn" id="pauseBtn" type="button" aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4.5" width="4" height="15" rx="1.5"/><rect x="14" y="4.5" width="4" height="15" rx="1.5"/></svg></button>
       </div>
       <div id="fx"></div>
@@ -394,7 +398,7 @@ const STR = {
     buzz: '도전!', cancel: '취소', waiting: '{name} 입력 중...', pass: '{name} 차례예요! 10초 안에 입력', timeout: '시간이 지났어요',
     thinking: '생각 중...',
     winYou: '승리!', loseYou: '아쉬워요', draw: '무승부', winName: '{name} 승리!', timeUp: '시간 종료',
-    again: '다시 하기', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '홈으로', none: '없음', ok: '확인',
+    again: '다시 하기', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '홈으로', none: '없음', ok: '확인',
     tut1: '두 사람이 알파벳을 하나씩 고르면, 룰렛이 시작 글자와 끝 글자를 정해요',
     tut2: '조건에 맞는 영어 단어를 3번 먼저 쓰면 승리! 상대가 쓴 단어는 못 써요',
     tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(STARTING), 과거형(STARTED) 등은 안 돼요. 제한 시간은 3분이에요',
@@ -429,7 +433,7 @@ const STR = {
     buzz: 'I got it!', cancel: 'Cancel', waiting: '{name} is typing...', pass: '{name}, your turn! 10 seconds', timeout: 'Time ran out',
     thinking: 'Thinking...',
     winYou: 'You win!', loseYou: 'So close!', draw: 'Draw', winName: '{name} wins!', timeUp: 'Time up',
-    again: 'Play again', tapToHear: 'Tap a word to hear it', home: 'Home', none: 'none', ok: 'OK',
+    again: 'Play again', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', home: 'Home', none: 'none', ok: 'OK',
     tut1: 'Each player picks a letter. The roulette decides which one starts the word and which one ends it',
     tut2: 'Be the first to write 3 words that fit! You can’t use a word your opponent already used',
     tut3: 'Words need 3+ letters, base forms only. No plurals (CATS), -ing forms (STARTING) or past tense (STARTED). Each game lasts 3 minutes',
@@ -469,7 +473,7 @@ const RAB_FRONT = `<svg data-s="rfront" viewBox="-10 -6 180 192" aria-hidden="tr
 <g data-g="hit"><path d="M54 92l10 6-10 6M106 92l-10 6 10 6" fill="none" stroke="${INK}" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="80" cy="124" rx="6" ry="7" fill="${INK}"/></g>
 <g data-g="wet"><path d="M54 98h12M94 98h12" stroke="${INK}" stroke-width="4.5" stroke-linecap="round"/><path d="M60 104c-3 8 3 12 4 6ZM100 104c-3 8 3 12 4 6Z" fill="#8FD0FF" stroke="${INK}" stroke-width="2"/><path d="M72 124q4-4 8 0q4 4 8 0" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/></g>
 <g data-g="ko"><path d="M54 98c0-8 12-8 12 0 0 6-8 6-8 1M94 98c0-8 12-8 12 0 0 6-8 6-8 1" fill="none" stroke="${INK}" stroke-width="4" stroke-linecap="round"/><path d="M72 122q4 4 8 0q4 4 8 0" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/></g>
-${BAND(1, 56, 74, -28)}${BAND(2, 112, 128, 22)}
+${BAND(1, 56, 74, -28)}${BAND(2, 108, 78, 26)}
 </g>
 <g data-o="drops"><path d="M28 70c-4 10 4 14 6 6ZM132 80c-4 10 4 14 6 6ZM40 132c-4 10 4 14 6 6ZM118 40c-4 10 4 14 6 6Z" fill="#8FD0FF" stroke="${INK}" stroke-width="2"/></g>
 <g data-o="stars">${STAR(30, 54, 11)}${STAR(80, 38, 11)}${STAR(132, 54, 11)}</g>
@@ -489,7 +493,7 @@ function backChar(name, c) {
 <g data-g="sad">${base}${side}<path d="M150 98q8 6 16 0" fill="none" stroke="${INK}" stroke-width="4.5" stroke-linecap="round"/><path d="M158 106c-4 9 3 13 5 6Z" fill="#8FD0FF" stroke="${INK}" stroke-width="2"/><path d="M194 132q8-6 16 0" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/></g>
 <g data-g="scratch">${base}${scratchArm}${Q(176, 40, 46, 12)}${Q(206, 70, 32, 20)}</g>
 ${c.front || ''}
-${BAND(1, 74, 92, -24)}${BAND(2, 140, 74, 28)}
+${BAND(1, (c.bands || [74, 92])[0], (c.bands || [74, 92])[1], -24)}${BAND(2, (c.bands || [0, 0, 140, 74])[2], (c.bands || [0, 0, 140, 74])[3], 28)}
 <g data-o="drops"><path d="M40 60c-4 10 4 14 6 6ZM186 40c-4 10 4 14 6 6ZM110 30c-4 10 4 14 6 6Z" fill="#8FD0FF" stroke="${INK}" stroke-width="2"/></g>
 <g data-o="stars">${STAR(60, 20, 12)}${STAR(110, 4, 12)}${STAR(160, 20, 12)}</g>
 </svg>`;
@@ -510,6 +514,7 @@ const CAPY = backChar('capy', {
 <path d="M100 144q10 8 20 0" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/></g>`
 });
 const RAB_BACK = backChar('rback', {
+  bands: [74, 104, 142, 108],
   fill: '#FFFFFF', shade: '#EFE7F2', hi: null,
   ears: `<path d="M70 72C54 22 62-34 84-34c18 2 16 54 8 102Z" fill="#fff" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/><path d="M126 70c-2-50 14-100 34-96 18 6 2 56-14 102Z" fill="#fff" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/>`,
   side: `<ellipse cx="200" cy="112" rx="18" ry="15" fill="#fff" stroke="${INK}" stroke-width="5"/><ellipse cx="212" cy="106" rx="5" ry="4" fill="#FF8FAB"/><ellipse cx="160" cy="120" rx="10" ry="5" fill="#FFB3C7"/>`
@@ -551,7 +556,10 @@ function ac() {
       SFXBUS = AC.createGain(); SFXBUS.gain.value = 1; SFXBUS.connect(AC.destination);
       MUSBUS = AC.createGain(); MUSBUS.gain.value = .07; MUSBUS.connect(AC.destination);
       /* the first tap only asks the audio engine to wake up; it finishes a moment later, so start the music then */
-      AC.addEventListener('statechange', () => { if (AC.state === 'running' && MUS.want && !MUS.playing) startMusic(); });
+      AC.addEventListener('statechange', () => {
+        if (AC.state === 'running') { if (MUS.want && !MUS.playing) startMusic(); }
+        else if (!document.hidden) setTimeout(() => { if (AC.state !== 'running') AC.resume().catch(() => { }); }, 60);
+      });
     }
     if (AC.state !== 'running') { const r = AC.resume(); if (r && r.catch) r.catch(() => { }); }
   } catch (e) { return null; }
@@ -569,6 +577,7 @@ function silentWav() {
   let bin = ''; b.forEach(x => bin += String.fromCharCode(x)); return 'data:audio/wav;base64,' + btoa(bin);
 }
 function startKeepAlive() {
+  if (navigator.audioSession) return;
   if (!soundOn && !musicOn) { if (keepAlive) keepAlive.pause(); return; }
   try {
     if (!keepAlive) { keepAlive = new Audio(silentWav()); keepAlive.loop = true; keepAlive.setAttribute('playsinline', ''); keepAlive.preload = 'auto'; }
@@ -578,8 +587,8 @@ function startKeepAlive() {
 let speechPrimed = false;
 function unlockAudio() {
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
-  startKeepAlive();
   const a = ac(); if (!a) return;
+  startKeepAlive();
   try { const b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) { }
   if (!speechPrimed && soundOn && 'speechSynthesis' in window) {
     speechPrimed = true;
@@ -590,7 +599,9 @@ function unlockAudio() {
 /* capture phase: unlock runs before any button's own handler tries to play a sound */
 ['touchstart', 'touchend', 'pointerup', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true, capture: true }));
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { if (keepAlive) keepAlive.pause(); stopMusic(); try { speechSynthesis.cancel(); } catch (e) { } }
+  if (document.hidden) { if (keepAlive) keepAlive.pause(); stopMusic(); try { speechSynthesis.cancel(); } catch (e) { } return; }
+  /* back from another app: wake the audio engine again and pick the music back up */
+  if (AC) { const r = AC.state !== 'running' ? AC.resume() : null; if (r && r.then) r.then(() => startMusic(), () => { }); else startMusic(); }
 });
 
 /* building blocks */
@@ -765,9 +776,18 @@ function pauseMenu() {
   $('ov').hidden = false; renderToggles();
   $('pResume').onclick = () => { $('ov').hidden = true; };
   $('pRules').onclick = () => tutorial(false);
-  $('pHome').onclick = () => goHome();
+  $('pHome').onclick = () => confirmQuit();
 }
 $('pauseBtn').onclick = pauseMenu;
+$('exitBtn').onclick = () => confirmQuit();
+/* leaving a game in progress: ask first */
+function confirmQuit() {
+  if (!G.mode || G.phase === 'over') return goHome();
+  const back = $('ov').hidden ? null : $('sheet').innerHTML;
+  sheet(`<h2>${esc(t('quitQ'))}</h2><div class="btns"><button class="go alt" type="button" id="qNo">${t('no')}</button><button class="go" type="button" id="qYes">${t('yes')}</button></div>`);
+  $('qYes').onclick = () => goHome();
+  $('qNo').onclick = () => { if (back && !isOnline()) pauseMenu(); else $('ov').hidden = true; };
+}
 document.querySelectorAll('.minfo').forEach(b => b.onclick = () => {
   const open = b.getAttribute('aria-expanded') !== 'true';
   document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
@@ -815,7 +835,7 @@ function newGame(mode) {
   stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
-  $('game').classList.toggle('duo', isDuo());
+  $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
   $('panel1').hidden = !isDuo();
   $('char1').innerHTML = RAB_FRONT + RAB_BACK; $('char0').innerHTML = CAPY;
   setFace(0, 'look'); setFace(1, isDuo() ? 'look' : 'idle');
