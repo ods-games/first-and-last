@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106213227';
+  var BUILD = '20261106213431';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -78,7 +78,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .lt.l{background:#FF9EB1;transform:rotate(4deg);animation-delay:.12s}
 .lt.l b{left:calc(22.5 * var(--u));top:calc(-7 * var(--u))}
 .lt.l i{left:calc(56.5 * var(--u));top:calc(58 * var(--u));font-size:calc(26 * var(--u))}
-.ln{flex:none;width:calc(58 * var(--u));height:calc(58 * var(--u));box-sizing:border-box;border-radius:50%;background:var(--yellow);border:calc(3.5 * var(--u)) solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:calc(44 * var(--u));line-height:1;padding-bottom:calc(6 * var(--u));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) .06s both}
+.ln{position:relative;z-index:2;margin:0 calc(-26 * var(--u));flex:none;width:calc(58 * var(--u));height:calc(58 * var(--u));box-sizing:border-box;border-radius:50%;background:var(--yellow);border:calc(3.5 * var(--u)) solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:calc(44 * var(--u));line-height:1;padding-bottom:calc(6 * var(--u));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) .06s both}
 .ribbon{font-family:var(--korean);font-size:17px;color:var(--ink);letter-spacing:1px;text-align:center;text-wrap:balance;max-width:92%}
 .stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;height:clamp(110px,17vh,150px);margin-top:0;margin-bottom:-22px;flex:none}
 .stage .hc{height:100%;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%}
