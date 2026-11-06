@@ -109,6 +109,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .words{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .chip{border:3px solid var(--ink);border-radius:10px;padding:1px 8px;font-size:15px;font-weight:600;background:var(--paper);animation:pop .35s ease-out}
 .chip.p0{background:var(--yellow)}
+button.chip{cursor:pointer;color:var(--ink)}
 .duo .chip.p1{background:var(--mint)}
 .roul{display:flex;gap:14px;align-items:flex-end}
 .roul .slot{display:flex;flex-direction:column;align-items:center;gap:4px}
@@ -211,6 +212,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
       <button class="pill" id="fsBtn" type="button" hidden></button>
       <button class="pill" id="langBtn" type="button"></button>
       <button class="pill" id="soundBtn" type="button"></button>
+      <button class="pill" id="musicBtn" type="button"></button>
       <button class="pill" id="rulesBtn" type="button" data-t="rules"></button>
     </div>
     <div class="logo" aria-label="First&amp;Last">
@@ -300,7 +302,7 @@ function baseOf(w) {
 /* ---------- strings ---------- */
 const STR = {
   ko: {
-    langBtn: 'English', soundOn: '소리 켬', soundOff: '소리 끔', rules: '규칙', fs: '전체 화면', fsExit: '전체 화면 끄기',
+    langBtn: 'English', soundOn: '소리 켬', soundOff: '소리 끔', musicOn: '음악 켬', musicOff: '음악 끔', rules: '규칙', fs: '전체 화면', fsExit: '전체 화면 끄기',
     tagline: '시작 글자와 끝 글자로 하는 영어 단어 대결',
     solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드',
     soloNote: 'AI 토끼 토리와 대결해요. 힌트를 한 번 쓸 수 있어요.',
@@ -321,14 +323,14 @@ const STR = {
     buzz: '도전!', cancel: '취소', waiting: '{name} 입력 중...', pass: '{name} 차례예요! 10초 안에 입력', timeout: '시간이 지났어요',
     thinking: '생각 중...',
     winYou: '승리!', loseYou: '아쉬워요', draw: '무승부', winName: '{name} 승리!', timeUp: '시간 종료',
-    again: '다시 하기', home: '처음으로', none: '없음', ok: '확인',
+    again: '다시 하기', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '처음으로', none: '없음', ok: '확인',
     tut1: '두 사람이 알파벳을 하나씩 고르면, 룰렛이 시작 글자와 끝 글자를 정해요',
     tut2: '조건에 맞는 영어 단어를 3번 먼저 쓰면 승리! 상대가 쓴 단어는 못 써요',
     tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(STARTING), 과거형(STARTED) 등은 안 돼요. 제한 시간은 3분이에요',
     prev: '이전', next: '다음', letsgo: '시작하기', close: '닫기', ruleTitle: '이렇게 놀아요'
   },
   en: {
-    langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
+    langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', musicOn: 'Music on', musicOff: 'Music off', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
     tagline: 'An English word duel: first letter meets last letter',
     solo: 'Solo', duo: 'Duo', online: 'Online',
     soloNote: 'Play against Tori the AI rabbit. You get one hint per game.',
@@ -349,7 +351,7 @@ const STR = {
     buzz: 'I got it!', cancel: 'Cancel', waiting: '{name} is typing...', pass: '{name}, your turn! 10 seconds', timeout: 'Time ran out',
     thinking: 'Thinking...',
     winYou: 'You win!', loseYou: 'So close!', draw: 'Draw', winName: '{name} wins!', timeUp: 'Time up',
-    again: 'Play again', home: 'Home', none: 'none', ok: 'OK',
+    again: 'Play again', tapToHear: 'Tap a word to hear it', home: 'Home', none: 'none', ok: 'OK',
     tut1: 'Each player picks a letter. The roulette decides which one starts the word and which one ends it',
     tut2: 'Be the first to write 3 words that fit! You can’t use a word your opponent already used',
     tut3: 'Words need 3+ letters, base forms only. No plurals (CATS), -ing forms (STARTING) or past tense (STARTED). Each game lasts 3 minutes',
@@ -359,6 +361,7 @@ const STR = {
 function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 let lang = store('fl-lang') === 'en' ? 'en' : 'ko';
 let soundOn = store('fl-sound') !== 'off';
+let musicOn = store('fl-music') !== 'off';
 let diff = ['easy', 'medium', 'hard'].includes(store('fl-diff')) ? store('fl-diff') : 'easy';
 function t(k, v) { let s = (STR[lang][k] ?? STR.ko[k] ?? k); if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
 const $ = id => document.getElementById(id);
@@ -456,14 +459,20 @@ function showSvg(container, svgName, g, opts = {}) {
   const f = s.querySelector('.flat'); if (f) f.style.transform = opts.flat ? 'scale(1.12,.78)' : '';
 }
 
-/* ---------- sound ---------- */
-let AC = null;
+/* ---------- sound ----------
+   Everything is synthesized with Web Audio (no audio files): sound effects, cartoon voices and
+   a small two-track background score. Word reading uses the browser's English speech voice. */
+let AC = null, SFXBUS = null, MUSBUS = null;
 /* ask iOS for the media-playback audio category up front, before any sound is made, so the ring switch doesn't mute the game */
 try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
 function ac() {
-  if (!soundOn) return null;
+  if (!soundOn && !musicOn) return null;
   try {
-    if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+    if (!AC) {
+      AC = new (window.AudioContext || window.webkitAudioContext)();
+      SFXBUS = AC.createGain(); SFXBUS.gain.value = 1; SFXBUS.connect(AC.destination);
+      MUSBUS = AC.createGain(); MUSBUS.gain.value = .07; MUSBUS.connect(AC.destination);
+    }
     if (AC.state !== 'running') { const r = AC.resume(); if (r && r.catch) r.catch(() => { }); }
   } catch (e) { return null; }
   return AC;
@@ -480,48 +489,150 @@ function silentWav() {
   let bin = ''; b.forEach(x => bin += String.fromCharCode(x)); return 'data:audio/wav;base64,' + btoa(bin);
 }
 function startKeepAlive() {
-  if (!soundOn) { if (keepAlive) keepAlive.pause(); return; }
+  if (!soundOn && !musicOn) { if (keepAlive) keepAlive.pause(); return; }
   try {
     if (!keepAlive) { keepAlive = new Audio(silentWav()); keepAlive.loop = true; keepAlive.setAttribute('playsinline', ''); keepAlive.preload = 'auto'; }
     if (keepAlive.paused) { const r = keepAlive.play(); if (r && r.catch) r.catch(() => { }); }
   } catch (e) { }
 }
-document.addEventListener('visibilitychange', () => { if (document.hidden && keepAlive) keepAlive.pause(); });
+let speechPrimed = false;
 function unlockAudio() {
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
   startKeepAlive();
   const a = ac(); if (!a) return;
   try { const b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) { }
+  if (!speechPrimed && soundOn && 'speechSynthesis' in window) {
+    speechPrimed = true;
+    try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } catch (e) { }
+  }
+  if (MUS.want && !MUS.playing) startMusic();
 }
 /* capture phase: unlock runs before any button's own handler tries to play a sound */
 ['touchstart', 'touchend', 'pointerup', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true, capture: true }));
-function tone(f, d, type = 'sine', vol = .18, slide = 0, delay = 0) {
-  const a = ac(); if (!a) return; const o = a.createOscillator(), g = a.createGain(), t0 = a.currentTime + delay;
-  o.type = type; o.frequency.setValueAtTime(f, t0); if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(40, f + slide), t0 + d);
-  g.gain.setValueAtTime(vol, t0); g.gain.exponentialRampToValueAtTime(.001, t0 + d); o.connect(g).connect(a.destination); o.start(t0); o.stop(t0 + d + .02);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { if (keepAlive) keepAlive.pause(); stopMusic(); try { speechSynthesis.cancel(); } catch (e) { } }
+});
+
+/* building blocks */
+function env(g, t0, a, peak, d) { g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + a); g.gain.exponentialRampToValueAtTime(.0001, t0 + a + d); }
+function osc(type, f, t0, dur, peak, { to, vib, bus, a = .005 } = {}) {
+  const A = ac(); if (!A) return; const o = A.createOscillator(), g = A.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t0); if (to) o.frequency.exponentialRampToValueAtTime(to, t0 + dur);
+  if (vib) { const l = A.createOscillator(), lg = A.createGain(); l.frequency.value = vib[0]; lg.gain.value = vib[1]; l.connect(lg).connect(o.frequency); l.start(t0); l.stop(t0 + dur + .05); }
+  env(g, t0, a, peak, dur); o.connect(g).connect(bus || SFXBUS); o.start(t0); o.stop(t0 + a + dur + .05);
 }
-function noise(d, freq, vol = .25) {
-  const a = ac(); if (!a) return; const b = a.createBuffer(1, Math.floor(a.sampleRate * d), a.sampleRate), ch = b.getChannelData(0);
-  for (let i = 0; i < ch.length; i++) ch[i] = (Math.random() * 2 - 1) * (1 - i / ch.length);
-  const s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain(); f.type = 'lowpass'; f.frequency.value = freq; g.gain.value = vol;
-  s.buffer = b; s.connect(f).connect(g).connect(a.destination); s.start();
+let NOISE = null;
+function noiseBuf() { if (!NOISE) { const A = AC; NOISE = A.createBuffer(1, A.sampleRate, A.sampleRate); const ch = NOISE.getChannelData(0); for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1; } return NOISE; }
+function noise(t0, dur, peak, type, f0, f1, q = 1, bus) {
+  const A = ac(); if (!A) return; const s = A.createBufferSource(), f = A.createBiquadFilter(), g = A.createGain();
+  s.buffer = noiseBuf(); f.type = type; f.Q.value = q; f.frequency.setValueAtTime(f0, t0); if (f1) f.frequency.exponentialRampToValueAtTime(f1, t0 + dur);
+  env(g, t0, .005, peak, dur); s.connect(f).connect(g).connect(bus || SFXBUS); s.start(t0); s.stop(t0 + dur + .05);
 }
+const now = () => (AC ? AC.currentTime : 0) + .01;
+
+/* sound effects */
 const SFX = {
-  key: () => tone(660, .05, 'triangle', .06),
-  pick: () => tone(520, .12, 'triangle', .14, 300),
-  roll: () => tone(880, .04, 'square', .05),
-  whoosh: () => noise(.25, 900, .12),
-  pop: () => tone(500, .18, 'sine', .25, 700),
-  splash: () => { noise(.4, 1800, .35); tone(300, .2, 'sine', .12, -150); },
-  bonk: () => { tone(1400, .12, 'square', .07, 900); tone(180, .25, 'triangle', .3, -80, .02); tone(1700, .14, 'square', .06, 800, .12); },
-  wrong: () => { tone(220, .12, 'square', .08); tone(180, .16, 'square', .08, 0, .13); },
-  huh: () => { tone(300, .14, 'triangle', .14, 160); tone(460, .18, 'triangle', .12, 200, .16); },
-  tick: () => tone(1000, .04, 'square', .05),
-  win: () => [523, 659, 784, 1046].forEach((f, i) => tone(f, .22, 'triangle', .16, 0, i * .12)),
-  lose: () => [392, 330, 262].forEach((f, i) => tone(f, .3, 'triangle', .14, 0, i * .18)),
-  buzz: () => tone(330, .15, 'sawtooth', .1)
+  key: () => { const t = now(); osc('sine', 1500, t, .03, .05); },
+  pick: () => { const t = now(); osc('triangle', 660, t, .08, .14); osc('triangle', 990, t + .07, .12, .12); },
+  roll: () => { const t = now(); osc('square', 1800, t, .02, .04); osc('sine', 900, t, .04, .08, { to: 600 }); },
+  tick: () => { const t = now(); osc('sine', 1300, t, .05, .08); },
+  go: () => { const t = now(); [523, 659, 784].forEach((f, i) => osc('square', f, t + i * .09, .08, .06)); osc('triangle', 1046, t + .27, .35, .16, { vib: [7, 12] }); },
+  whoosh: () => { const t = now(); noise(t, .35, .14, 'bandpass', 300, 2600, 1.2); },
+  block: () => { const t = now(); osc('sine', 900, t, .07, .25, { to: 420 }); osc('square', 2400, t, .015, .05); },
+  pop: () => { const t = now(); osc('sine', 420, t, .16, .3, { to: 1400 }); noise(t, .06, .12, 'highpass', 2000); },
+  splash: () => {
+    const t = now(); noise(t, .5, .4, 'lowpass', 4000, 300, .7);
+    for (let i = 0; i < 6; i++) { const s = t + .08 + Math.random() * .35; osc('sine', 500 + Math.random() * 700, s, .06, .07, { to: 1600 }); }
+  },
+  bonk: () => {
+    const t = now();
+    osc('sine', 1250, t, .1, .14, { to: 1900, vib: [28, 60] }); osc('sine', 1700, t + .11, .14, .12, { to: 1100, vib: [28, 60] });
+    osc('triangle', 150, t, .3, .35, { to: 70 }); noise(t, .12, .2, 'lowpass', 900);
+  },
+  wrong: () => { const t = now(); osc('square', 196, t, .12, .06); osc('square', 147, t + .13, .2, .06); },
+  buzz: () => { const t = now(); osc('triangle', 880, t, .1, .14); osc('triangle', 1175, t + .1, .2, .14); },
+  win: () => {
+    const t = now(); const m = [523, 659, 784, 1046, 784, 1046];
+    m.forEach((f, i) => { osc('square', f, t + i * .11, .1, .05); osc('triangle', f / 2, t + i * .11, .1, .1); });
+    osc('triangle', 1318, t + .7, .6, .14, { vib: [6, 14] }); for (let i = 0; i < 8; i++) osc('sine', 2000 + Math.random() * 2000, t + .7 + i * .06, .05, .04);
+  },
+  lose: () => { const t = now(); [392, 370, 349].forEach((f, i) => osc('sawtooth', f, t + i * .32, .3, .05)); osc('sawtooth', 330, t + .96, .7, .05, { vib: [5, 10], to: 300 }); },
+  draw: () => { const t = now(); osc('triangle', 523, t, .2, .12); osc('triangle', 523, t + .25, .3, .12); }
 };
-const sfx = k => { try { SFX[k] && SFX[k](); } catch (e) { } };
+const sfx = k => { if (!soundOn) return; try { ac() && SFX[k] && SFX[k](); } catch (e) { } };
+
+/* cartoon voices: a buzzy tone through two vowel filters, low for the capybara, high for the rabbit */
+const VOWEL = { a: [800, 1250], i: [350, 2200], u: [330, 850], o: [520, 900], e: [520, 1900] };
+function syl(t0, base, f0, f1, dur, v, vol = .5) {
+  const A = ac(); if (!A) return; const o = A.createOscillator(), g = A.createGain();
+  o.type = 'sawtooth'; o.frequency.setValueAtTime(base * f0, t0); o.frequency.exponentialRampToValueAtTime(base * f1, t0 + dur);
+  const mix = A.createGain(); mix.gain.value = 1;
+  VOWEL[v].forEach((fr, k) => { const bp = A.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = fr * (base > 400 ? 1.25 : 1); bp.Q.value = 7; const bg = A.createGain(); bg.gain.value = k ? .6 : 1; o.connect(bp).connect(bg).connect(mix); });
+  env(g, t0, .02, vol, dur); mix.connect(g).connect(SFXBUS); o.start(t0); o.stop(t0 + dur + .1);
+}
+const VOICES = {
+  hup: (b, t) => syl(t, b, 1.1, 1.3, .1, 'u', .35),
+  ouch: (b, t) => { syl(t, b, 1.7, 1.2, .1, 'a'); syl(t + .1, b, 1.3, .8, .18, 'a'); },
+  yay: (b, t) => { syl(t, b, 1, 1.15, .1, 'e', .4); syl(t + .12, b, 1.4, 1.7, .2, 'i', .45); },
+  huh: (b, t) => syl(t, b, .9, 1.5, .32, 'u', .45),
+  aww: (b, t) => syl(t, b, 1.25, .7, .55, 'o', .45),
+  hmm: (b, t) => syl(t, b, 1, 1.05, .35, 'u', .25)
+};
+function voice(p, kind) { if (!soundOn) return; try { if (!ac()) return; VOICES[kind](p === 0 ? 210 : 470, now()); } catch (e) { } }
+
+/* read a word aloud in English */
+let enVoice = null;
+function pickVoice() {
+  try { const vs = speechSynthesis.getVoices(); enVoice = vs.find(v => /en-US/i.test(v.lang) && /Samantha|Google US|Aria|Jenny/i.test(v.name)) || vs.find(v => /^en[-_]US/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || null; } catch (e) { }
+}
+if ('speechSynthesis' in window) { pickVoice(); try { speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (e) { } }
+function sayWord(w) {
+  if (!soundOn || !('speechSynthesis' in window)) return;
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(w); u.lang = 'en-US'; if (enVoice) u.voice = enVoice; u.rate = .9; u.pitch = 1.1; u.volume = 1; speechSynthesis.speak(u); } catch (e) { }
+}
+
+/* background music: a tiny step sequencer (eighth notes) with a home tune and a game tune */
+const _ = null;
+const SONGS = {
+  home: {
+    bpm: 92, wave: 'triangle',
+    mel: [76, _, 74, _, 72, _, 74, _, 76, _, 79, _, 76, _, _, _, 72, _, 69, _, 67, _, 69, _, 72, _, 74, _, 72, _, _, _],
+    bass: [48, 52, 55, 52, 45, 48, 52, 48, 41, 45, 48, 45, 43, 47, 50, 47], drums: false
+  },
+  game: {
+    bpm: 132, wave: 'square',
+    mel: [72, _, 76, _, 79, 76, 74, _, 72, _, 74, 76, 74, _, 67, _, 69, _, 72, _, 76, 74, 72, _, 74, _, 76, 74, 72, _, _, _,
+      79, _, 76, _, 79, 81, 79, _, 76, _, 74, 76, 72, _, _, _, 69, _, 72, 74, 76, _, 74, 72, 74, _, 76, 79, 72, _, _, _],
+    bass: [48, 48, 55, 55, 45, 45, 52, 52, 41, 41, 48, 48, 43, 43, 50, 50, 48, 48, 55, 55, 45, 45, 52, 52, 41, 41, 48, 48, 43, 43, 43, 43], drums: true
+  }
+};
+const MUS = { want: null, playing: null, step: 0, next: 0, id: null, fast: false };
+const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+function setMusic(name) { MUS.want = name; if (!name) return stopMusic(); if (MUS.playing && MUS.playing !== name) stopMusic(); startMusic(); }
+function startMusic() {
+  if (!musicOn || !MUS.want || document.hidden) return;
+  const A = ac(); if (!A || A.state !== 'running') return;
+  if (MUS.playing === MUS.want) return;
+  MUS.playing = MUS.want; MUS.step = 0; MUS.next = A.currentTime + .1;
+  clearInterval(MUS.id); MUS.id = setInterval(schedMusic, 40);
+}
+function stopMusic() { clearInterval(MUS.id); MUS.id = null; MUS.playing = null; }
+function schedMusic() {
+  const A = AC, song = SONGS[MUS.playing]; if (!A || !song) return;
+  if (A.currentTime > MUS.next + .5) MUS.next = A.currentTime + .05; // after a stall, don't machine-gun missed notes
+  const dt = 60 / (song.bpm * (MUS.fast ? 1.22 : 1)) / 2;
+  while (MUS.next < A.currentTime + .2) {
+    const i = MUS.step, t = MUS.next, m = song.mel[i % song.mel.length];
+    if (m) osc(song.wave, mtof(m), t, dt * .9, .5, { bus: MUSBUS, a: .01 });
+    if (i % 2 === 0) { const b = song.bass[(i / 2) % song.bass.length]; osc('triangle', mtof(b - 12), t, dt * 1.7, .9, { bus: MUSBUS, a: .01 }); }
+    if (song.drums) {
+      if (i % 4 === 0) osc('sine', 120, t, .12, 1.4, { to: 45, bus: MUSBUS });
+      if (i % 2 === 1) noise(t, .04, .35, 'highpass', 7000, 0, 1, MUSBUS);
+      if (i % 8 === 4) noise(t, .1, .7, 'bandpass', 1800, 900, 1, MUSBUS);
+    }
+    MUS.step++; MUS.next += dt;
+  }
+}
 
 /* ---------- home ---------- */
 const fsOK = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled) && !/iPhone|iPad|iPod/.test(navigator.userAgent);
@@ -530,6 +641,7 @@ function applyLang() {
   document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
   $('langBtn').textContent = t('langBtn');
   $('soundBtn').textContent = soundOn ? t('soundOn') : t('soundOff');
+  $('musicBtn').textContent = musicOn ? t('musicOn') : t('musicOff');
   $('diffNote').textContent = t('note_' + diff);
   $('diffNow').textContent = '· ' + t(diff);
   $('fsBtn').hidden = !fsOK; $('fsBtn').textContent = (document.fullscreenElement || document.webkitFullscreenElement) ? t('fsExit') : t('fs');
@@ -540,7 +652,8 @@ $('homeCast').innerHTML = `<div id="hc0">${CAPY}</div><div id="hc1">${RAB_FRONT}
 document.querySelectorAll('#homeCast > div').forEach(d => d.style.height = '100%');
 showSvg($('hc0'), 'capy', 'front'); showSvg($('hc1'), 'rfront', 'happy');
 $('langBtn').onclick = () => { lang = lang === 'ko' ? 'en' : 'ko'; store('fl-lang', lang); applyLang(); };
-$('soundBtn').onclick = () => { soundOn = !soundOn; store('fl-sound', soundOn ? 'on' : 'off'); applyLang(); startKeepAlive(); sfx('pick'); };
+$('soundBtn').onclick = () => { soundOn = !soundOn; store('fl-sound', soundOn ? 'on' : 'off'); applyLang(); if (!soundOn) { try { speechSynthesis.cancel(); } catch (e) { } } unlockAudio(); sfx('pick'); };
+$('musicBtn').onclick = () => { musicOn = !musicOn; store('fl-music', musicOn ? 'on' : 'off'); applyLang(); if (musicOn) { unlockAudio(); startMusic(); } else stopMusic(); };
 $('fsBtn').onclick = () => {
   const d = document, el = d.documentElement;
   try {
@@ -564,7 +677,7 @@ $('goOnline').onclick = () => {
   $('sheet').innerHTML = `<button class="x" type="button" id="xBtn" aria-label="${esc(t('close'))}">${XICON}</button><h2>${esc(t('online'))}</h2><p>${esc(t('soonText'))}</p><div class="btns"><button class="go alt" type="button" id="okBtn">${t('ok')}</button></div>`;
   $('ov').hidden = false; $('xBtn').onclick = $('okBtn').onclick = () => { $('ov').hidden = true; };
 };
-$('homeBtn').onclick = () => { stopAll(); G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; };
+$('homeBtn').onclick = () => { stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; };
 
 /* ---------- tutorial ---------- */
 let afterTut = null;
@@ -599,7 +712,7 @@ function nameOf(p) { if (G.mode === 'ai') return p === 0 ? t('me') : t('ai'); re
 const paused = () => !$('ov').hidden;
 
 function newGame(mode) {
-  stopAll();
+  stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
   $('game').classList.toggle('duo', isDuo());
@@ -756,7 +869,7 @@ function roulette() {
 function startPlay() {
   G.phase = 'play'; G.input = ['', ''];
   setCenter(`${isDuo() ? '' : `<div class="msg">${esc(t('startEnd', { S: G.start.toUpperCase(), E: G.end.toUpperCase() }))}<small>${esc(t('fight'))}</small></div>`}<div class="words"></div>`);
-  setFace(0, 'idle'); setFace(1, 'idle'); renderPanels(); startClock(); scheduleAI(); startIdle();
+  setFace(0, 'idle'); setFace(1, 'idle'); renderPanels(); startClock(); scheduleAI(); startIdle(); sfx('go');
 }
 /* while waiting, characters now and then glance back or hop */
 function startIdle() {
@@ -773,7 +886,7 @@ function startClock() {
   clearInterval(G.clockId); renderClock();
   G.clockId = setInterval(() => {
     if (G.phase !== 'play' || paused()) return;
-    G.time--; renderClock(); if (G.time <= 10 && G.time > 0) sfx('tick');
+    G.time--; renderClock(); MUS.fast = G.time <= 30; if (G.time <= 10 && G.time > 0) sfx('tick');
     if (G.time <= 0) { clearInterval(G.clockId); finish(G.scores[0] > G.scores[1] ? 0 : G.scores[1] > G.scores[0] ? 1 : null, true); }
   }, 1000);
 }
@@ -794,7 +907,7 @@ function submit(p) {
   const w = G.input[p]; if (!w) return;
   const err = check(w, p);
   if (!err) return accept(p, w);
-  sfx(err.unknown ? 'huh' : 'wrong'); setFace(p, 'scratch', 1600);
+  sfx('wrong'); voice(p, 'huh'); setFace(p, 'scratch', 1600);
   penalize(p, err.msg);
 }
 /* any wrong answer: that player's keyboard (solo) or buzzer (duo) is locked for 3 seconds */
@@ -814,6 +927,7 @@ function penalize(p, msg) {
   }, 1000);
 }
 function accept(p, w) {
+  sayWord(w);
   G.used.set(w, p); G.order.push([w, p]); G.input[p] = ''; G.scores[p]++;
   const n = G.scores[p];
   if (isDuo()) { clearTimeout(G.buzzId); G.active = null; }
@@ -844,7 +958,7 @@ function scheduleAI() {
     if (G.phase !== 'play') return;
     if (paused()) G.aiDue += 500;
     if (Date.now() >= G.aiDue) return aiMove();
-    if (G.aiDue - Date.now() < 2500 && !document.querySelector('.bubble.b1')) bubble(1, t('thinking'), 2400);
+    if (G.aiDue - Date.now() < 2500 && !document.querySelector('.bubble.b1')) { bubble(1, t('thinking'), 2400); voice(1, 'hmm'); }
     G.aiId = setTimeout(tick, 500);
   };
   G.aiId = setTimeout(tick, 500);
@@ -874,7 +988,7 @@ function cancelBuzz(p) {
 function runBuzzTimer(p) {
   clearTimeout(G.buzzId);
   const bar = $('tbar' + p); if (bar) { bar.style.transition = 'none'; bar.style.transform = 'scaleX(1)'; void bar.offsetWidth; bar.style.transition = 'transform 10s linear'; bar.style.transform = 'scaleX(0)'; }
-  G.buzzId = setTimeout(() => { if (G.phase === 'play' && G.active === p) { sfx('wrong'); setFace(p, 'scratch', 1600); penalize(p, t('timeout')); } }, 10000);
+  G.buzzId = setTimeout(() => { if (G.phase === 'play' && G.active === p) { sfx('wrong'); voice(p, 'huh'); setFace(p, 'scratch', 1600); penalize(p, t('timeout')); } }, 10000);
 }
 
 /* ---------- attacks ---------- */
@@ -903,19 +1017,20 @@ async function attack(p, w, n, tok) {
   const live = () => tok === G.token;
   const q = other(p), from = anchor(p), to = anchor(q), side = p === 0 ? 60 : -60;
   if (p === 0 || isDuo()) setFace(p, 'throw'); else jump(1);
+  voice(p, 'hup');
   if (n === 1) {
     sfx('whoosh');
     const letters = [...w.toUpperCase()].slice(0, 8);
     const flights = letters.map((c, i) => wait(i * 130).then(() => {
-      const el = document.createElement('div'); el.className = 'fly'; el.textContent = c; return fly(el, from, to, 1000, 360 * (i % 2 ? 1 : -1), side);
+      const el = document.createElement('div'); el.className = 'fly'; el.textContent = c; return fly(el, from, to, 1000, 360 * (i % 2 ? 1 : -1), side).then(() => { if (live() && i > 0) sfx('block'); });
     }));
-    await flights[0]; if (!live()) return; burst(to, BURST, lang === 'ko' ? '뿅!' : 'POP!'); sfx('pop'); setFace(q, 'hit', 1600); await Promise.all(flights);
+    await flights[0]; if (!live()) return; burst(to, BURST, lang === 'ko' ? '뿅!' : 'POP!'); sfx('block'); sfx('pop'); voice(q, 'ouch'); setFace(q, 'hit', 1600); await Promise.all(flights);
   } else if (n === 2) {
     sfx('whoosh');
     const el = document.createElement('div'); el.style.cssText = 'position:absolute;left:0;top:0;margin:-26px 0 0 -22px'; el.innerHTML = BALLOON;
     await fly(el, from, to, 1200, 160, side);
     if (!live()) return;
-    burst(to, SPLASH, lang === 'ko' ? '철퍽!' : 'SPLASH!'); sfx('splash'); setFace(q, 'wet', 1900); shakeArena();
+    burst(to, SPLASH, lang === 'ko' ? '철퍽!' : 'SPLASH!'); sfx('splash'); voice(q, 'ouch'); setFace(q, 'wet', 1900); shakeArena();
   } else {
     /* the hammer swings down around its handle end so the head's face lands on the target's head */
     const holder = document.createElement('div');
@@ -927,13 +1042,13 @@ async function attack(p, w, n, tok) {
     holder.appendChild(el); $('fx').appendChild(holder);
     await el.animate([{ transform: 'rotate(80deg)', opacity: 0 }, { transform: 'rotate(80deg)', opacity: 1, offset: .3 }, { transform: 'rotate(0deg)', opacity: 1 }], { duration: 700, easing: 'cubic-bezier(.55,0,.9,.55)', fill: 'forwards' }).finished;
     if (!live()) return;
-    burst(to, BURST, lang === 'ko' ? '뿅!' : 'BONK!'); sfx('bonk'); setFace(q, 'ko'); shakeArena();
+    burst(to, BURST, lang === 'ko' ? '뿅!' : 'BONK!'); sfx('bonk'); setTimeout(() => live() && voice(q, 'aww'), 350); setFace(q, 'ko'); shakeArena();
     el.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(18deg)' }], { duration: 250, fill: 'forwards' });
     setTimeout(() => holder.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }).finished.then(() => holder.remove()), 700);
   }
   if (!live()) return;
   renderHearts(); drawFace(q);
-  if (n < 3 && (p === 0 || isDuo())) setTimeout(() => setFace(p, 'look', 1100, 'idle'), 450);
+  if (n < 3 && (p === 0 || isDuo())) setTimeout(() => { if (!live()) return; setFace(p, 'look', 1100, 'idle'); voice(p, 'yay'); }, 450);
   if (n >= 3) { const b = document.createElement('div'); b.className = 'ko-banner'; b.textContent = 'K.O.!'; $('arena').appendChild(b); await wait(1300); }
 }
 
@@ -945,26 +1060,31 @@ function finish(winner, byTime) {
   document.querySelectorAll('.bubble').forEach(x => x.remove());
   if (winner === 0) { setFace(0, 'win'); setFace(1, 'lose'); }
   else if (winner === 1) { setFace(1, 'win'); setFace(0, 'lose'); }
-  if (winner === 0 || (isDuo() && winner !== null)) sfx('win'); else sfx('lose');
+  setMusic(null); MUS.fast = false;
+  if (winner === null) sfx('draw'); else if (winner === 0 || isDuo()) sfx('win'); else sfx('lose');
+  if (winner !== null) { setTimeout(() => { if (tok === G.token) { voice(winner, 'yay'); voice(other(winner), 'aww'); } }, 700); }
   let title;
   if (winner === null) title = t('draw');
   else if (G.mode === 'ai') title = winner === 0 ? t('winYou') : t('loseYou');
   else title = t('winName', { name: nameOf(winner) });
-  const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<span class="chip p${p}">${x[0].toUpperCase()}</span>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
+  const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<button type="button" class="chip p${p}" data-say="${x[0]}">${x[0].toUpperCase()} <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg></button>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
   setTimeout(() => {
     if (tok !== G.token) return;
     $('sheet').innerHTML = `<h2>${esc(title)}</h2>${byTime ? `<p>${t('timeUp')}</p>` : ''}
       <div class="score">${G.scores[0]} : ${G.scores[1]}</div>
       <div class="res-words"><div class="res-row"><b>${esc(nameOf(0))}</b>${list(0)}</div><div class="res-row"><b>${esc(nameOf(1))}</b>${list(1)}</div></div>
+      <p style="font-size:14px">${esc(t('tapToHear'))}</p>
       <p style="font-size:15px">${esc(t('startEnd', { S: G.start.toUpperCase(), E: G.end.toUpperCase() }))}</p>
       <div class="btns"><button class="go alt" type="button" id="resHome">${t('home')}</button><button class="go" type="button" id="resAgain">${t('again')}</button></div>`;
     $('ov').hidden = false;
+    $('sheet').querySelectorAll('[data-say]').forEach(b => b.onclick = () => sayWord(b.dataset.say));
     $('resAgain').onclick = () => { sfx('pick'); newGame(G.mode); };
     $('resHome').onclick = () => $('homeBtn').click();
   }, 1200);
 }
 
 applyLang();
+setMusic('home');
 </script>
 
 </body>
