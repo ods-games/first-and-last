@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106214932';
+  var BUILD = '20261106215347';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -283,23 +283,13 @@ button.chip{cursor:pointer;color:var(--ink)}
 </style>
 
 <style>
-html,body{background:#D6EEFF}
-/* the game fills the whole physical screen; the status-bar strip at the top is the game's own padding */
-#app{position:fixed;left:0;right:0;top:0;height:var(--full,100%);margin:0 auto;padding-top:env(safe-area-inset-top,0px);box-sizing:border-box}
+/* iPhone home-screen apps (see-through status bar) only draw the page down to the screen height minus the
+   status bar; below that the phone just paints the page background. So: the game fits the drawn area, and the
+   page background is the color of the screen's bottom edge (grass on the home screen, keyboard cream in a game). */
+html,body{background:#CDEFBE}
+html.on-game,html.on-game body{background:#FFF4E8}
+#app{position:fixed;left:0;right:0;top:0;bottom:0;height:auto;margin:0 auto;padding-top:env(safe-area-inset-top,0px);box-sizing:border-box}
 </style>
-<script>
-/* iPhone home-screen apps with a see-through status bar report a screen height that is short by the
-   status bar, leaving an empty strip at the bottom. In that mode use the real screen height instead. */
-(function () {
-  function fit() {
-    var app = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches;
-    var h = window.innerHeight;
-    if (app && window.screen) h = Math.max(h, innerWidth < innerHeight ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height));
-    document.documentElement.style.setProperty('--full', h + 'px');
-  }
-  fit(); addEventListener('resize', fit); addEventListener('orientationchange', function () { setTimeout(fit, 300); });
-})();
-</script>
 </head>
 <body>
 <div id="app">
