@@ -1,0 +1,24 @@
+{
+ "name": "First&Last",
+ "short_name": "First&Last",
+ "description": "시작 글자와 끝 글자로 하는 영어 단어 대결 게임",
+ "start_url": "./",
+ "scope": "./",
+ "display": "fullscreen",
+ "orientation": "portrait",
+ "background_color": "#D6EEFF",
+ "theme_color": "#D6EEFF",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
