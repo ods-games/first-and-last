@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106202415';
+  var BUILD = '20261106203233';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -124,12 +124,14 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .card .nm{font-family:var(--korean);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hearts{display:flex;gap:3px}
 .hearts svg{width:18px;height:16px}
-#card1{left:max(10px,env(safe-area-inset-left,0px));top:10px}
+#card1{left:max(10px,env(safe-area-inset-left,0px));top:10px;max-width:38%}
 #card0{left:max(10px,env(safe-area-inset-left,0px));bottom:12px}
-#clock{position:absolute;z-index:4;right:max(10px,env(safe-area-inset-right,0px));top:10px}
+.hud{position:absolute;z-index:4;right:max(10px,env(safe-area-inset-right,0px));top:10px;display:flex;align-items:center;gap:6px}
 .clock{border:4px solid var(--ink);border-radius:999px;background:var(--paper);padding:2px 12px;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
 .clock.hurry{background:var(--pink);animation:pulse .5s ease-in-out infinite alternate}
-.tools{position:absolute;z-index:4;right:max(10px,env(safe-area-inset-right,0px));bottom:12px;display:flex;gap:6px}
+.tools{display:flex;gap:5px}
+.tools .icon-btn{width:36px;height:36px;border-radius:11px}
+.tools .icon-btn svg{width:19px;height:19px}
 .icon-btn{width:40px;height:40px;border:3px solid var(--ink);border-radius:12px;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:0}
 .icon-btn svg{width:22px;height:22px}
 #exitBtn{display:none}
@@ -189,7 +191,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .duo #card1{transform:rotate(180deg);left:auto;right:max(10px,env(safe-area-inset-right,0px));top:10px}
 .duo .mid{top:39cqh;padding-right:96px}
 .duo #rail{display:flex;position:absolute;z-index:4;left:calc(100% - 50px);top:50%;transform:translate(-50%,-50%) rotate(90deg);align-items:center;gap:12px}
-#rail .side{flex-direction:row;gap:6px}
+#rail .side{flex-direction:row;gap:6px;white-space:nowrap}
 #rail .tile{width:48px;height:48px;font-size:28px;border-radius:12px;box-shadow:0 4px 0 var(--ink)}
 
 /* ---------- panels (keyboard) ---------- */
@@ -319,7 +321,7 @@ button.chip{cursor:pointer;color:var(--ink)}
       <div class="sun"></div><div class="cloud"></div>
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
-      <div class="clock" id="clock">2:00</div>
+      <div class="hud" id="hud"><div class="clock" id="clock">2:00</div></div>
       <div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
@@ -333,7 +335,7 @@ button.chip{cursor:pointer;color:var(--ink)}
       </div>
       <div class="char" id="char0"></div>
       <div class="card" id="card0"><div class="nm" id="name0"></div><div class="hearts" id="hearts0"></div></div>
-      <div class="tools">
+      <div class="tools" id="tools">
         <button class="icon-btn tog" data-tog="sfx" type="button"></button>
         <button class="icon-btn tog" data-tog="music" type="button"></button>
         <button class="icon-btn" id="exitBtn" type="button" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/></svg></button>
@@ -822,7 +824,9 @@ document.querySelectorAll('.diff').forEach(b => b.onclick = () => { diff = b.dat
 $('goAI').onclick = () => { sfx('pick'); newGame('ai'); };
 $('goDuo').onclick = () => { sfx('pick'); newGame('duo'); };
 $('goOnline').onclick = () => { sfx('pick'); createRoom(); };
-function goHome() { leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; }
+function goHome() {
+  document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
+  leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; }
 
 /* ---------- tutorial ---------- */
 let afterTut = null;
@@ -860,6 +864,7 @@ function newGame(mode) {
   stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
+  (isDuo() ? $('rail') : $('hud')).insertBefore($('tools'), isDuo() ? null : $('clock'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
   $('panel1').hidden = !isDuo();
   $('char1').innerHTML = RAB_FRONT + RAB_BACK; $('char0').innerHTML = CAPY;
