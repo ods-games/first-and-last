@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106220336';
+  var BUILD = '20261106220640';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -28,9 +28,11 @@ body{margin:0;font:14px system-ui,sans-serif}
       var tried = null; try { tried = sessionStorage.getItem('fl-upd'); } catch (e) { }
       if (tried === v) return;
       try { sessionStorage.setItem('fl-upd', v); } catch (e) { }
-      fetch(location.pathname, { cache: 'reload' }).then(function () { location.reload(); }, function () { location.reload(); });
+      /* open the page under a new address so neither the phone nor GitHub's servers can hand back the old copy */
+      location.replace(location.pathname + '?v=' + encodeURIComponent(v) + location.hash);
     }).catch(function () { });
   }
+  try { if (/[?&]v=/.test(location.search) && !/[?&]r=/.test(location.search)) history.replaceState(null, '', location.pathname + location.hash); } catch (e) { }
   check();
   document.addEventListener('visibilitychange', function () { if (!document.hidden) check(); });
 })();
