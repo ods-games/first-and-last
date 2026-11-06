@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107013152';
+  var BUILD = '20261107014138';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1372,7 +1372,6 @@ function finish(winner, byTime) {
     const show = () => {
       sheet(`<div class="res-head"><div class="tile tS">${G.start.toUpperCase()}</div><h2>${esc(title)}</h2><div class="tile tE">${G.end.toUpperCase()}</div></div>${byTime ? `<p class="res-time">${t('timeUp')}</p>` : ''}
       <div class="res-cols">${col(0)}<div class="rcolon">:</div>${col(1)}</div>
-      <p class="res-tap"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg>${esc(t('tapShort'))}</p>
       ${isOnline() ? '<p id="rematchNote" style="font-size:15px"></p>' : ''}<div class="btns"><button class="go alt" type="button" id="resHome">${t('quit')}</button><button class="go" type="button" id="resAgain">${t('again')}</button></div>`);
       $('sheet').querySelectorAll('[data-say]').forEach(b => b.onclick = () => { if (!soundOn) toggleSfx(); sayWord(b.dataset.say); });
       $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else newGame(G.mode); };
