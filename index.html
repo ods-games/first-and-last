@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106170234';
+  var BUILD = '20261106170420';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -528,6 +528,8 @@ function ac() {
       AC = new (window.AudioContext || window.webkitAudioContext)();
       SFXBUS = AC.createGain(); SFXBUS.gain.value = 1; SFXBUS.connect(AC.destination);
       MUSBUS = AC.createGain(); MUSBUS.gain.value = .07; MUSBUS.connect(AC.destination);
+      /* the first tap only asks the audio engine to wake up; it finishes a moment later, so start the music then */
+      AC.addEventListener('statechange', () => { if (AC.state === 'running' && MUS.want && !MUS.playing) startMusic(); });
     }
     if (AC.state !== 'running') { const r = AC.resume(); if (r && r.catch) r.catch(() => { }); }
   } catch (e) { return null; }
