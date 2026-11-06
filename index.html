@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107014138';
+  var BUILD = '20261107015114';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -227,14 +227,21 @@ button.chip{cursor:pointer;color:var(--ink)}
 .typed:empty::before{content:attr(data-ph);font-family:var(--korean);font-size:16px;letter-spacing:0;color:#8A7466}
 .typed.bad{animation:shake .35s linear;border-color:var(--red)}
 .act{height:46px;border:4px solid var(--ink);border-radius:14px;background:var(--pink);box-shadow:0 4px 0 var(--ink);padding:0 12px;font-family:var(--korean);font-size:18px;white-space:nowrap}
-.act.hint{background:var(--paper);font-size:15px}
+.act.hint{background:var(--yellow);font-size:15px}
+.act.hint[data-cancel]{background:#D9CCFF}
+.act.del{background:var(--mint);padding:0 10px;display:flex;align-items:center}
 .act:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 .act:disabled{opacity:.4;box-shadow:none}
 .kb{display:flex;flex-direction:column;gap:6px}
 .kb .r{display:flex;justify-content:center;gap:4px}
-.key{flex:1;max-width:40px;height:42px;padding:0;border:3px solid var(--ink);border-radius:10px;background:var(--paper);box-shadow:0 3px 0 var(--ink);font-size:17px;font-weight:600}
+.kb2{display:flex;gap:4px;justify-content:center}
+.kbl{flex:1;min-width:0;max-width:380px;display:flex;flex-direction:column;gap:6px}
+.key.ent{flex:none;width:64px;max-width:none;height:auto;background:var(--pink);font-family:var(--korean);font-size:16px}
+.key.case{flex:.75;max-width:34px;font-size:13px;background:var(--sky);font-family:var(--display)}
+.key.case.on{background:var(--water)}
+.kb.lc .key[data-k]:not(.ent){font-size:24px;padding-bottom:3px}
+.key{flex:1;max-width:40px;height:42px;padding:0;border:3px solid var(--ink);border-radius:10px;background:var(--paper);box-shadow:0 3px 0 var(--ink);font-size:19px;font-weight:600}
 .key.wide{max-width:60px;flex:1.5;font-size:15px}
-.key.case{font-size:15px;font-family:var(--display)}
 .key:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
 .key:disabled{opacity:.3;box-shadow:none}
 .panel.pick .key:not(:disabled){animation:rainbow 1.6s linear infinite,twinkle .8s ease-in-out infinite alternate;animation-delay:calc(var(--i) * -90ms),calc(var(--i) * -60ms)}
@@ -281,7 +288,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .rs,.rcolon{font-size:44px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
 .rcolon{margin-top:22px}
 .rw{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:6px}
-.rw .chip{white-space:nowrap}
+.rw .chip{white-space:nowrap;font-size:19px;padding:3px 10px}
 p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-family:var(--korean);font-size:13px;color:var(--soft);margin:12px 0 0}
 .res-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .res-top .tile{width:38px;height:38px;font-size:22px;border-width:3px;border-radius:10px;box-shadow:0 3px 0 var(--ink)}
@@ -845,6 +852,7 @@ $('homeCast').innerHTML = `<div class="hc" id="hc0">${CAPY}</div><div class="vs"
 showSvg($('hc0'), 'capy', 'front'); showSvg($('hc1'), 'rfront', 'happy');
 $('langBtn').onclick = () => { lang = lang === 'ko' ? 'en' : 'ko'; store('fl-lang', lang); applyLang(); };
 const ICON = {
+  del: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-6-7z"/><path d="M12 9.5l5 5M17 9.5l-5 5"/></svg>',
   sfxOn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>',
   sfxOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>',
   musOn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17.5V5.5l10-2v12"/><circle cx="6.5" cy="17.5" r="2.5" fill="currentColor"/><circle cx="16.5" cy="15.5" r="2.5" fill="currentColor"/></svg>',
@@ -997,6 +1005,16 @@ function panelMode(p) {
   if (G.phase === 'play') { if (!isDuo()) return p === 0 ? 'type' : 'off'; return G.active === p ? 'type' : (G.active === null ? 'buzz' : 'wait'); }
   return 'off';
 }
+function kbHTML(mode, allowed) {
+  let ki = 0;
+  const key = c => `<button class="key" type="button" style="--i:${ki++}" data-k="${c}" ${allowed && !allowed.has(c.toLowerCase()) ? 'disabled' : ''}>${mode === 'pick' ? c : cs(c)}</button>`;
+  const row = r => [...r].map(key).join('');
+  if (mode === 'pick') return `<div class="kb">${ROWS.map(r => `<div class="r">${row(r)}</div>`).join('')}</div>`;
+  /* typing: one tall Enter key on the right of the bottom two rows; a small Aa key before Z */
+  return `<div class="kb${lowerCase ? ' lc' : ''}"><div class="r">${row(ROWS[0])}</div>
+    <div class="kb2"><div class="kbl"><div class="r">${row(ROWS[1])}</div><div class="r"><button class="key case${lowerCase ? ' on' : ''}" type="button" data-case="1" aria-label="Aa">Aa</button>${row(ROWS[2])}</div></div>
+    <button class="key ent" type="button" data-k="ENT">${esc(t('enter'))}</button></div></div>`;
+}
 function renderPanels() {
   [0, 1].forEach(p => {
     const el = $('panel' + p); if (!isDuo() && p === 1) return;
@@ -1006,10 +1024,9 @@ function renderPanels() {
     const hintBtn = G.mode === 'ai' ? `<button class="act hint" type="button" data-hint="1" ${G.hintUsed || G.phase !== 'play' ? 'disabled' : ''}>${t('hint')}</button>` : '';
     const who = G.phase === 'pick' ? G.picker : G.active;
     const buzzLabel = locked ? t('frozen', { n: G.lockLeft[p] }) : mode === 'buzz' ? t('buzz') : (who === 0 || who === 1) ? t('waiting', { name: nameOf(who) }) : '...';
-    let ki = 0;
-    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(t('ph'))}">${cs(G.input[p])}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act" type="button" data-go="1">${t('enter')}</button></div>
+    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(t('ph'))}">${cs(G.input[p])}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act del" type="button" data-k="DEL" aria-label="Delete">${ICON.del}</button></div>
       <div class="tbar"><i id="tbar${p}"></i></div>
-      <div class="kb">${ROWS.map((r, ri) => `<div class="r">${ri === 2 && mode !== 'pick' ? `<button class="key wide case" type="button" data-case="1" aria-label="Aa">${lowerCase ? 'aA' : 'Aa'}</button>` : ''}${[...r].map(c => `<button class="key" type="button" style="--i:${ki++}" data-k="${c}" ${allowed && !allowed.has(c.toLowerCase()) ? 'disabled' : ''}>${mode === 'pick' ? c : cs(c)}</button>`).join('')}${ri === 1 && mode !== 'pick' ? `<button class="key wide" type="button" data-k="DEL" aria-label="Delete">⌫</button>` : ''}${ri === 2 && mode !== 'pick' ? `<button class="key wide" type="button" data-k="ENT" aria-label="Enter">⏎</button>` : ''}</div>`).join('')}</div>
+      ${kbHTML(mode, allowed)}
       <button class="buzzer" type="button" data-buzz="1" ${mode !== 'buzz' || locked ? 'disabled' : ''}>${esc(buzzLabel)}</button>
       ${locked && !isDuo() ? `<div class="frost"><span>${esc(t('frozenTop'))}<b class="lockn">${esc(t('frozenN', { n: G.lockLeft[p] }))}</b></span></div>` : ''}`;
     el.onpointerdown = e => { const b = e.target.closest('button'); if (!b || b.disabled) return; e.preventDefault(); onPanel(p, b); };
@@ -1365,7 +1382,7 @@ function finish(winner, byTime) {
   if (winner === null) title = t('draw');
   else if (!isDuo()) title = winner === 0 ? t('winYou') : t('loseYou');
   else title = t('winName', { name: nameOf(winner) });
-  const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<button type="button" class="chip p${p}" data-say="${x[0]}">${cs(x[0])} <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg></button>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
+  const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<button type="button" class="chip p${p}" data-say="${x[0]}">${cs(x[0])} <svg viewBox="0 0 16 16" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg></button>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
   setTimeout(() => {
     if (tok !== G.token) return;
     const col = q => `<div class="rc"><b>${esc(nameOf(q))}</b><div class="rs">${G.scores[q]}</div><div class="rw">${list(q)}</div></div>`;
