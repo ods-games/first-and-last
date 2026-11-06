@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107003004';
+  var BUILD = '20261107005614';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -179,7 +179,11 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 .msg small{display:block;font-size:13px;color:var(--soft)}
 .count{font-size:min(84px,14cqh);font-weight:700;line-height:1;color:var(--ink);-webkit-text-stroke:0;text-shadow:3px 3px 0 var(--paper),-3px -3px 0 var(--paper),3px -3px 0 var(--paper),-3px 3px 0 var(--paper);animation:countPop .9s ease-out}
 .count.low{color:var(--red)}
-.words{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.words{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;padding-top:6px}
+.brow{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;width:100%}
+.brow .chip{font-size:17px;padding:3px 10px;white-space:nowrap}
+.bslot{width:58px;height:31px;border:2.5px dotted var(--ink);border-radius:10px;opacity:.35;box-sizing:border-box;flex:none}
+.duo .brow.p1{transform:rotate(180deg)}
 .chip{border:3px solid var(--ink);border-radius:10px;padding:1px 8px;font-size:15px;font-weight:600;background:var(--paper);animation:pop .35s ease-out}
 .chip.p0{background:var(--yellow)}
 button.chip{cursor:pointer;color:var(--ink)}
@@ -267,6 +271,9 @@ button.chip{cursor:pointer;color:var(--ink)}
 .btns .go{flex:1;font-size:19px}
 .btns .go:disabled{visibility:hidden}
 .res-words{display:flex;flex-direction:column;gap:8px}
+.res-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.res-top .tile{width:38px;height:38px;font-size:22px;border-width:3px;border-radius:10px;box-shadow:0 3px 0 var(--ink)}
+.res-tap{margin-left:auto;font-family:var(--korean);font-size:13px;color:var(--soft);display:flex;align-items:center;gap:4px}
 .res-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .res-row b{font-family:var(--korean);font-weight:400;font-size:16px;min-width:70px}
 .linkbox{border:3px dashed var(--ink);border-radius:12px;background:var(--paper);padding:8px 10px;font-size:14px;word-break:break-all;user-select:text;-webkit-user-select:text;text-align:center}
@@ -448,8 +455,8 @@ const STR = {
     frozen: '{n}초 후에 다시 할 수 있어요', frozenTop: '다시 하기까지', frozenN: '{n}초',
     buzz: '도전!', cancel: '취소', waiting: '{name} 입력 중...', pass: '{name} 차례예요! 10초 안에 입력', timeout: '시간이 지났어요',
     thinking: '생각 중...',
-    winYou: '승리!', loseYou: '아쉬워요', draw: '무승부', winName: '{name} 승리!', timeUp: '시간 종료',
-    again: '다시 하기', hintLabel: '힌트', hintOut: '힌트가 나왔어요!', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '홈으로', quit: '그만하기', none: '없음', ok: '확인',
+    winYou: '승리!', loseYou: '패배', draw: '무승부', winName: '{name} 승리!', timeUp: '시간 종료',
+    again: '다시 하기', hintLabel: '힌트', hintOut: '힌트가 나왔어요!', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', tapShort: '눌러서 듣기', home: '홈으로', quit: '그만하기', none: '없음', ok: '확인',
     tut1: '두 사람이 알파벳을 하나씩 고르면, 룰렛이 시작 글자와 끝 글자를 정해요',
     tut2: '조건에 맞는 영어 단어를 3번 먼저 쓰면 승리! 상대가 쓴 단어는 못 써요',
     tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(STARTING), 과거형(STARTED) 등은 안 돼요. 제한 시간은 3분이에요',
@@ -483,8 +490,8 @@ const STR = {
     frozen: 'Try again in {n}s', frozenTop: 'Try again in', frozenN: '{n}s',
     buzz: 'I got it!', cancel: 'Cancel', waiting: '{name} is typing...', pass: '{name}, your turn! 10 seconds', timeout: 'Time ran out',
     thinking: 'Thinking...',
-    winYou: 'You win!', loseYou: 'So close!', draw: 'Draw', winName: '{name} wins!', timeUp: 'Time up',
-    again: 'Play again', hintLabel: 'Hint', hintOut: 'A hint appeared!', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', home: 'Home', quit: 'Quit', none: 'none', ok: 'OK',
+    winYou: 'You win!', loseYou: 'You lose', draw: 'Draw', winName: '{name} wins!', timeUp: 'Time up',
+    again: 'Play again', hintLabel: 'Hint', hintOut: 'A hint appeared!', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', tapShort: 'Tap to hear', home: 'Home', quit: 'Quit', none: 'none', ok: 'OK',
     tut1: 'Each player picks a letter. The roulette decides which one starts the word and which one ends it',
     tut2: 'Be the first to write 3 words that fit! You can’t use a word your opponent already used',
     tut3: 'Words need 3+ letters, base forms only. No plurals (CATS), -ing forms (STARTING) or past tense (STARTED). Each game lasts 3 minutes',
@@ -967,8 +974,11 @@ function toggleCase() {
   sfx('key'); renderPanels(); refreshWords();
 }
 function refreshWords() {
-  const box = $('center').querySelector('.words');
-  if (box) box.innerHTML = G.order.map(([x, q]) => `<span class="chip p${q}">${cs(x)}</span>`).join('');
+  const box = $('center').querySelector('.words'); if (!box) return;
+  /* two rows of three: the other player's words on top (near them), mine below; empty boxes show what's left */
+  const row = q => { const ws = G.order.filter(x => x[1] === q).map(x => `<span class="chip p${q}">${cs(x[0])}</span>`);
+    while (ws.length < 3) ws.push('<span class="bslot"></span>'); return `<div class="brow p${q}">${ws.slice(0, 3).join('')}</div>`; };
+  box.innerHTML = row(1) + row(0);
 }
 function panelMode(p) {
   if (G.phase === 'pick') return G.picker === p ? 'pick' : (isDuo() ? 'wait' : 'off');
@@ -1091,7 +1101,11 @@ function roulette(forced) {
 }
 function startPlay() {
   G.phase = 'play'; G.input = ['', ''];
-  setCenter(`${isDuo() ? '' : `<div class="msg">${esc(t('startEnd', { S: G.start.toUpperCase(), E: G.end.toUpperCase() }))}<small>${esc(t('fight'))}</small></div>`}<div class="words"></div>`);
+  /* the rule line only shows for someone's first few games; after that the middle is just the word board */
+  let plays = 0; try { plays = +localStorage.getItem('fl-plays') || 0; localStorage.setItem('fl-plays', plays + 1); } catch (e) { }
+  const intro = !isDuo() && plays < 3;
+  setCenter(`${intro ? `<div class="msg">${esc(t('startEnd', { S: G.start.toUpperCase(), E: G.end.toUpperCase() }))}<small>${esc(t('fight'))}</small></div>` : ''}<div class="words"></div>`);
+  refreshWords();
   setFace(0, 'idle'); setFace(1, 'idle'); renderPanels(); startClock(); scheduleAI(); startIdle(); sfx('go');
 }
 /* while waiting, characters now and then glance back or hop */
@@ -1347,12 +1361,11 @@ function finish(winner, byTime) {
     if (tok !== G.token) return;
     $('sheet').innerHTML = `<h2>${esc(title)}</h2>${byTime ? `<p>${t('timeUp')}</p>` : ''}
       <div class="score">${G.scores[0]} : ${G.scores[1]}</div>
+      <div class="res-top"><div class="tile tS">${G.start.toUpperCase()}</div><div class="tile tE">${G.end.toUpperCase()}</div><span class="res-tap"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg>${esc(t('tapShort'))}</span></div>
       <div class="res-words"><div class="res-row"><b>${esc(nameOf(0))}</b>${list(0)}</div><div class="res-row"><b>${esc(nameOf(1))}</b>${list(1)}</div></div>
-      <p style="font-size:14px">${esc(t('tapToHear'))}</p>
-      <p style="font-size:15px">${esc(t('startEnd', { S: G.start.toUpperCase(), E: G.end.toUpperCase() }))}</p>
       ${isOnline() ? '<p id="rematchNote" style="font-size:15px"></p>' : ''}<div class="btns"><button class="go alt" type="button" id="resHome">${t('home')}</button><button class="go" type="button" id="resAgain">${t('again')}</button></div>`;
     $('ov').hidden = false;
-    $('sheet').querySelectorAll('[data-say]').forEach(b => b.onclick = () => sayWord(b.dataset.say));
+    $('sheet').querySelectorAll('[data-say]').forEach(b => b.onclick = () => { if (!soundOn) toggleSfx(); sayWord(b.dataset.say); });
     $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else newGame(G.mode); };
     $('resHome').onclick = () => goHome();
   }, 1200);
