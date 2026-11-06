@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106213431';
+  var BUILD = '20261106213644';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -279,7 +279,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 </style>
 
-<style>html,body{background:#D6EEFF}</style>
+<style>html,body{background:#D6EEFF}#app{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);bottom:0;height:auto;margin:0 auto}</style>
 </head>
 <body>
 <div id="app">
