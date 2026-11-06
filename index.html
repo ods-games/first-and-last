@@ -17,6 +17,19 @@
 body{margin:0;font:14px system-ui,sans-serif}
 [hidden]{display:none!important}
 </style>
+<script>
+(function () {
+  var BUILD = '20261106165849';
+  function check() {
+    fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
+      v = (v || '').trim();
+      if (v && v !== BUILD) fetch(location.pathname, { cache: 'reload' }).then(function () { location.reload(); }, function () { location.reload(); });
+    }).catch(function () { });
+  }
+  check();
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) check(); });
+})();
+</script>
 <title>First&amp;Last</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
