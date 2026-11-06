@@ -37,24 +37,49 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 #app{height:100%;max-width:480px;margin:0 auto;display:flex;flex-direction:column;background:var(--sky);position:relative;overflow:hidden;user-select:none;-webkit-user-select:none}
 .screen{flex:1;display:flex;flex-direction:column;min-height:0}
 
-/* ---------- home ---------- */
-#home{padding-block:20px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));gap:16px;overflow-y:auto;background:var(--sky)}
-.home-top{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-.pill{border:3px solid var(--ink);border-radius:999px;background:var(--paper);padding:4px 12px;font-family:var(--korean);font-size:15px}
-.logo{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:4px;flex-wrap:wrap}
-.logo .tile{width:56px;height:56px;font-size:36px}
-.logo .rest{font-size:34px;font-weight:700;letter-spacing:.5px}
-.tagline{text-align:center;font-family:var(--korean);font-size:17px;margin-top:-6px;text-wrap:balance}
-.home-cast{display:flex;justify-content:center;align-items:flex-end;gap:10px;height:140px}
-.home-cast svg{height:100%;width:auto}
-.modes{display:flex;flex-direction:column;gap:10px}
-.mode{border:4px solid var(--ink);border-radius:20px;background:var(--cream);padding:10px 10px 10px 14px;display:flex;flex-direction:column;gap:10px}
-.mrow{display:flex;align-items:center;gap:10px}
-.mname{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:none;border:none;padding:4px 0;text-align:left;font-family:var(--korean);font-size:22px}
-.mname small{font-size:14px;color:var(--soft)}
-.mname svg{width:18px;height:18px;flex:none;transition:transform .2s}
-.mname[aria-expanded="true"] svg{transform:rotate(180deg)}
-.mdesc{display:flex;flex-direction:column;gap:10px;font-family:var(--korean);font-size:15px;color:var(--soft);line-height:1.4}
+/* ---------- home: title screen. Sky on top, a grass field below that the cast stands on; modes sit in the field ---------- */
+#home{position:relative;overflow-y:auto;overflow-x:hidden;background:var(--sky);padding:0}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.deco{position:absolute;inset:0;pointer-events:none;z-index:0}
+.deco .cl{position:absolute;background:var(--paper);border-radius:999px}
+.deco .ft{position:absolute;width:34px;height:34px;border:3px solid var(--ink);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;opacity:.55;box-shadow:0 3px 0 var(--ink);animation:bob 4s ease-in-out infinite}
+#home > *:not(.deco){position:relative;z-index:1}
+.home-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-block:12px}
+.home-top .rt{display:flex;gap:8px}
+.home-top .icon-btn{border-radius:50%;width:42px;height:42px;box-shadow:0 3px 0 var(--ink)}
+.pill{border:3px solid var(--ink);border-radius:999px;background:var(--paper);padding:6px 14px;font-family:var(--korean);font-size:15px;box-shadow:0 3px 0 var(--ink)}
+.title{margin:6px 0 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.t-row{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:2px}
+.t-row .t-tile{width:clamp(56px,17vw,76px);height:clamp(56px,17vw,76px);font-size:clamp(36px,11vw,50px);border-width:5px;border-radius:18px;box-shadow:0 6px 0 var(--ink);animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
+.t-row .t-tile.f{background:var(--mint);transform:rotate(-7deg)}
+.t-row .t-tile.l{background:var(--blush);transform:rotate(6deg);animation-delay:.12s;margin-left:6px}
+.t-word{font-size:clamp(34px,10.5vw,50px);font-weight:700;color:var(--paper);letter-spacing:.5px;line-height:1;
+  text-shadow:3px 0 0 var(--ink),-3px 0 0 var(--ink),0 3px 0 var(--ink),0 -3px 0 var(--ink),2px 2px 0 var(--ink),-2px 2px 0 var(--ink),2px -2px 0 var(--ink),-2px -2px 0 var(--ink),0 7px 0 var(--ink)}
+.t-amp{color:var(--yellow)}
+.ribbon{font-family:var(--korean);font-size:15px;background:var(--yellow);border:3px solid var(--ink);border-radius:999px;padding:4px 16px;box-shadow:0 3px 0 var(--ink);text-align:center;text-wrap:balance;max-width:92%}
+.stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;height:clamp(110px,17vh,145px);margin-top:14px;margin-bottom:-22px}
+.stage .hc{height:100%;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%}
+.stage .hc:last-child{animation-delay:-1.3s}
+.stage svg{height:100%;width:auto;overflow:visible}
+.vs{align-self:center;margin-bottom:10px;width:46px;height:46px;flex:none;border-radius:50%;background:var(--pink);border:4px solid var(--ink);box-shadow:0 4px 0 var(--ink);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--paper);
+  text-shadow:2px 0 0 var(--ink),-2px 0 0 var(--ink),0 2px 0 var(--ink),0 -2px 0 var(--ink);transform:rotate(-8deg)}
+.field{flex:1;background:var(--grass);border-top:5px solid var(--ink);border-radius:50% 50% 0 0/38px 38px 0 0;padding-top:40px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
+.mcard{border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:var(--c);transition:transform .08s}
+.mcard:has(.mmain:active){transform:translateY(4px);box-shadow:0 2px 0 var(--ink)}
+.mrow{display:flex;align-items:center}
+.mmain{flex:1;min-width:0;display:flex;align-items:center;gap:12px;background:none;border:0;padding:12px 8px 12px 12px;text-align:left}
+.micon{width:52px;height:52px;flex:none;border-radius:16px;border:3px solid var(--ink);background:var(--paper);display:flex;align-items:center;justify-content:center}
+.micon svg{width:32px;height:32px}
+.mtext{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mtext b{font-family:var(--korean);font-weight:400;font-size:23px;line-height:1.1}
+.mtext small{font-family:var(--korean);font-size:14px;color:var(--ink);opacity:.75}
+.mgo{width:40px;height:40px;flex:none;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.mgo svg{width:16px;height:16px}
+.minfo{flex:none;width:44px;height:44px;margin-right:6px;background:none;border:0;display:flex;align-items:center;justify-content:center;padding:0}
+.minfo span{width:26px;height:26px;border-radius:50%;border:3px solid var(--ink);background:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;font-family:var(--display)}
+.minfo[aria-expanded="true"] span{background:var(--ink);color:var(--paper)}
+.badge{white-space:nowrap;display:inline-block;font-family:var(--korean);font-size:12px;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:0 7px;margin-left:6px;vertical-align:3px}
+.mdesc{display:flex;flex-direction:column;gap:10px;font-family:var(--korean);font-size:15px;color:var(--ink);line-height:1.45;margin:0 12px 12px;padding:10px 12px;background:var(--paper);border:3px solid var(--ink);border-radius:14px}
 .diffs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .diff{border:3px solid var(--ink);border-radius:12px;background:var(--paper);padding:8px 0;font-family:var(--korean);font-size:15px;color:var(--ink)}
 .diff[aria-pressed="true"]{background:var(--yellow)}
@@ -62,7 +87,9 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .go:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 .go.alt{background:var(--mint)}
 .go.soon{background:var(--paper)}
-
+.copy{text-align:center;font-size:12px;color:var(--ink);opacity:.6;margin-top:auto}
+@keyframes bob{50%{transform:translateY(-8px) rotate(var(--r,0deg))}}
+@keyframes tileIn{from{transform:scale(.2) rotate(-40deg);opacity:0}}
 /* ---------- game ---------- */
 .tile{display:flex;align-items:center;justify-content:center;border:4px solid var(--ink);border-radius:16px;box-shadow:0 5px 0 var(--ink);font-weight:700;background:var(--paper);box-sizing:border-box}
 #arena{flex:1;min-height:0;position:relative;overflow:hidden;container-type:size;background:var(--sky)}
@@ -215,22 +242,24 @@ button.chip{cursor:pointer;color:var(--ink)}
 <body>
 <div id="app">
   <section id="home" class="screen">
-    <div class="home-top">
-      <button class="pill" id="fsBtn" type="button" hidden></button>
+    <div class="deco" aria-hidden="true"><div class="cl" style="left:-20px;top:120px;width:120px;height:30px"></div><div class="cl" style="right:-30px;top:190px;width:150px;height:34px"></div><div class="ft" style="left:3%;top:122px;background:#FFE07A;--r:-10deg;transform:rotate(-10deg);animation-delay:0s">A</div><div class="ft" style="left:88%;top:150px;background:#BDEBD8;--r:9deg;transform:rotate(9deg);animation-delay:-1s">Q</div></div>
+    <div class="home-top gut">
       <button class="pill" id="langBtn" type="button"></button>
-      <button class="pill tog" data-tog="sfx" type="button"></button>
-      <button class="pill tog" data-tog="music" type="button"></button>
-      <button class="pill" id="rulesBtn" type="button" data-t="rules"></button>
+      <div class="rt">
+        <button class="icon-btn" id="fsBtn" type="button" hidden aria-label="Full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+        <button class="icon-btn tog" data-tog="sfx" type="button"></button>
+        <button class="icon-btn tog" data-tog="music" type="button"></button>
+        <button class="icon-btn" id="rulesBtn" type="button" aria-label="Rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.4a2.8 2.8 0 0 1 5.4 1c0 2-2.7 2.3-2.7 4"/><circle cx="12" cy="17.6" r=".9" fill="currentColor"/></svg></button>
+      </div>
     </div>
-    <div class="logo" aria-label="First&amp;Last">
-      <div class="tile" style="background:var(--mint)">F</div><span class="rest">irst&amp;</span>
-      <div class="tile" style="background:var(--blush)">L</div><span class="rest">ast</span>
-    </div>
-    <div class="tagline" data-t="tagline"></div>
-    <div class="home-cast" id="homeCast"></div>
-    <div class="modes">
-      <div class="mode">
-        <div class="mrow"><button class="mname" type="button" aria-expanded="false" aria-controls="dSolo" data-x="dSolo"><span data-t="solo"></span><small id="diffNow"></small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></button><button class="go" id="goAI" type="button" data-t="start"></button></div>
+    <h1 class="title gut" aria-label="First&amp;Last">
+      <span class="t-row" aria-hidden="true"><span class="tile t-tile f">F</span><span class="t-word">irst<span class="t-amp">&amp;</span></span><span class="tile t-tile l">L</span><span class="t-word">ast</span></span>
+      <span class="ribbon" data-t="tagline"></span>
+    </h1>
+    <div class="stage" id="homeCast"></div>
+    <div class="field gut">
+      <div class="mcard" style="--c:var(--pink)">
+        <div class="mrow"><button class="mmain" id="goAI" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="11" r="5.5" fill="#FFB3C7"/><path d="M6.5 27c1.2-5.6 5-8.5 9.5-8.5s8.3 2.9 9.5 8.5" fill="#FFB3C7"/></svg></span><span class="mtext"><b data-t="solo"></b><small><span data-t="soloSub"></span> · <span id="diffNow"></span></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 3l8 5-8 5z" fill="#FFFFFF"/></svg></span></button><button class="minfo" type="button" aria-expanded="false" aria-controls="dSolo" data-x="dSolo" aria-label="Info"><span>i</span></button></div>
         <div class="mdesc" id="dSolo" hidden><span data-t="soloNote"></span>
           <div class="diffs" id="diffs">
             <button class="diff" type="button" data-d="easy" data-t="easy"></button>
@@ -238,14 +267,15 @@ button.chip{cursor:pointer;color:var(--ink)}
             <button class="diff" type="button" data-d="hard" data-t="hard"></button>
           </div><span id="diffNote"></span></div>
       </div>
-      <div class="mode">
-        <div class="mrow"><button class="mname" type="button" aria-expanded="false" aria-controls="dDuo" data-x="dDuo"><span data-t="duo"></span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></button><button class="go alt" id="goDuo" type="button" data-t="start"></button></div>
+      <div class="mcard" style="--c:var(--mint)">
+        <div class="mrow"><button class="mmain" id="goDuo" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="12" r="4.5" fill="#BDEBD8"/><circle cx="21.5" cy="12" r="4.5" fill="#FFE07A"/><path d="M3.5 26c1-4.6 4-7 7.5-7s6.5 2.4 7.5 7" fill="#BDEBD8"/><path d="M14 26c1-4.6 4-7 7.5-7s6.5 2.4 7.5 7" fill="#FFE07A"/></svg></span><span class="mtext"><b data-t="duo"></b><small data-t="duoSub"></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 3l8 5-8 5z" fill="#FFFFFF"/></svg></span></button><button class="minfo" type="button" aria-expanded="false" aria-controls="dDuo" data-x="dDuo" aria-label="Info"><span>i</span></button></div>
         <div class="mdesc" id="dDuo" hidden><span data-t="duoNote"></span></div>
       </div>
-      <div class="mode">
-        <div class="mrow"><button class="mname" type="button" aria-expanded="false" aria-controls="dOn" data-x="dOn"><span data-t="online"></span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></button><button class="go soon" id="goOnline" type="button" data-t="start"></button></div>
+      <div class="mcard" style="--c:#D9CCFF">
+        <div class="mrow"><button class="mmain" id="goOnline" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="#C9E7FF"/><path d="M5 16h22M16 5c3.2 3.2 4.6 7 4.6 11s-1.4 7.8-4.6 11c-3.2-3.2-4.6-7-4.6-11s1.4-7.8 4.6-11z"/></svg></span><span class="mtext"><b><span data-t="online"></span><span class="badge" data-t="soonBadge"></span></b><small data-t="onlineSub"></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 3l8 5-8 5z" fill="#FFFFFF"/></svg></span></button><button class="minfo" type="button" aria-expanded="false" aria-controls="dOn" data-x="dOn" aria-label="Info"><span>i</span></button></div>
         <div class="mdesc" id="dOn" hidden><span data-t="onlineNote"></span></div>
       </div>
+      <div class="copy">© 2026 ods-games</div>
     </div>
   </section>
 
@@ -311,8 +341,8 @@ function baseOf(w) {
 const STR = {
   ko: {
     langBtn: 'English', soundOn: '소리 켬', soundOff: '소리 끔', sfx: '효과음', music: '음악', paused: '일시정지', resume: '계속하기', rules: '규칙', fs: '전체 화면', fsExit: '전체 화면 끄기',
-    tagline: '시작 글자와 끝 글자로 하는 영어 단어 대결',
-    solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드',
+    tagline: '첫 글자와 끝 글자로 겨루는 영어 단어 대결',
+    solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드', soloSub: 'AI 토리와 대결', duoSub: '한 폰으로 둘이서', onlineSub: '친구와 각자 폰으로', soonBadge: '준비 중',
     soloNote: 'AI 토끼 토리와 대결해요. 힌트를 한 번 쓸 수 있어요.',
     duoNote: '한 폰을 가운데 두고 마주 앉아서 해요. 먼저 부저를 누른 사람이 입력해요.',
     onlineNote: '친구에게 링크를 보내서 각자 폰으로 대결해요. 준비 중이에요.',
@@ -340,7 +370,7 @@ const STR = {
   en: {
     langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', sfx: 'Sounds', music: 'Music', paused: 'Paused', resume: 'Resume', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
     tagline: 'An English word duel: first letter meets last letter',
-    solo: 'Solo', duo: 'Duo', online: 'Online',
+    solo: 'Solo', duo: 'Duo', online: 'Online', soloSub: 'Play Tori the AI', duoSub: 'Two players, one phone', onlineSub: 'Each on your own phone', soonBadge: 'Soon',
     soloNote: 'Play against Tori the AI rabbit. You get one hint per game.',
     duoNote: 'Two players face each other over one phone. Whoever buzzes first gets to type.',
     onlineNote: 'Send a friend a link and play on your own phones. Coming soon.',
@@ -651,13 +681,12 @@ function applyLang() {
   $('langBtn').textContent = t('langBtn');
   renderToggles();
   $('diffNote').textContent = t('note_' + diff);
-  $('diffNow').textContent = '· ' + t(diff);
-  $('fsBtn').hidden = !fsOK; $('fsBtn').textContent = (document.fullscreenElement || document.webkitFullscreenElement) ? t('fsExit') : t('fs');
+  $('diffNow').textContent = t(diff);
+  $('fsBtn').hidden = !fsOK;
   document.querySelectorAll('.diff').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === diff ? 'true' : 'false'));
   if (G.mode) { renderNames(); renderPanels(); }
 }
-$('homeCast').innerHTML = `<div id="hc0">${CAPY}</div><div id="hc1">${RAB_FRONT}</div>`;
-document.querySelectorAll('#homeCast > div').forEach(d => d.style.height = '100%');
+$('homeCast').innerHTML = `<div class="hc" id="hc0">${CAPY}</div><div class="vs" aria-hidden="true">VS</div><div class="hc" id="hc1">${RAB_FRONT}</div>`;
 showSvg($('hc0'), 'capy', 'front'); showSvg($('hc1'), 'rfront', 'happy');
 $('langBtn').onclick = () => { lang = lang === 'ko' ? 'en' : 'ko'; store('fl-lang', lang); applyLang(); };
 const ICON = {
@@ -697,9 +726,9 @@ function pauseMenu() {
   $('pHome').onclick = () => goHome();
 }
 $('pauseBtn').onclick = pauseMenu;
-document.querySelectorAll('.mname').forEach(b => b.onclick = () => {
+document.querySelectorAll('.minfo').forEach(b => b.onclick = () => {
   const open = b.getAttribute('aria-expanded') !== 'true';
-  document.querySelectorAll('.mname').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
+  document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
   b.setAttribute('aria-expanded', open ? 'true' : 'false'); $(b.dataset.x).hidden = !open; sfx('key');
 });
 document.querySelectorAll('.diff').forEach(b => b.onclick = () => { diff = b.dataset.d; store('fl-diff', diff); applyLang(); sfx('key'); });
