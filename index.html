@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106230628';
+  var BUILD = '20261106230806';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -144,7 +144,9 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 .tools{display:flex;gap:5px}
 .tools .icon-btn{width:30px;height:30px;border-radius:9px;border-width:2.5px}
 .tools .icon-btn svg{width:16px;height:16px}
-#rail .tools .icon-btn{width:28px;height:28px}
+/* duo: the buttons stand in a column at the right edge, beside the sideways clock */
+.duo #tools{position:absolute;z-index:5;right:8px;top:50%;transform:translateY(-50%);flex-direction:column;gap:6px}
+.duo #tools .icon-btn{width:28px;height:28px}
 .icon-btn{width:40px;height:40px;border:3px solid var(--ink);border-radius:12px;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:0}
 .icon-btn svg{width:22px;height:22px}
 #exitBtn{display:none}
@@ -203,7 +205,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .duo #char1{top:-7cqh;left:42%;height:min(36cqh,230px);transform:translateX(-50%) rotate(180deg)}
 .duo #card1{transform:rotate(180deg);left:auto;right:max(10px,env(safe-area-inset-right,0px));top:10px}
 .duo .mid{top:39cqh;padding-right:96px}
-.duo #rail{display:flex;position:absolute;z-index:4;left:calc(100% - 50px);top:50%;transform:translate(-50%,-50%) rotate(90deg);align-items:center;gap:12px}
+.duo #rail{display:flex;position:absolute;z-index:4;left:calc(100% - 78px);top:50%;transform:translate(-50%,-50%) rotate(90deg);align-items:center;gap:12px}
 #rail .side{flex-direction:row;gap:6px;white-space:nowrap}
 #rail .tile{width:48px;height:48px;font-size:28px;border-radius:12px;box-shadow:0 4px 0 var(--ink)}
 
@@ -918,7 +920,7 @@ function newGame(mode) {
   stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
-  if (isDuo()) $('rail').insertBefore($('tools'), $('clockR').nextSibling); else $('hud').insertBefore($('tools'), $('clock'));
+  if (isDuo()) $('rail').parentNode.insertBefore($('tools'), $('rail').nextSibling); else $('hud').insertBefore($('tools'), $('clock'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
   $('panel1').hidden = !isDuo();
   $('char1').innerHTML = RAB_FRONT + RAB_BACK; $('char0').innerHTML = CAPY;
