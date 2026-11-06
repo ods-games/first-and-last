@@ -19,11 +19,16 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106165849';
+  var BUILD = '20261106165902';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
-      if (v && v !== BUILD) fetch(location.pathname, { cache: 'reload' }).then(function () { location.reload(); }, function () { location.reload(); });
+      if (!v || v === BUILD) return;
+      /* reload at most once per new version, so a slow server can never cause a reload loop */
+      var tried = null; try { tried = sessionStorage.getItem('fl-upd'); } catch (e) { }
+      if (tried === v) return;
+      try { sessionStorage.setItem('fl-upd', v); } catch (e) { }
+      fetch(location.pathname, { cache: 'reload' }).then(function () { location.reload(); }, function () { location.reload(); });
     }).catch(function () { });
   }
   check();
