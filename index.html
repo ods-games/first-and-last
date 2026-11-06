@@ -331,7 +331,7 @@ const STR = {
     buzz: '도전!', cancel: '취소', waiting: '{name} 입력 중...', pass: '{name} 차례예요! 10초 안에 입력', timeout: '시간이 지났어요',
     thinking: '생각 중...',
     winYou: '승리!', loseYou: '아쉬워요', draw: '무승부', winName: '{name} 승리!', timeUp: '시간 종료',
-    again: '다시 하기', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '처음으로', none: '없음', ok: '확인',
+    again: '다시 하기', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '홈으로', none: '없음', ok: '확인',
     tut1: '두 사람이 알파벳을 하나씩 고르면, 룰렛이 시작 글자와 끝 글자를 정해요',
     tut2: '조건에 맞는 영어 단어를 3번 먼저 쓰면 승리! 상대가 쓴 단어는 못 써요',
     tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(STARTING), 과거형(STARTED) 등은 안 돼요. 제한 시간은 3분이에요',
@@ -690,7 +690,6 @@ function pauseMenu() {
   if (!G.mode || G.phase === 'over') return;
   if (isDuo() && G.active !== null) cancelBuzz(G.active);
   $('sheet').innerHTML = `<h2>${esc(t('paused'))}</h2>
-    <div class="pause-row"><button class="tog" data-tog="sfx" type="button"></button><button class="tog" data-tog="music" type="button"></button></div>
     <div class="pause-list"><button class="go" type="button" id="pResume">${t('resume')}</button><button class="go alt" type="button" id="pRules">${t('rules')}</button><button class="go soon" type="button" id="pHome">${t('home')}</button></div>`;
   $('ov').hidden = false; renderToggles();
   $('pResume').onclick = () => { $('ov').hidden = true; };
