@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106203233';
+  var BUILD = '20261106204530';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -130,8 +130,9 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .clock{border:4px solid var(--ink);border-radius:999px;background:var(--paper);padding:2px 12px;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
 .clock.hurry{background:var(--pink);animation:pulse .5s ease-in-out infinite alternate}
 .tools{display:flex;gap:5px}
-.tools .icon-btn{width:36px;height:36px;border-radius:11px}
-.tools .icon-btn svg{width:19px;height:19px}
+.tools .icon-btn{width:30px;height:30px;border-radius:9px;border-width:2.5px}
+.tools .icon-btn svg{width:16px;height:16px}
+#rail .tools .icon-btn{width:28px;height:28px}
 .icon-btn{width:40px;height:40px;border:3px solid var(--ink);border-radius:12px;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:0}
 .icon-btn svg{width:22px;height:22px}
 #exitBtn{display:none}
@@ -864,7 +865,7 @@ function newGame(mode) {
   stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
-  (isDuo() ? $('rail') : $('hud')).insertBefore($('tools'), isDuo() ? null : $('clock'));
+  if (isDuo()) $('rail').insertBefore($('tools'), $('clockR')); else $('hud').insertBefore($('tools'), $('clock'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
   $('panel1').hidden = !isDuo();
   $('char1').innerHTML = RAB_FRONT + RAB_BACK; $('char0').innerHTML = CAPY;
