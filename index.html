@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106213805';
+  var BUILD = '20261106214312';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -265,6 +265,8 @@ button.chip{cursor:pointer;color:var(--ink)}
 .tut-art.lobby{height:110px}
 .tut-art.lobby svg{height:100%;width:auto}
 @keyframes spin{to{transform:rotate(360deg)}}
+.diag-probe{position:fixed;top:env(safe-area-inset-top,0px);bottom:env(safe-area-inset-bottom,0px);left:0;width:1px;pointer-events:none;visibility:hidden}
+#diag{position:fixed;left:6px;right:6px;bottom:6px;z-index:99;max-height:46%;overflow:auto;margin:0;padding:8px;border-radius:10px;background:rgba(30,20,15,.88);color:#fff;font:11px/1.35 ui-monospace,Menlo,monospace;white-space:pre-wrap;user-select:text;-webkit-user-select:text}
 .score{font-size:40px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums}
 
 @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
@@ -317,7 +319,7 @@ button.chip{cursor:pointer;color:var(--ink)}
         <div class="mrow"><button class="mmain" id="goOnline" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="#C9E7FF"/><path d="M5 16h22M16 5c3.2 3.2 4.6 7 4.6 11s-1.4 7.8-4.6 11c-3.2-3.2-4.6-7-4.6-11s1.4-7.8 4.6-11z"/></svg></span><span class="mtext"><b><span data-t="online"></span></b><small data-t="onlineSub"></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 3l8 5-8 5z" fill="#FFFFFF"/></svg></span></button><button class="minfo" type="button" aria-expanded="false" aria-controls="dOn" data-x="dOn" aria-label="Info"><span>i</span></button></div>
         <div class="mdesc" id="dOn" hidden><span data-t="onlineNote"></span></div>
       </div>
-      <div class="copy">© 2026 ods-games</div>
+      <div class="copy" id="copyLine">© 2026 ods-games</div>
     </div>
   </section>
 
@@ -352,6 +354,7 @@ button.chip{cursor:pointer;color:var(--ink)}
     <div class="panel" id="panel0"></div>
   </section>
 
+  <pre id="diag" hidden></pre>
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 
@@ -574,7 +577,8 @@ function wakeAudio() {
       SFXBUS = ctx.createGain(); SFXBUS.gain.value = 1; SFXBUS.connect(ctx.destination);
       MUSBUS = ctx.createGain(); MUSBUS.gain.value = .07; MUSBUS.connect(ctx.destination);
       /* waking up finishes a moment after the tap, so start the music then */
-      ctx.addEventListener('statechange', () => { if (AC === ctx && ctx.state === 'running' && MUS.want && !MUS.playing) startMusic(); });
+      dlog('audio engine created (' + ctx.state + ', ' + ctx.sampleRate + 'Hz)');
+      ctx.addEventListener('statechange', () => { dlog('audio engine -> ' + ctx.state); if (AC === ctx && ctx.state === 'running' && MUS.want && !MUS.playing) startMusic(); });
     }
     if (AC.state !== 'running') { const r = AC.resume(); if (r && r.catch) r.catch(() => { }); }
   } catch (e) { return null; }
@@ -599,15 +603,20 @@ function startKeepAlive() {
     if (keepAlive.paused) { const r = keepAlive.play(); if (r && r.catch) r.catch(() => { }); }
   } catch (e) { }
 }
+/* diagnostics log (shown by tapping the copyright line 5 times) */
+const DLOG = []; const T0 = performance.now();
+function dlog(msg) { DLOG.push(((performance.now() - T0) / 1000).toFixed(2) + 's ' + msg); if (DLOG.length > 40) DLOG.shift(); if (window.renderDiag) renderDiag(); }
 let speechPrimed = false;
 /* iPhones only let a page speak after it has spoken once inside a tap. While speaking, the phone lowers
    other sound for a moment, so this runs when a game starts rather than on the first tap anywhere. */
 function primeSpeech() {
+  if (!speechPrimed) dlog('speech warm-up');
   if (speechPrimed || !soundOn || !('speechSynthesis' in window)) return;
   speechPrimed = true;
   try { if (!enVoice) pickVoice(); const u = new SpeechSynthesisUtterance('hi'); u.lang = 'en-US'; u.volume = 0; u.rate = 2; speechSynthesis.speak(u); } catch (e) { }
 }
-function unlockAudio() {
+function unlockAudio(e) {
+  if (e && e.type) { if (!unlockAudio.seen) dlog('first tap (' + e.type + ')'); unlockAudio.seen = true; }
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
   const a = wakeAudio(); if (!a) return;
   startKeepAlive();
@@ -625,6 +634,7 @@ window.addEventListener('pagehide', releaseAudio);
 /* leaving the app: close the audio engine completely, so the phone's "playing" indicator goes away.
    iPhones often can't wake an engine that was cut off in the background, so the next tap builds a fresh one. */
 function releaseAudio() {
+  dlog('app hidden: audio released');
   stopMusic();
   try { speechSynthesis.cancel(); } catch (e) { }
   if (keepAlive) { try { keepAlive.pause(); } catch (e) { } }
@@ -738,6 +748,7 @@ const MUS = { want: null, playing: null, step: 0, next: 0, id: null, fast: false
 const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
 function setMusic(name) { MUS.want = name; if (!name) return stopMusic(); if (MUS.playing && MUS.playing !== name) stopMusic(); startMusic(); }
 function startMusic() {
+  if (MUS.want && MUS.playing !== MUS.want && AC && AC.state === 'running') dlog('music start: ' + MUS.want);
   if (!musicOn || !MUS.want || document.hidden) return;
   const A = ac(); if (!A || A.state !== 'running') return;
   if (MUS.playing === MUS.want) return;
@@ -1499,6 +1510,32 @@ function friendLeft() {
   if (code.length === 6) setTimeout(() => joinRoom(code), 0);
 })();
 
+(function () {
+  let taps = 0, last = 0;
+  const probe = document.createElement('div'); probe.className = 'diag-probe'; document.body.appendChild(probe);
+  window.renderDiag = function () {
+    const d = $('diag'); if (d.hidden) return;
+    const pr = probe.getBoundingClientRect(), app = $('app').getBoundingClientRect();
+    const sess = navigator.audioSession ? navigator.audioSession.type : 'none';
+    d.textContent = [
+      'FnL diagnostics  (tap the copyright 5x to hide)',
+      'device: ' + navigator.userAgent.replace(/^.*?\(/, '(').slice(0, 90),
+      'standalone: ' + (navigator.standalone === true || matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches),
+      'screen ' + screen.width + 'x' + screen.height + '  inner ' + innerWidth + 'x' + innerHeight + '  dpr ' + devicePixelRatio,
+      'safe top ' + Math.round(pr.top) + '  safe bottom ' + Math.round(innerHeight - pr.bottom),
+      'game box top ' + Math.round(app.top) + ' bottom ' + Math.round(app.bottom) + '  (gap below ' + Math.round(innerHeight - app.bottom) + ')',
+      'audioSession: ' + sess + '  silent-track trick: ' + (navigator.audioSession ? 'off' : 'on'),
+      'audio engine: ' + (AC ? AC.state + ' t=' + AC.currentTime.toFixed(1) : 'none') + '  music: ' + (MUS.playing || '-') + ' (want ' + (MUS.want || '-') + ')',
+      'sound ' + soundOn + '  music ' + musicOn + '  speech warmed ' + speechPrimed,
+      '--- log ---'].concat(DLOG).join('\n');
+  };
+  $('copyLine').addEventListener('click', () => {
+    const n = Date.now(); taps = n - last < 600 ? taps + 1 : 1; last = n;
+    if (taps >= 5) { taps = 0; $('diag').hidden = !$('diag').hidden; renderDiag(); }
+  });
+  setInterval(() => window.renderDiag(), 500);
+  dlog('page loaded');
+})();
 applyLang();
 setMusic('home');
 </script>
