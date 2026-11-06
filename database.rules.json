@@ -1,0 +1,18 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "rooms": {
+      "$code": {
+        ".read": "auth != null",
+        ".write": "auth != null && ((!data.exists() && newData.child('host').val() === auth.uid) || data.child('host').val() === auth.uid || data.child('guest').val() === auth.uid || (!data.child('guest').exists() && newData.child('guest').val() === auth.uid))",
+        ".validate": "$code.matches(/^[A-Z0-9]{6}$/)",
+        "used": {
+          "$word": {
+            ".validate": "!data.exists() && $word.matches(/^[a-z]{3,16}$/)"
+          }
+        }
+      }
+    }
+  }
+}

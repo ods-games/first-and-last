@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106171028';
+  var BUILD = '20261106194154';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -242,6 +242,13 @@ button.chip{cursor:pointer;color:var(--ink)}
 .res-words{display:flex;flex-direction:column;gap:8px}
 .res-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .res-row b{font-family:var(--korean);font-weight:400;font-size:16px;min-width:70px}
+.linkbox{border:3px dashed var(--ink);border-radius:12px;background:var(--paper);padding:8px 10px;font-size:14px;word-break:break-all;user-select:text;-webkit-user-select:text;text-align:center}
+.wait{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:16px!important}
+.wait small{font-size:13px;color:var(--soft)}
+.spin{display:block;margin:0 auto;width:26px;height:26px;border-radius:50%;border:4px solid var(--muted);border-top-color:var(--pink);animation:spin .8s linear infinite}
+.tut-art.lobby{height:110px}
+.tut-art.lobby svg{height:100%;width:auto}
+@keyframes spin{to{transform:rotate(360deg)}}
 .score{font-size:40px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums}
 
 @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
@@ -291,7 +298,7 @@ button.chip{cursor:pointer;color:var(--ink)}
         <div class="mdesc" id="dDuo" hidden><span data-t="duoNote"></span></div>
       </div>
       <div class="mcard" style="--c:#D9CCFF">
-        <div class="mrow"><button class="mmain" id="goOnline" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="#C9E7FF"/><path d="M5 16h22M16 5c3.2 3.2 4.6 7 4.6 11s-1.4 7.8-4.6 11c-3.2-3.2-4.6-7-4.6-11s1.4-7.8 4.6-11z"/></svg></span><span class="mtext"><b><span data-t="online"></span><span class="badge" data-t="soonBadge"></span></b><small data-t="onlineSub"></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 3l8 5-8 5z" fill="#FFFFFF"/></svg></span></button><button class="minfo" type="button" aria-expanded="false" aria-controls="dOn" data-x="dOn" aria-label="Info"><span>i</span></button></div>
+        <div class="mrow"><button class="mmain" id="goOnline" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="#C9E7FF"/><path d="M5 16h22M16 5c3.2 3.2 4.6 7 4.6 11s-1.4 7.8-4.6 11c-3.2-3.2-4.6-7-4.6-11s1.4-7.8 4.6-11z"/></svg></span><span class="mtext"><b><span data-t="online"></span></b><small data-t="onlineSub"></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 3l8 5-8 5z" fill="#FFFFFF"/></svg></span></button><button class="minfo" type="button" aria-expanded="false" aria-controls="dOn" data-x="dOn" aria-label="Info"><span>i</span></button></div>
         <div class="mdesc" id="dOn" hidden><span data-t="onlineNote"></span></div>
       </div>
       <div class="copy">© 2026 ods-games</div>
@@ -364,7 +371,14 @@ const STR = {
     solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드', soloSub: 'AI 토리와 대결', duoSub: '한 폰으로 둘이서', onlineSub: '친구와 각자 폰으로', soonBadge: '준비 중',
     soloNote: 'AI 토끼 토리와 대결해요. 힌트를 한 번 쓸 수 있어요.',
     duoNote: '한 폰을 가운데 두고 마주 앉아서 해요. 먼저 부저를 누른 사람이 입력해요.',
-    onlineNote: '친구에게 링크를 보내서 각자 폰으로 대결해요. 준비 중이에요.',
+    onlineNote: '초대 링크를 카톡이나 문자로 보내면, 친구가 링크를 눌러 바로 들어와요. 각자 폰으로 대결해요.',
+    friend: '친구', connecting: '연결하는 중...', cantConnect: '온라인에 연결할 수 없어요. 인터넷 연결을 확인하거나 ods-games.github.io/first-and-last 에서 열어주세요.',
+    inviteTitle: '친구 초대', inviteText: '이 링크를 친구에게 보내주세요. 친구가 들어오면 바로 시작해요.', copy: '링크 복사', copied: '복사했어요', share: '공유하기',
+    waitingFriend: '친구를 기다리는 중...', expiresIn: '{t} 후 링크가 만료돼요', expired: '링크가 만료됐어요.', newLink: '새 링크 만들기',
+    roomGone: '만료됐거나 없는 초대 링크예요.', roomFull: '이미 다른 사람이 들어간 방이에요.', ownLink: '내가 만든 초대 링크예요. 친구에게 보내주세요.',
+    lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
+    friendLeft: '친구가 나갔어요', friendLeftText: '대결이 끝났어요.', waitRematch: '친구를 기다리는 중...', friendWants: '친구가 한 판 더 하고 싶어해요!',
+    shareText: 'First&Last 영어 단어 대결 한 판 할래?',
     soon: '온라인 모드는 준비 중이에요', soonText: '친구에게 초대 링크를 보내서 각자 폰으로 대결하는 기능이 곧 들어와요.',
     easy: '쉬움', medium: '보통', hard: '어려움', start: '시작',
     note_easy: 'AI가 쉬운 단어를 천천히 써요', note_medium: 'AI가 적당한 속도로 따라와요', note_hard: 'AI가 빠르고 어려운 글자를 골라요',
@@ -392,7 +406,14 @@ const STR = {
     solo: 'Solo', duo: 'Duo', online: 'Online', soloSub: 'Play Tori the AI', duoSub: 'Two players, one phone', onlineSub: 'Each on your own phone', soonBadge: 'Soon',
     soloNote: 'Play against Tori the AI rabbit. You get one hint per game.',
     duoNote: 'Two players face each other over one phone. Whoever buzzes first gets to type.',
-    onlineNote: 'Send a friend a link and play on your own phones. Coming soon.',
+    onlineNote: 'Send the invite link by message. Your friend taps it and joins right away, each on their own phone.',
+    friend: 'Friend', connecting: 'Connecting...', cantConnect: 'Can’t go online. Check your connection, or open ods-games.github.io/first-and-last.',
+    inviteTitle: 'Invite a friend', inviteText: 'Send this link to a friend. The game starts as soon as they join.', copy: 'Copy link', copied: 'Copied', share: 'Share',
+    waitingFriend: 'Waiting for your friend...', expiresIn: 'Link expires in {t}', expired: 'The link has expired.', newLink: 'New link',
+    roomGone: 'This invite link has expired or doesn’t exist.', roomFull: 'Someone else already joined this game.', ownLink: 'This is your own invite link. Send it to a friend.',
+    lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
+    friendLeft: 'Your friend left', friendLeftText: 'The game has ended.', waitRematch: 'Waiting for your friend...', friendWants: 'Your friend wants a rematch!',
+    shareText: 'Up for a round of First&Last?',
     soon: 'Online mode is coming soon', soonText: 'You will be able to send a friend an invite link and play on your own phones.',
     easy: 'Easy', medium: 'Medium', hard: 'Hard', start: 'Start',
     note_easy: 'The AI plays easy words, slowly', note_medium: 'The AI keeps a steady pace', note_hard: 'The AI is fast and picks tricky letters',
@@ -755,12 +776,8 @@ document.querySelectorAll('.minfo').forEach(b => b.onclick = () => {
 document.querySelectorAll('.diff').forEach(b => b.onclick = () => { diff = b.dataset.d; store('fl-diff', diff); applyLang(); sfx('key'); });
 $('goAI').onclick = () => { sfx('pick'); newGame('ai'); };
 $('goDuo').onclick = () => { sfx('pick'); newGame('duo'); };
-$('goOnline').onclick = () => {
-  sfx('key');
-  $('sheet').innerHTML = `<button class="x" type="button" id="xBtn" aria-label="${esc(t('close'))}">${XICON}</button><h2>${esc(t('online'))}</h2><p>${esc(t('soonText'))}</p><div class="btns"><button class="go alt" type="button" id="okBtn">${t('ok')}</button></div>`;
-  $('ov').hidden = false; $('xBtn').onclick = $('okBtn').onclick = () => { $('ov').hidden = true; };
-};
-function goHome() { stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; }
+$('goOnline').onclick = () => { sfx('pick'); createRoom(); };
+function goHome() { leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; }
 
 /* ---------- tutorial ---------- */
 let afterTut = null;
@@ -791,12 +808,12 @@ function stopAll() { timers.forEach(clearTimeout); timers = []; clearInterval(G.
 const other = p => 1 - p;
 const charEl = p => $('char' + p);
 const isDuo = () => G.mode === 'duo';
-function nameOf(p) { if (G.mode === 'ai') return p === 0 ? t('me') : t('ai'); return p === 0 ? t('p1') : t('p2'); }
+function nameOf(p) { if (G.mode === 'ai') return p === 0 ? t('me') : t('ai'); if (G.mode === 'online') return p === 0 ? t('me') : t('friend'); return p === 0 ? t('p1') : t('p2'); }
 const paused = () => !$('ov').hidden;
 
 function newGame(mode) {
   stopAll(); MUS.fast = false; setMusic('game');
-  Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
+  Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
   $('game').classList.toggle('duo', isDuo());
   $('panel1').hidden = !isDuo();
@@ -804,6 +821,7 @@ function newGame(mode) {
   setFace(0, 'look'); setFace(1, isDuo() ? 'look' : 'idle');
   $('fx').innerHTML = ''; document.querySelectorAll('.ko-banner,.bubble').forEach(e => e.remove());
   setTiles('?', '?'); renderClock(); renderNames(); renderHearts();
+  if (mode === 'online') return; // the room drives the online flow
   if (store('fl-tut') !== '1') { afterTut = beginPick; tutorial(true); } else beginPick();
 }
 function setTiles(s, e) { document.querySelectorAll('.tS').forEach(x => { if (x.closest('#arena')) x.textContent = s; }); document.querySelectorAll('.tE').forEach(x => { if (x.closest('#arena')) x.textContent = e; }); }
@@ -835,7 +853,7 @@ function setFace(p, face, ms, after) {
 const ROWS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 function panelMode(p) {
   if (G.phase === 'pick') return G.picker === p ? 'pick' : (isDuo() ? 'wait' : 'off');
-  if (G.phase === 'play') { if (G.mode === 'ai') return p === 0 ? 'type' : 'off'; return G.active === p ? 'type' : (G.active === null ? 'buzz' : 'wait'); }
+  if (G.phase === 'play') { if (!isDuo()) return p === 0 ? 'type' : 'off'; return G.active === p ? 'type' : (G.active === null ? 'buzz' : 'wait'); }
   return 'off';
 }
 function renderPanels() {
@@ -903,7 +921,7 @@ function beginPick(msg) {
 }
 function pickPrompt(msg) {
   let sec = PICK_SEC; const p = G.picker;
-  const draw = () => setCenter(`<div class="msg">${msg ? esc(msg) + '<br>' : ''}${esc(G.mode === 'ai' ? t('pickYou') : t('pickName', { name: nameOf(p) }))}${p === 1 ? `<small>${esc(t('dimNote'))}</small>` : ''}</div><div class="count${sec <= 3 ? ' low' : ''}" aria-live="polite">${sec}</div>`, isDuo() && p === 1);
+  const draw = () => setCenter(`<div class="msg">${msg ? esc(msg) + '<br>' : ''}${esc(!isDuo() ? t('pickYou') : t('pickName', { name: nameOf(p) }))}${p === 1 ? `<small>${esc(t('dimNote'))}</small>` : ''}</div><div class="count${sec <= 3 ? ' low' : ''}" aria-live="polite">${sec}</div>`, isDuo() && p === 1);
   draw(); clearInterval(G.pickId);
   G.pickId = setInterval(() => {
     if (paused()) return;
@@ -920,7 +938,8 @@ function pickLetter(p, l) {
   if (p === 0) {
     setTiles(l.toUpperCase(), '?');
     const opts = partners(l);
-    if (!opts.length) { G.picker = -1; renderPanels(); setCenter(`<div class="msg">${esc(t('tooFew'))}</div>`); return later(() => beginPick(), 1600); }
+    if (!opts.length) { G.picker = -1; renderPanels(); setCenter(`<div class="msg">${esc(t('tooFew'))}</div>`); return later(() => (isOnline() ? onlinePick(false) : beginPick()), 1600); }
+    if (isOnline()) return onlinePicked(l);
     if (G.mode === 'ai') {
       const score = x => Math.max(cnt(l, x), cnt(x, l));
       const s = opts.slice().sort((x, y) => G.diff === 'hard' ? score(x) - score(y) : score(y) - score(x));
@@ -933,8 +952,8 @@ function pickLetter(p, l) {
   } else { setTiles(G.picks[0].toUpperCase(), l.toUpperCase()); G.picker = -1; renderPanels(); later(roulette, 500); }
 }
 function jump(p) { const c = charEl(p); c.classList.remove('jump'); void c.offsetWidth; c.classList.add('jump'); }
-function roulette() {
-  const [a, b] = G.picks, dirs = dirsOK(a, b);
+function roulette(forced) {
+  const [a, b] = G.picks, dirs = forced ? [forced] : dirsOK(a, b);
   if (!dirs.length) { setCenter(`<div class="msg">${esc(t('tooFew'))}</div>`); return later(() => beginPick(), 1600); }
   G.phase = 'roulette'; renderPanels();
   const chosen = dirs[Math.floor(Math.random() * dirs.length)];
@@ -944,7 +963,9 @@ function roulette() {
   const total = finalIdx === 1 ? 10 : 11; let i = 0;
   const run = () => {
     const on = i % 2; $('rs0').classList.toggle('on', on === 0); $('rs1').classList.toggle('on', on === 1); sfx('roll');
-    if (i >= total - 1 || a === b) { G.start = chosen[0]; G.end = chosen[1]; setTiles(G.start.toUpperCase(), G.end.toUpperCase()); later(startPlay, 900); return; }
+    if (i >= total - 1 || a === b) { G.start = chosen[0]; G.end = chosen[1]; setTiles(G.start.toUpperCase(), G.end.toUpperCase());
+      if (isOnline()) { if (ON && ON.role === 'host') later(() => ON && ON.ref.update({ status: 'play', startAt: FB.TS }), 900); return; }
+      later(startPlay, 900); return; }
     i++; later(run, 70 + i * i * 4);
   };
   run();
@@ -966,10 +987,13 @@ function startIdle() {
   }, 3500);
 }
 function startClock() {
-  clearInterval(G.clockId); renderClock();
+  clearInterval(G.clockId);
+  if (isOnline()) G.time = Math.max(0, 180 - Math.floor((FB.now() - G.startAt) / 1000));
+  renderClock();
   G.clockId = setInterval(() => {
     if (G.phase !== 'play' || paused()) return;
-    G.time--; renderClock(); MUS.fast = G.time <= 30; if (G.time <= 10 && G.time > 0) sfx('tick');
+    if (isOnline()) G.time = Math.max(0, 180 - Math.floor((FB.now() - G.startAt) / 1000)); else G.time--;
+    renderClock(); MUS.fast = G.time <= 30; if (G.time <= 10 && G.time > 0) sfx('tick');
     if (G.time <= 0) { clearInterval(G.clockId); finish(G.scores[0] > G.scores[1] ? 0 : G.scores[1] > G.scores[0] ? 1 : null, true); }
   }, 1000);
 }
@@ -989,7 +1013,7 @@ function submit(p) {
   if (G.phase !== 'play' || panelMode(p) !== 'type') return;
   const w = G.input[p]; if (!w) return;
   const err = check(w, p);
-  if (!err) return accept(p, w);
+  if (!err) return isOnline() ? claimWord(w) : accept(p, w);
   sfx('wrong'); voice(p, 'huh'); setFace(p, 'scratch', 1600);
   penalize(p, err.msg);
 }
@@ -1140,6 +1164,7 @@ function finish(winner, byTime) {
   if (G.phase === 'over') return;
   G.phase = 'over'; stopAll(); G.lock = [false, false]; renderPanels(); renderClock();
   const tok = G.token;
+  if (isOnline() && ON && ON.role === 'host') ON.ref.update({ status: 'over' }).catch(() => { });
   document.querySelectorAll('.bubble').forEach(x => x.remove());
   if (winner === 0) { setFace(0, 'win'); setFace(1, 'lose'); }
   else if (winner === 1) { setFace(1, 'win'); setFace(0, 'lose'); }
@@ -1148,7 +1173,7 @@ function finish(winner, byTime) {
   if (winner !== null) { setTimeout(() => { if (tok === G.token) { voice(winner, 'yay'); voice(other(winner), 'aww'); } }, 700); }
   let title;
   if (winner === null) title = t('draw');
-  else if (G.mode === 'ai') title = winner === 0 ? t('winYou') : t('loseYou');
+  else if (!isDuo()) title = winner === 0 ? t('winYou') : t('loseYou');
   else title = t('winName', { name: nameOf(winner) });
   const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<button type="button" class="chip p${p}" data-say="${x[0]}">${x[0].toUpperCase()} <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg></button>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
   setTimeout(() => {
@@ -1158,13 +1183,230 @@ function finish(winner, byTime) {
       <div class="res-words"><div class="res-row"><b>${esc(nameOf(0))}</b>${list(0)}</div><div class="res-row"><b>${esc(nameOf(1))}</b>${list(1)}</div></div>
       <p style="font-size:14px">${esc(t('tapToHear'))}</p>
       <p style="font-size:15px">${esc(t('startEnd', { S: G.start.toUpperCase(), E: G.end.toUpperCase() }))}</p>
-      <div class="btns"><button class="go alt" type="button" id="resHome">${t('home')}</button><button class="go" type="button" id="resAgain">${t('again')}</button></div>`;
+      ${isOnline() ? '<p id="rematchNote" style="font-size:15px"></p>' : ''}<div class="btns"><button class="go alt" type="button" id="resHome">${t('home')}</button><button class="go" type="button" id="resAgain">${t('again')}</button></div>`;
     $('ov').hidden = false;
     $('sheet').querySelectorAll('[data-say]').forEach(b => b.onclick = () => sayWord(b.dataset.say));
-    $('resAgain').onclick = () => { sfx('pick'); newGame(G.mode); };
+    $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else newGame(G.mode); };
     $('resHome').onclick = () => goHome();
   }, 1200);
 }
+
+/* ---------- online: invite-link duels over Firebase Realtime Database ----------
+   rooms/{CODE}: host, guest (anonymous uids), status waiting|lobby|pick|roulette|play|over, round, pickRound,
+   picks/{host,guest}, start, end, startAt (server ms), used/{word}: role (first writer wins), order (push list),
+   left/{role}, rematch/{role}. The host drives status changes; both clients replay the same events. */
+const FB_CFG = {
+  apiKey: 'AIzaSyCDiQ_1KN4KQTJUhmPpThGO7u9qf9dpzC8',
+  authDomain: 'first-and-last-bfa0d.firebaseapp.com',
+  databaseURL: 'https://first-and-last-bfa0d-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'first-and-last-bfa0d',
+  storageBucket: 'first-and-last-bfa0d.firebasestorage.app',
+  messagingSenderId: '745432185860',
+  appId: '1:745432185860:web:2353fa940da1bf9aef0951'
+};
+const FB_VER = '10.12.2', ROOM_TTL = 10 * 60 * 1000, CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+let FB = null, ON = null;
+const isOnline = () => G.mode === 'online';
+function loadScript(src) { return new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+async function fbInit() {
+  if (FB) return FB;
+  const base = `https://cdn.jsdelivr.net/npm/firebase@${FB_VER}/`;
+  if (!window.firebase) { await loadScript(base + 'firebase-app-compat.js'); await loadScript(base + 'firebase-auth-compat.js'); await loadScript(base + 'firebase-database-compat.js'); }
+  if (!firebase.apps.length) firebase.initializeApp(FB_CFG);
+  const cred = await firebase.auth().signInAnonymously();
+  const db = firebase.database();
+  await new Promise((res, rej) => {
+    const r = db.ref('.info/connected'); const to = setTimeout(() => { r.off(); rej(new Error('offline')); }, 10000);
+    r.on('value', s => { if (s.val() === true) { clearTimeout(to); r.off(); res(); } });
+  });
+  let offset = 0; db.ref('.info/serverTimeOffset').on('value', s => { offset = s.val() || 0; });
+  FB = { db, uid: cred.user.uid, now: () => Date.now() + offset, TS: firebase.database.ServerValue.TIMESTAMP };
+  return FB;
+}
+function sheet(html, onClose) {
+  $('sheet').innerHTML = (onClose ? `<button class="x" type="button" id="xBtn" aria-label="${esc(t('close'))}">${XICON}</button>` : '') + html;
+  $('ov').hidden = false; if (onClose) $('xBtn').onclick = onClose;
+}
+function sheetMsg(msg) { sheet(`<h2>${esc(t('online'))}</h2><p>${esc(msg)}</p><div class="spin" aria-hidden="true"></div>`); }
+function sheetError(msg) {
+  leaveRoom();
+  sheet(`<h2>${esc(t('online'))}</h2><p>${esc(msg)}</p><div class="btns"><button class="go alt" type="button" id="okBtn">${t('home')}</button></div>`);
+  $('okBtn').onclick = () => goHome();
+}
+const makeCode = () => Array.from({ length: 6 }, () => CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)]).join('');
+const inviteUrl = code => location.origin + location.pathname + '?r=' + code;
+
+async function createRoom() {
+  sheetMsg(t('connecting'));
+  try { await fbInit(); } catch (e) { return sheetError(t('cantConnect')); }
+  try {
+    const code = makeCode(), ref = FB.db.ref('rooms/' + code);
+    await ref.set({ host: FB.uid, status: 'waiting', created: FB.TS, round: 0 });
+    ref.onDisconnect().remove();
+    ON = { code, role: 'host', ref, joined: false, key: '' };
+    listenRoom(); showInvite();
+  } catch (e) { sheetError(t('cantConnect')); }
+}
+function showInvite() {
+  const url = inviteUrl(ON.code), canShare = !!navigator.share;
+  sheet(`<h2>${esc(t('inviteTitle'))}</h2><p>${esc(t('inviteText'))}</p>
+    <div class="linkbox" id="linkBox">${esc(url)}</div>
+    <div class="btns">${canShare ? `<button class="go" type="button" id="shareBtn">${t('share')}</button>` : ''}<button class="go alt" type="button" id="copyBtn">${t('copy')}</button></div>
+    <p class="wait"><span class="spin" aria-hidden="true"></span>${esc(t('waitingFriend'))}<br><small id="ttl"></small></p>`, () => { leaveRoom(); goHome(); });
+  $('copyBtn').onclick = async () => {
+    try { await navigator.clipboard.writeText(url); $('copyBtn').textContent = t('copied'); }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($('linkBox')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  };
+  if (canShare) $('shareBtn').onclick = () => { navigator.share({ title: 'First&Last', text: t('shareText'), url }).catch(() => { }); };
+  const tick = () => {
+    if (!ON || ON.joined || !$('ttl')) return clearInterval(ON && ON.ttlId);
+    const created = ON.room && ON.room.created;
+    const left = created ? Math.max(0, ROOM_TTL - (FB.now() - created)) : ROOM_TTL;
+    const m = Math.floor(left / 60000), s = Math.floor(left / 1000) % 60;
+    $('ttl').textContent = t('expiresIn', { t: m + ':' + String(s).padStart(2, '0') });
+    if (left <= 0) { clearInterval(ON.ttlId); ON.ref.remove(); expiredSheet(); }
+  };
+  clearInterval(ON.ttlId); ON.ttlId = setInterval(tick, 1000); tick();
+}
+function expiredSheet() {
+  leaveRoom();
+  sheet(`<h2>${esc(t('online'))}</h2><p>${esc(t('expired'))}</p><div class="btns"><button class="go alt" type="button" id="hBtn">${t('home')}</button><button class="go" type="button" id="nBtn">${t('newLink')}</button></div>`);
+  $('hBtn').onclick = () => goHome(); $('nBtn').onclick = () => createRoom();
+}
+
+async function joinRoom(code) {
+  sheetMsg(t('connecting'));
+  try { await fbInit(); } catch (e) { return sheetError(t('cantConnect')); }
+  try {
+    const ref = FB.db.ref('rooms/' + code), r = (await ref.once('value')).val();
+    if (!r) return sheetError(t('roomGone'));
+    if (r.host === FB.uid) return sheetError(t('ownLink'));
+    if (r.guest && r.guest !== FB.uid) return sheetError(t('roomFull'));
+    if (!r.guest) {
+      if (r.status !== 'waiting' || FB.now() - r.created > ROOM_TTL) return sheetError(t('roomGone'));
+      const res = await ref.child('guest').transaction(g => (g ? undefined : FB.uid));
+      if (!res.committed) return sheetError(t('roomFull'));
+      await ref.update({ status: 'lobby' });
+    }
+    ref.child('left/guest').onDisconnect().set(true);
+    ON = { code, role: 'guest', ref, joined: true, key: '' };
+    listenRoom();
+  } catch (e) { sheetError(t('roomGone')); }
+}
+
+function listenRoom() {
+  ON.ref.on('value', s => onRoom(s.val()));
+  ON.ref.child('order').on('child_added', s => onOrder(s.val()));
+}
+function leaveRoom() {
+  if (!ON) return; const o = ON; ON = null;
+  try {
+    clearInterval(o.ttlId); clearTimeout(o.lobbyId); o.ref.off(); o.ref.child('order').off();
+    if (o.joined) { o.ref.child('left/' + o.role).set(true); o.ref.child('left/' + o.role).onDisconnect().cancel(); }
+    else if (o.role === 'host') { o.ref.onDisconnect().cancel(); o.ref.remove(); }
+  } catch (e) { }
+}
+const oppRole = () => (ON.role === 'host' ? 'guest' : 'host');
+
+function onRoom(r) {
+  if (!ON) return;
+  if (!r) { if (ON.joined) return friendLeft(); return; }
+  ON.room = r;
+  if (r.left && r.left[oppRole()] && ON.joined) return friendLeft();
+  if (r.status === 'waiting') return;
+  if (!ON.joined && r.guest) { ON.joined = true; clearInterval(ON.ttlId); if (ON.role === 'host') { ON.ref.onDisconnect().cancel(); ON.ref.child('left/host').onDisconnect().set(true); } }
+  if (r.status === 'lobby') { if (ON.key !== 'lobby') { ON.key = 'lobby'; showLobby(); } return; }
+  if (r.status === 'pick') {
+    const k = 'pick' + r.round + '.' + (r.pickRound || 0);
+    if (ON.key !== k) {
+      const fresh = ON.round !== r.round; ON.key = k;
+      if (fresh) { ON.round = r.round; newGame('online'); }
+      onlinePick(r.note === 'tooFew');
+    }
+    if (ON.role === 'host' && r.picks && r.picks.host && r.picks.guest && !ON.resolving) resolvePicks(r);
+    return;
+  }
+  if (r.status === 'roulette') { if (ON.key !== 'roul' + r.round) { ON.key = 'roul' + r.round; onlineRoulette(r); } return; }
+  if (r.status === 'play') { if (ON.key !== 'play' + r.round && r.startAt) { ON.key = 'play' + r.round; G.startAt = r.startAt; startPlay(); } return; }
+  if (r.status === 'over') {
+    const rm = r.rematch || {};
+    if (ON.role === 'host' && rm.host && rm.guest) return resetRound(r);
+    const note = $('rematchNote'); if (note) note.textContent = rm[oppRole()] && !rm[ON.role] ? t('friendWants') : '';
+  }
+}
+function showLobby() {
+  newGame('online'); G.phase = 'lobby'; renderPanels();
+  let n = 3;
+  const draw = () => sheet(`<h2>${esc(ON.role === 'host' ? t('lobbyHost') : t('lobbyGuest'))}</h2>
+    <div class="tut-art lobby">${RAB_FRONT}</div><p>${esc(t('startsIn', { n }))}</p>
+    <div class="btns"><button class="go soon" type="button" id="leaveBtn">${t('leave')}</button></div>`);
+  const tick = () => {
+    if (!ON || ON.key !== 'lobby') return;
+    draw(); showSvg($('sheet').querySelector('.lobby'), 'rfront', 'happy'); $('leaveBtn').onclick = () => { leaveRoom(); goHome(); };
+    if (n <= 0) { $('ov').hidden = true; if (ON.role === 'host') ON.ref.update({ status: 'pick', round: 1, pickRound: 0, note: null }); return; }
+    n--; ON.lobbyId = setTimeout(tick, 1000);
+  };
+  sfx('buzz'); tick();
+}
+function onlinePick(tooFew) {
+  G.phase = 'pick'; G.picks = [null, null]; G.picker = 0; G.input = ['', ''];
+  $('ov').hidden = true; setTiles('?', '?'); setFace(0, 'look'); setFace(1, 'idle');
+  renderPanels(); pickPrompt(tooFew ? t('tooFew') : '');
+}
+async function resolvePicks(r) {
+  ON.resolving = true;
+  try {
+    const a = r.picks.host, b = r.picks.guest, dirs = dirsOK(a, b);
+    if (!dirs.length) await ON.ref.update({ picks: null, pickRound: (r.pickRound || 0) + 1, note: 'tooFew' });
+    else { const c = dirs[Math.floor(Math.random() * dirs.length)]; await ON.ref.update({ status: 'roulette', start: c[0], end: c[1], note: null }); }
+  } catch (e) { } finally { if (ON) ON.resolving = false; }
+}
+function onlineRoulette(r) {
+  clearInterval(G.pickId);
+  const mine = r.picks[ON.role], theirs = r.picks[oppRole()];
+  G.picks = [mine, theirs]; G.picker = -1; setTiles(mine.toUpperCase(), theirs.toUpperCase());
+  roulette([r.start, r.end]);
+}
+function onlinePicked(l) {
+  G.picker = -1; renderPanels(); setTiles(l.toUpperCase(), '?');
+  setCenter(`<div class="msg">${esc(t('waitPick'))}</div>`);
+  ON.ref.child('picks/' + ON.role).set(l).catch(() => { });
+}
+function claimWord(w) {
+  if (G.pending) return; G.pending = true;
+  G.input[0] = ''; const ty = $('typed0'); if (ty) ty.textContent = '';
+  ON.ref.child('used/' + w).transaction(v => (v ? undefined : ON.role)).then(res => {
+    G.pending = false; if (!ON) return;
+    if (res.committed) return ON.ref.child('order').push({ w, by: ON.role, t: FB.TS });
+    sfx('wrong'); voice(0, 'huh'); setFace(0, 'scratch', 1600); penalize(0, t('usedOpp'));
+  }).catch(() => { G.pending = false; toast(0, t('cantConnect')); });
+}
+function onOrder(o) {
+  if (!o || !ON || !isOnline() || G.phase !== 'play' || G.used.has(o.w)) return;
+  accept(o.by === ON.role ? 0 : 1, o.w);
+}
+function requestRematch() {
+  if (!ON) return goHome();
+  ON.ref.child('rematch/' + ON.role).set(true);
+  const b = $('resAgain'); if (b) { b.disabled = true; b.textContent = t('waitRematch'); }
+}
+function resetRound(r) {
+  ON.ref.update({ status: 'pick', round: (r.round || 0) + 1, pickRound: 0, picks: null, used: null, order: null, rematch: null, start: null, end: null, startAt: null, note: null });
+}
+function friendLeft() {
+  const wasPlaying = G.mode === 'online' && G.phase !== 'over';
+  leaveRoom(); stopAll(); if (G.mode === 'online') G.phase = 'over';
+  sheet(`<h2>${esc(t('friendLeft'))}</h2>${wasPlaying ? `<p>${esc(t('friendLeftText'))}</p>` : ''}<div class="btns"><button class="go alt" type="button" id="hBtn">${t('home')}</button></div>`);
+  $('hBtn').onclick = () => goHome();
+}
+/* an invite link opens straight into the room */
+(function () {
+  let code = null; try { code = new URLSearchParams(location.search).get('r'); } catch (e) { }
+  if (!code) return;
+  code = code.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+  try { history.replaceState(null, '', location.pathname); } catch (e) { }
+  if (code.length === 6) setTimeout(() => joinRoom(code), 0);
+})();
 
 applyLang();
 setMusic('home');
