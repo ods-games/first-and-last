@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106230035';
+  var BUILD = '20261106230628';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -918,7 +918,7 @@ function newGame(mode) {
   stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
-  if (isDuo()) $('rail').insertBefore($('tools'), $('clockR')); else $('hud').insertBefore($('tools'), $('clock'));
+  if (isDuo()) $('rail').insertBefore($('tools'), $('clockR').nextSibling); else $('hud').insertBefore($('tools'), $('clock'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
   $('panel1').hidden = !isDuo();
   $('char1').innerHTML = RAB_FRONT + RAB_BACK; $('char0').innerHTML = CAPY;
