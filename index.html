@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="First&amp;Last">
+<meta name="apple-mobile-web-app-title" content="FnL">
 <meta name="theme-color" content="#D6EEFF">
 <meta name="description" content="시작 글자와 끝 글자로 하는 영어 단어 대결 게임">
 <link rel="manifest" href="manifest.webmanifest">
@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106204530';
+  var BUILD = '20261106211928';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -35,7 +35,7 @@ body{margin:0;font:14px system-ui,sans-serif}
   document.addEventListener('visibilitychange', function () { if (!document.hidden) check(); });
 })();
 </script>
-<title>First&amp;Last</title>
+<title>First n Last</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Jua&display=swap">
@@ -67,13 +67,18 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .home-top .icon-btn{border-radius:50%;width:42px;height:42px;box-shadow:0 3px 0 var(--ink)}
 .pill{border:3px solid var(--ink);border-radius:999px;background:var(--paper);padding:6px 14px;font-family:var(--korean);font-size:15px;box-shadow:0 3px 0 var(--ink)}
 .title{flex:1 0 auto;margin:0;padding-block:clamp(16px,4vh,40px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,2vh,20px)}
-.t-row{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:2px}
-.t-row .t-tile{width:clamp(56px,17vw,76px);height:clamp(56px,17vw,76px);font-size:clamp(36px,11vw,50px);border-width:5px;border-radius:18px;box-shadow:0 6px 0 var(--ink);animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
-.t-row .t-tile.f{background:var(--mint);transform:rotate(-7deg)}
-.t-row .t-tile.l{background:var(--blush);transform:rotate(6deg);animation-delay:.12s;margin-left:6px}
-.t-word{font-size:clamp(34px,10.5vw,50px);font-weight:700;color:var(--paper);letter-spacing:.5px;line-height:1;
-  text-shadow:3px 0 0 var(--ink),-3px 0 0 var(--ink),0 3px 0 var(--ink),0 -3px 0 var(--ink),2px 2px 0 var(--ink),-2px 2px 0 var(--ink),2px -2px 0 var(--ink),-2px -2px 0 var(--ink),0 7px 0 var(--ink)}
-.t-amp{color:var(--yellow)}
+/* logo: two letter blocks with the rest of each word tucked into the letter's own empty space; all sizes scale from one unit */
+.logo{--u:min(1.15px,calc((100vw - 40px) / 360));display:flex;align-items:center;justify-content:center;gap:calc(14 * var(--u))}
+.lt{position:relative;flex:none;width:calc(130 * var(--u));height:calc(130 * var(--u));box-sizing:border-box;border:calc(5 * var(--u)) solid var(--ink);border-radius:calc(26 * var(--u));box-shadow:0 calc(8 * var(--u)) 0 var(--ink);overflow:hidden;animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
+.lt b{position:absolute;font-weight:700;font-size:calc(128 * var(--u));line-height:1}
+.lt i{position:absolute;font-style:normal;font-weight:600;font-size:calc(30 * var(--u));line-height:1}
+.lt.f{background:#8EC5FF;transform:rotate(-5deg)}
+.lt.f b{left:calc(9 * var(--u));top:calc(-21 * var(--u))}
+.lt.f i{left:calc(39 * var(--u));top:calc(75 * var(--u))}
+.lt.l{background:#FF9EB1;transform:rotate(4deg);animation-delay:.12s}
+.lt.l b{left:calc(12 * var(--u));top:calc(-21 * var(--u))}
+.lt.l i{left:calc(44 * var(--u));top:calc(46 * var(--u))}
+.ln{flex:none;width:calc(58 * var(--u));height:calc(58 * var(--u));box-sizing:border-box;border-radius:50%;background:var(--yellow);border:calc(4 * var(--u)) solid var(--ink);box-shadow:0 calc(5 * var(--u)) 0 var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:calc(44 * var(--u));line-height:1;padding-bottom:calc(6 * var(--u));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) .06s both}
 .ribbon{font-family:var(--korean);font-size:15px;background:var(--yellow);border:3px solid var(--ink);border-radius:999px;padding:4px 16px;box-shadow:0 3px 0 var(--ink);text-align:center;text-wrap:balance;max-width:92%}
 .stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;height:clamp(110px,17vh,150px);margin-top:0;margin-bottom:-22px;flex:none}
 .stage .hc{height:100%;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%}
@@ -289,8 +294,8 @@ button.chip{cursor:pointer;color:var(--ink)}
         <button class="icon-btn" id="rulesBtn" type="button" aria-label="Rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.4a2.8 2.8 0 0 1 5.4 1c0 2-2.7 2.3-2.7 4"/><circle cx="12" cy="17.6" r=".9" fill="currentColor"/></svg></button>
       </div>
     </div>
-    <h1 class="title gut" aria-label="First&amp;Last">
-      <span class="t-row" aria-hidden="true"><span class="tile t-tile f">F</span><span class="t-word">irst<span class="t-amp">&amp;</span></span><span class="tile t-tile l">L</span><span class="t-word">ast</span></span>
+    <h1 class="title gut" aria-label="First n Last">
+      <span class="logo" aria-hidden="true"><span class="lt f"><b>F</b><i>irst</i></span><span class="ln">n</span><span class="lt l"><b>L</b><i>ast</i></span></span>
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"></div>
@@ -379,7 +384,7 @@ function baseOf(w) {
 const STR = {
   ko: {
     langBtn: 'English', soundOn: '소리 켬', soundOff: '소리 끔', sfx: '효과음', music: '음악', paused: '일시정지', resume: '계속하기', rules: '규칙', fs: '전체 화면', fsExit: '전체 화면 끄기',
-    tagline: '첫 글자와 끝 글자로 겨루는 영어 단어 대결',
+    tagline: '세상 모든 단어, 그 시작과 끝',
     solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드', soloSub: 'AI 토리와 대결', duoSub: '한 폰으로 둘이서', onlineSub: '친구와 각자 폰으로', soonBadge: '준비 중',
     soloNote: 'AI 토끼 토리와 대결해요. 힌트를 한 번 쓸 수 있어요.',
     duoNote: '한 폰을 가운데 두고 마주 앉아서 해요. 먼저 부저를 누른 사람이 입력해요.',
@@ -390,7 +395,7 @@ const STR = {
     roomGone: '만료됐거나 없는 초대 링크예요.', roomFull: '이미 다른 사람이 들어간 방이에요.', ownLink: '내가 만든 초대 링크예요. 친구에게 보내주세요.',
     lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
     friendLeft: '친구가 나갔어요', friendLeftText: '대결이 끝났어요.', waitRematch: '친구를 기다리는 중...', friendWants: '친구가 한 판 더 하고 싶어해요!',
-    shareText: 'First&Last 영어 단어 대결 한 판 할래?',
+    shareText: 'First n Last 영어 단어 대결 한 판 할래?',
     soon: '온라인 모드는 준비 중이에요', soonText: '친구에게 초대 링크를 보내서 각자 폰으로 대결하는 기능이 곧 들어와요.',
     easy: '쉬움', medium: '보통', hard: '어려움', start: '시작',
     note_easy: 'AI가 쉬운 단어를 천천히 써요', note_medium: 'AI가 적당한 속도로 따라와요', note_hard: 'AI가 빠르고 어려운 글자를 골라요',
@@ -414,7 +419,7 @@ const STR = {
   },
   en: {
     langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', sfx: 'Sounds', music: 'Music', paused: 'Paused', resume: 'Resume', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
-    tagline: 'An English word duel: first letter meets last letter',
+    tagline: 'All the words in the world, from first to last.',
     solo: 'Solo', duo: 'Duo', online: 'Online', soloSub: 'Play Tori the AI', duoSub: 'Two players, one phone', onlineSub: 'Each on your own phone', soonBadge: 'Soon',
     soloNote: 'Play against Tori the AI rabbit. You get one hint per game.',
     duoNote: 'Two players face each other over one phone. Whoever buzzes first gets to type.',
@@ -425,7 +430,7 @@ const STR = {
     roomGone: 'This invite link has expired or doesn’t exist.', roomFull: 'Someone else already joined this game.', ownLink: 'This is your own invite link. Send it to a friend.',
     lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
     friendLeft: 'Your friend left', friendLeftText: 'The game has ended.', waitRematch: 'Waiting for your friend...', friendWants: 'Your friend wants a rematch!',
-    shareText: 'Up for a round of First&Last?',
+    shareText: 'Up for a round of First n Last?',
     soon: 'Online mode is coming soon', soonText: 'You will be able to send a friend an invite link and play on your own phones.',
     easy: 'Easy', medium: 'Medium', hard: 'Hard', start: 'Start',
     note_easy: 'The AI plays easy words, slowly', note_medium: 'The AI keeps a steady pace', note_hard: 'The AI is fast and picks tricky letters',
@@ -1335,7 +1340,7 @@ function showInvite() {
     try { await navigator.clipboard.writeText(url); $('copyBtn').textContent = t('copied'); }
     catch (e) { const r = document.createRange(); r.selectNodeContents($('linkBox')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
   };
-  if (canShare) $('shareBtn').onclick = () => { navigator.share({ title: 'First&Last', text: t('shareText'), url }).catch(() => { }); };
+  if (canShare) $('shareBtn').onclick = () => { navigator.share({ title: 'First n Last', text: t('shareText'), url }).catch(() => { }); };
   const tick = () => {
     if (!ON || ON.joined || !$('ttl')) return clearInterval(ON && ON.ttlId);
     const created = ON.room && ON.room.created;

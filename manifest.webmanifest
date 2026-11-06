@@ -1,6 +1,6 @@
 {
- "name": "First&Last",
- "short_name": "First&Last",
+ "name": "First n Last",
+ "short_name": "FnL",
  "description": "시작 글자와 끝 글자로 하는 영어 단어 대결 게임",
  "start_url": "./",
  "scope": "./",
