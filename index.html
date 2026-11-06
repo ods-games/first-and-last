@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106200902';
+  var BUILD = '20261106201759';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -196,6 +196,11 @@ button.chip{cursor:pointer;color:var(--ink)}
 .panel{flex:none;background:var(--cream);border-top:4px solid var(--ink);padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:8px;position:relative}
 #panel1{border-top:none;border-bottom:4px solid var(--ink);transform:rotate(180deg)}
 .row-in{display:flex;gap:6px}
+.hintbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px}
+.hintbar b{font-family:var(--korean);font-weight:400;font-size:14px;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:0 9px}
+.hw{display:inline-flex;align-items:center;gap:5px;font-size:20px;font-weight:700}
+.hw i{display:inline-block;width:13px;height:13px;border:3px solid var(--ink);border-radius:50%;box-sizing:border-box}
+.hw.used{opacity:.35;text-decoration:line-through}
 .typed{flex:1;min-width:0;height:46px;box-sizing:border-box;border:4px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;padding:0 12px;font-size:22px;font-weight:600;letter-spacing:2px;overflow:hidden;white-space:nowrap}
 .typed:empty::before{content:attr(data-ph);font-family:var(--korean);font-size:16px;letter-spacing:0;color:#8A7466}
 .typed.bad{animation:shake .35s linear;border-color:var(--red)}
@@ -398,7 +403,7 @@ const STR = {
     buzz: '도전!', cancel: '취소', waiting: '{name} 입력 중...', pass: '{name} 차례예요! 10초 안에 입력', timeout: '시간이 지났어요',
     thinking: '생각 중...',
     winYou: '승리!', loseYou: '아쉬워요', draw: '무승부', winName: '{name} 승리!', timeUp: '시간 종료',
-    again: '다시 하기', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '홈으로', none: '없음', ok: '확인',
+    again: '다시 하기', hintLabel: '힌트', hintOut: '힌트가 나왔어요!', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '홈으로', none: '없음', ok: '확인',
     tut1: '두 사람이 알파벳을 하나씩 고르면, 룰렛이 시작 글자와 끝 글자를 정해요',
     tut2: '조건에 맞는 영어 단어를 3번 먼저 쓰면 승리! 상대가 쓴 단어는 못 써요',
     tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(STARTING), 과거형(STARTED) 등은 안 돼요. 제한 시간은 3분이에요',
@@ -433,7 +438,7 @@ const STR = {
     buzz: 'I got it!', cancel: 'Cancel', waiting: '{name} is typing...', pass: '{name}, your turn! 10 seconds', timeout: 'Time ran out',
     thinking: 'Thinking...',
     winYou: 'You win!', loseYou: 'So close!', draw: 'Draw', winName: '{name} wins!', timeUp: 'Time up',
-    again: 'Play again', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', home: 'Home', none: 'none', ok: 'OK',
+    again: 'Play again', hintLabel: 'Hint', hintOut: 'A hint appeared!', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', home: 'Home', none: 'none', ok: 'OK',
     tut1: 'Each player picks a letter. The roulette decides which one starts the word and which one ends it',
     tut2: 'Be the first to write 3 words that fit! You can’t use a word your opponent already used',
     tut3: 'Words need 3+ letters, base forms only. No plurals (CATS), -ing forms (STARTING) or past tense (STARTED). Each game lasts 3 minutes',
@@ -841,7 +846,7 @@ const paused = () => !$('ov').hidden;
 
 function newGame(mode) {
   stopAll(); MUS.fast = false; setMusic('game');
-  Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
+  Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
   $('panel1').hidden = !isDuo();
@@ -894,7 +899,7 @@ function renderPanels() {
     const who = G.phase === 'pick' ? G.picker : G.active;
     const buzzLabel = locked ? t('frozen', { n: G.lockLeft[p] }) : mode === 'buzz' ? t('buzz') : (who === 0 || who === 1) ? t('waiting', { name: nameOf(who) }) : '...';
     let ki = 0;
-    el.innerHTML = `<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(t('ph'))}">${G.input[p].toUpperCase()}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act" type="button" data-go="1">${t('enter')}</button></div>
+    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(t('ph'))}">${G.input[p].toUpperCase()}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act" type="button" data-go="1">${t('enter')}</button></div>
       <div class="tbar"><i id="tbar${p}"></i></div>
       <div class="kb">${ROWS.map((r, ri) => `<div class="r">${[...r].map(c => `<button class="key" type="button" style="--i:${ki++}" data-k="${c}" ${allowed && !allowed.has(c.toLowerCase()) ? 'disabled' : ''}>${c}</button>`).join('')}${ri === 1 && mode !== 'pick' ? `<button class="key wide" type="button" data-k="DEL" aria-label="Delete">⌫</button>` : ''}${ri === 2 && mode !== 'pick' ? `<button class="key wide" type="button" data-k="ENT" aria-label="Enter">⏎</button>` : ''}</div>`).join('')}</div>
       <button class="buzzer" type="button" data-buzz="1" ${mode !== 'buzz' || locked ? 'disabled' : ''}>${esc(buzzLabel)}</button>
@@ -1021,7 +1026,7 @@ function startClock() {
   G.clockId = setInterval(() => {
     if (G.phase !== 'play' || paused()) return;
     if (isOnline()) G.time = Math.max(0, 180 - Math.floor((FB.now() - G.startAt) / 1000)); else G.time--;
-    renderClock(); MUS.fast = G.time <= 30; if (G.time <= 10 && G.time > 0) sfx('tick');
+    renderClock(); if (G.mode !== 'ai') timedHints(); MUS.fast = G.time <= 30; if (G.time <= 10 && G.time > 0) sfx('tick');
     if (G.time <= 0) { clearInterval(G.clockId); finish(G.scores[0] > G.scores[1] ? 0 : G.scores[1] > G.scores[0] ? 1 : null, true); }
   }, 1000);
 }
@@ -1067,19 +1072,47 @@ function accept(p, w) {
   const n = G.scores[p];
   if (isDuo()) { clearTimeout(G.buzzId); G.active = null; }
   if (n >= 3) { G.phase = 'ko'; clearInterval(G.clockId); clearTimeout(G.aiId); }
+  if (G.hints.some(h => h.w === w)) renderPanels();
   const box = $('center').querySelector('.words');
   if (box) box.innerHTML = G.order.map(([x, q]) => `<span class="chip p${q}">${x.toUpperCase()}</span>`).join('');
   renderPanels();
   const tok = G.token;
   attack(p, w, n, tok).then(() => { if (n >= 3 && tok === G.token) finish(p, false); });
 }
+/* hints: a short, common word that fits, shown as letters and hollow circles (easier to count than underscores) */
+function pickHintWord() {
+  const key = G.start + G.end, shown = new Set(G.hints.map(h => h.w));
+  const free = list => (list || []).filter(w => !G.used.has(w) && !shown.has(w));
+  let pool = free(IDX_E[key]); if (!pool.length) pool = free(IDX[key]); if (!pool.length) return null;
+  pool.sort((a, b) => a.length - b.length);
+  const short = pool.filter(w => w.length <= pool[0].length + 1).slice(0, 8);
+  return short[Math.floor(Math.random() * short.length)];
+}
+function hintHTML(h) {
+  const w = h.w, n = w.length;
+  const cells = [...w].map((c, i) => (i === 0 || i === n - 1 || (i === 1 && n >= 5)) ? `<span>${c.toUpperCase()}</span>` : '<i></i>').join('');
+  return `<span class="hw${G.used.has(w) ? ' used' : ''}" aria-label="${n}">${cells}</span>`;
+}
+function hintBar() { return G.hints && G.hints.length && (G.phase === 'play' || G.phase === 'ko') ? `<div class="hintbar"><b>${t('hintLabel')}</b>${G.hints.map(hintHTML).join('')}</div>` : ''; }
+function addHint(w) {
+  if (!w || G.hints.some(h => h.w === w)) return;
+  G.hints.push({ w }); renderPanels(); sfx('pick');
+  [0, 1].forEach(p => { if (p === 0 || isDuo()) toast(p, t('hintOut'), 1800); });
+}
 function hint() {
   if (G.phase !== 'play' || G.hintUsed) return;
-  const pool = (IDX[G.start + G.end] || []).filter(w => !G.used.has(w));
-  if (!pool.length) return toast(0, t('notword'));
-  const w = pool[Math.floor(Math.random() * pool.length)];
-  const shown = [...w].map((c, i) => (i === 0 || i === 1 || i === w.length - 1) ? c.toUpperCase() : '_').join(' ');
-  G.hintUsed = true; renderPanels(); toast(0, shown, 4000); sfx('pick');
+  const w = pickHintWord(); if (!w) return toast(0, t('notword'));
+  G.hintUsed = true; addHint(w);
+}
+/* duo and online: hints at 2:00, 1:00 and 0:30 left, unless someone is already doing well (same for both players) */
+function timedHints() {
+  [[120, 1], [60, 2], [30, Infinity]].forEach(([at, enough]) => {
+    if (G.time > at || G.hintDone[at]) return;
+    G.hintDone[at] = true;
+    if (Math.max(G.scores[0], G.scores[1]) >= enough) return;
+    if (isOnline()) { if (ON && ON.role === 'host') { const w = pickHintWord(); if (w) ON.ref.child('hints/' + at).set(w).catch(() => { }); } }
+    else addHint(pickHintWord());
+  });
 }
 
 /* ---------- AI ---------- */
@@ -1355,7 +1388,11 @@ function onRoom(r) {
     return;
   }
   if (r.status === 'roulette') { if (ON.key !== 'roul' + r.round) { ON.key = 'roul' + r.round; onlineRoulette(r); } return; }
-  if (r.status === 'play') { if (ON.key !== 'play' + r.round && r.startAt) { ON.key = 'play' + r.round; G.startAt = r.startAt; startPlay(); } return; }
+  if (r.status === 'play') {
+    if (ON.key !== 'play' + r.round && r.startAt) { ON.key = 'play' + r.round; G.startAt = r.startAt; startPlay(); }
+    if (r.hints) Object.keys(r.hints).sort((a, b) => b - a).forEach(k => addHint(r.hints[k]));
+    return;
+  }
   if (r.status === 'over') {
     const rm = r.rematch || {};
     if (ON.role === 'host' && rm.host && rm.guest) return resetRound(r);
@@ -1419,7 +1456,7 @@ function requestRematch() {
   const b = $('resAgain'); if (b) { b.disabled = true; b.textContent = t('waitRematch'); }
 }
 function resetRound(r) {
-  ON.ref.update({ status: 'pick', round: (r.round || 0) + 1, pickRound: 0, picks: null, used: null, order: null, rematch: null, start: null, end: null, startAt: null, note: null });
+  ON.ref.update({ status: 'pick', round: (r.round || 0) + 1, pickRound: 0, picks: null, used: null, order: null, rematch: null, hints: null, start: null, end: null, startAt: null, note: null });
 }
 function friendLeft() {
   const wasPlaying = G.mode === 'online' && G.phase !== 'over';
