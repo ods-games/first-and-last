@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106215347';
+  var BUILD = '20261106215850';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -62,13 +62,13 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .deco .cl{position:absolute;background:var(--paper);border-radius:999px}
 .deco .ft{position:absolute;width:34px;height:34px;border:3px solid var(--ink);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;opacity:.55;box-shadow:0 3px 0 var(--ink);animation:bob 4s ease-in-out infinite}
 #home > *:not(.deco){position:relative;z-index:1}
-.home-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-block:12px}
+.home-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-block:10px}
 .home-top .rt{display:flex;gap:8px}
 .home-top .icon-btn{border-radius:50%;width:42px;height:42px;box-shadow:0 3px 0 var(--ink)}
 .pill{border:3px solid var(--ink);border-radius:999px;background:var(--paper);padding:6px 14px;font-family:var(--korean);font-size:15px;box-shadow:0 3px 0 var(--ink)}
-.title{flex:1 0 auto;margin:0;padding-block:clamp(16px,4vh,40px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,2vh,20px)}
+.title{flex:1 0 auto;margin:0;padding-block:clamp(6px,2vh,24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,1.6vh,16px)}
 /* logo: two letter blocks with the rest of each word tucked into the letter's own empty space; all sizes scale from one unit */
-.logo{--u:min(1.15px,calc((100vw - 40px) / 360));display:flex;align-items:center;justify-content:center;gap:calc(14 * var(--u))}
+.logo{--u:max(.6px,min(1.15px,calc((100vw - 40px) / 360),calc((100dvh - 600px) / 160)));display:flex;align-items:center;justify-content:center;gap:calc(14 * var(--u))}
 .lt{position:relative;flex:none;width:calc(130 * var(--u));height:calc(130 * var(--u));box-sizing:border-box;border:calc(4 * var(--u)) solid var(--ink);border-radius:calc(26 * var(--u));overflow:hidden;animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
 .lt b{position:absolute;font-weight:700;font-size:calc(128 * var(--u));line-height:1}
 .lt i{position:absolute;font-style:normal;font-weight:600;font-size:calc(30 * var(--u));line-height:1}
@@ -81,18 +81,18 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .ln{position:relative;z-index:2;margin:0 calc(-26 * var(--u));flex:none;width:calc(58 * var(--u));height:calc(58 * var(--u));box-sizing:border-box;border-radius:50%;background:var(--yellow);border:calc(3.5 * var(--u)) solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:calc(44 * var(--u));line-height:1;padding-bottom:calc(6 * var(--u));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) .06s both}
 .ribbon{font-family:var(--korean);font-size:17px;color:var(--ink);letter-spacing:1px;text-align:center;white-space:pre-line;line-height:1.4}
 html[lang="ko"] .ribbon{white-space:nowrap}
-.stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;height:clamp(110px,17vh,150px);margin-top:0;margin-bottom:-22px;flex:none}
+.stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;height:clamp(96px,14vh,136px);margin-top:0;margin-bottom:-20px;flex:none}
 .stage .hc{height:100%;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%}
 .stage .hc:last-child{animation-delay:-1.3s}
 .stage svg{height:100%;width:auto;overflow:visible}
 .vs{align-self:center;margin-bottom:14px;flex:none;font-size:30px;font-weight:700;font-style:italic;color:#F07C98;letter-spacing:1px;transform:rotate(-8deg)}
-.field{flex:none;background:var(--grass);border-top:5px solid var(--ink);border-radius:50% 50% 0 0/38px 38px 0 0;padding-top:40px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
+.field{flex:none;background:var(--grass);border-top:5px solid var(--ink);border-radius:50% 50% 0 0/38px 38px 0 0;padding-top:32px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
 .mcard{border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:var(--c);transition:transform .08s}
 .mcard:has(.mmain:active){transform:translateY(4px);box-shadow:0 2px 0 var(--ink)}
 .mrow{display:flex;align-items:center}
-.mmain{flex:1;min-width:0;display:flex;align-items:center;gap:12px;background:none;border:0;padding:12px 8px 12px 12px;text-align:left}
-.micon{width:52px;height:52px;flex:none;border-radius:16px;border:3px solid var(--ink);background:var(--paper);display:flex;align-items:center;justify-content:center}
-.micon svg{width:32px;height:32px}
+.mmain{flex:1;min-width:0;display:flex;align-items:center;gap:12px;background:none;border:0;padding:10px 8px 10px 10px;text-align:left}
+.micon{width:48px;height:48px;flex:none;border-radius:16px;border:3px solid var(--ink);background:var(--paper);display:flex;align-items:center;justify-content:center}
+.micon svg{width:30px;height:30px}
 .mtext{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .mtext b{font-family:var(--korean);font-weight:400;font-size:23px;line-height:1.1}
 .mtext small{font-family:var(--korean);font-size:14px;color:var(--ink);opacity:.75}
