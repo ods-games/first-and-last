@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106213644';
+  var BUILD = '20261106213805';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -600,16 +600,20 @@ function startKeepAlive() {
   } catch (e) { }
 }
 let speechPrimed = false;
+/* iPhones only let a page speak after it has spoken once inside a tap. While speaking, the phone lowers
+   other sound for a moment, so this runs when a game starts rather than on the first tap anywhere. */
+function primeSpeech() {
+  if (speechPrimed || !soundOn || !('speechSynthesis' in window)) return;
+  speechPrimed = true;
+  try { if (!enVoice) pickVoice(); const u = new SpeechSynthesisUtterance('hi'); u.lang = 'en-US'; u.volume = 0; u.rate = 2; speechSynthesis.speak(u); } catch (e) { }
+}
 function unlockAudio() {
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
   const a = wakeAudio(); if (!a) return;
   startKeepAlive();
   try { const b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) { }
-  /* iPhones only let a page speak after it has spoken once inside a tap */
-  if (!speechPrimed && soundOn && 'speechSynthesis' in window) {
-    speechPrimed = true;
-    try { if (!enVoice) pickVoice(); const u = new SpeechSynthesisUtterance('hi'); u.lang = 'en-US'; u.volume = 0; u.rate = 2; speechSynthesis.speak(u); } catch (e) { }
-  }
+  /* in a game, a tap also readies word reading (on the home screen this would briefly duck the music) */
+  if (G.mode) primeSpeech();
   if (MUS.want && !MUS.playing) startMusic();
 }
 /* capture phase: unlock runs before any button's own handler tries to play a sound */
@@ -827,9 +831,9 @@ document.querySelectorAll('.minfo').forEach(b => b.onclick = () => {
   b.setAttribute('aria-expanded', open ? 'true' : 'false'); $(b.dataset.x).hidden = !open; sfx('key');
 });
 document.querySelectorAll('.diff').forEach(b => b.onclick = () => { diff = b.dataset.d; store('fl-diff', diff); applyLang(); sfx('key'); });
-$('goAI').onclick = () => { sfx('pick'); newGame('ai'); };
-$('goDuo').onclick = () => { sfx('pick'); newGame('duo'); };
-$('goOnline').onclick = () => { sfx('pick'); createRoom(); };
+$('goAI').onclick = () => { primeSpeech(); sfx('pick'); newGame('ai'); };
+$('goDuo').onclick = () => { primeSpeech(); sfx('pick'); newGame('duo'); };
+$('goOnline').onclick = () => { primeSpeech(); sfx('pick'); createRoom(); };
 function goHome() {
   document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
   leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; }
