@@ -458,11 +458,13 @@ function showSvg(container, svgName, g, opts = {}) {
 
 /* ---------- sound ---------- */
 let AC = null;
+/* ask iOS for the media-playback audio category up front, before any sound is made, so the ring switch doesn't mute the game */
+try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
 function ac() {
   if (!soundOn) return null;
   try {
     if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
-    if (AC.state !== 'running') AC.resume();
+    if (AC.state !== 'running') { const r = AC.resume(); if (r && r.catch) r.catch(() => { }); }
   } catch (e) { return null; }
   return AC;
 }
@@ -470,11 +472,12 @@ function ac() {
    into the "media playback" audio category (the one video sites use), which plays through the switch. */
 let keepAlive = null;
 function silentWav() {
-  const n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer);
+  /* half a second of 16-bit, 22.05 kHz mono silence: the most widely decoded WAV form on iPhones */
+  const rate = 22050, n = rate, b = new Uint8Array(44 + n), v = new DataView(b.buffer);
   const s = (o, str) => [...str].forEach((c, i) => b[o + i] = c.charCodeAt(0));
   s(0, 'RIFF'); v.setUint32(4, 36 + n, true); s(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
-  v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); s(36, 'data'); v.setUint32(40, n, true);
-  b.fill(128, 44); let bin = ''; b.forEach(x => bin += String.fromCharCode(x)); return 'data:audio/wav;base64,' + btoa(bin);
+  v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); s(36, 'data'); v.setUint32(40, n, true);
+  let bin = ''; b.forEach(x => bin += String.fromCharCode(x)); return 'data:audio/wav;base64,' + btoa(bin);
 }
 function startKeepAlive() {
   if (!soundOn) { if (keepAlive) keepAlive.pause(); return; }
@@ -490,7 +493,8 @@ function unlockAudio() {
   const a = ac(); if (!a) return;
   try { const b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) { }
 }
-['touchend', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true }));
+/* capture phase: unlock runs before any button's own handler tries to play a sound */
+['touchstart', 'touchend', 'pointerup', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true, capture: true }));
 function tone(f, d, type = 'sine', vol = .18, slide = 0, delay = 0) {
   const a = ac(); if (!a) return; const o = a.createOscillator(), g = a.createGain(), t0 = a.currentTime + delay;
   o.type = type; o.frequency.setValueAtTime(f, t0); if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(40, f + slide), t0 + d);
