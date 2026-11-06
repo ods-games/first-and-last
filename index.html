@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106231438';
+  var BUILD = '20261107003004';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -217,7 +217,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .hintbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px}
 .hintbar b{font-family:var(--korean);font-weight:400;font-size:14px;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:0 9px}
 .hw{display:inline-flex;align-items:center;gap:5px;font-size:20px;font-weight:700}
-.hw i{display:inline-block;width:15px;height:18px;border:2.5px dashed var(--ink);border-radius:3px;box-sizing:border-box}
+.hw i{display:inline-block;width:15px;height:18px;border:2px dotted var(--ink);border-radius:3px;box-sizing:border-box}
 .hw.used{opacity:.35;text-decoration:line-through}
 .typed{flex:1;min-width:0;height:46px;box-sizing:border-box;border:4px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;padding:0 12px;font-size:22px;font-weight:600;letter-spacing:2px;overflow:hidden;white-space:nowrap}
 .typed:empty::before{content:attr(data-ph);font-family:var(--korean);font-size:16px;letter-spacing:0;color:#8A7466}
@@ -230,13 +230,14 @@ button.chip{cursor:pointer;color:var(--ink)}
 .kb .r{display:flex;justify-content:center;gap:4px}
 .key{flex:1;max-width:40px;height:42px;padding:0;border:3px solid var(--ink);border-radius:10px;background:var(--paper);box-shadow:0 3px 0 var(--ink);font-size:17px;font-weight:600}
 .key.wide{max-width:60px;flex:1.5;font-size:15px}
+.key.case{font-size:15px;font-family:var(--display)}
 .key:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
 .key:disabled{opacity:.3;box-shadow:none}
 .panel.pick .key:not(:disabled){animation:rainbow 1.6s linear infinite,twinkle .8s ease-in-out infinite alternate;animation-delay:calc(var(--i) * -90ms),calc(var(--i) * -60ms)}
 .panel.frozen .kb,.panel.frozen .row-in{opacity:.45;pointer-events:none;filter:saturate(.3)}
 .frost{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:8;pointer-events:none}
-.frost b.lockn{display:block;text-align:center;font-family:var(--display);font-size:40px;line-height:1.1;animation:countPop .9s ease-out}
-.frost span{background:var(--ink);color:var(--paper);border-radius:14px;padding:6px 14px;font-family:var(--korean);font-size:18px}
+.frost b.lockn{display:block;color:var(--paper);text-align:center;font-family:var(--display);font-size:44px;line-height:1.05;animation:countPop .9s ease-out}
+.frost span{background:var(--ink);color:var(--paper);border-radius:14px;padding:8px 18px 6px;font-family:var(--korean);font-size:18px;text-align:center}
 .toast{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);z-index:9;background:var(--ink);color:var(--paper);border-radius:12px;padding:6px 12px;font-family:var(--korean);font-size:15px;white-space:nowrap;max-width:94%;overflow:hidden;text-overflow:ellipsis;animation:pop .25s ease-out}
 .buzzer{height:64px;border:4px solid var(--ink);border-radius:20px;background:var(--yellow);box-shadow:0 5px 0 var(--ink);font-family:var(--korean);font-size:26px;align-items:center;justify-content:center}
 .buzzer:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
@@ -444,11 +445,11 @@ const STR = {
     ph: '단어를 입력하세요', enter: '입력', hint: '힌트',
     short: '3글자 이상만 돼요', mismatch: '{S}로 시작해서 {E}로 끝나야 해요', usedOpp: '상대가 먼저 썼어요',
     usedMe: '이미 쓴 단어예요', base: '기본형만 돼요 ({w} → {b})', proper: '이름이나 약어는 안 돼요', notword: '사전에 없는 단어예요',
-    frozen: '{n}초 후에 다시 할 수 있어요',
+    frozen: '{n}초 후에 다시 할 수 있어요', frozenTop: '다시 하기까지', frozenN: '{n}초',
     buzz: '도전!', cancel: '취소', waiting: '{name} 입력 중...', pass: '{name} 차례예요! 10초 안에 입력', timeout: '시간이 지났어요',
     thinking: '생각 중...',
     winYou: '승리!', loseYou: '아쉬워요', draw: '무승부', winName: '{name} 승리!', timeUp: '시간 종료',
-    again: '다시 하기', hintLabel: '힌트', hintOut: '힌트가 나왔어요!', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '홈으로', none: '없음', ok: '확인',
+    again: '다시 하기', hintLabel: '힌트', hintOut: '힌트가 나왔어요!', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', home: '홈으로', quit: '그만하기', none: '없음', ok: '확인',
     tut1: '두 사람이 알파벳을 하나씩 고르면, 룰렛이 시작 글자와 끝 글자를 정해요',
     tut2: '조건에 맞는 영어 단어를 3번 먼저 쓰면 승리! 상대가 쓴 단어는 못 써요',
     tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(STARTING), 과거형(STARTED) 등은 안 돼요. 제한 시간은 3분이에요',
@@ -479,11 +480,11 @@ const STR = {
     ph: 'Type a word', enter: 'Enter', hint: 'Hint',
     short: 'Words need 3+ letters', mismatch: 'Must start with {S} and end with {E}', usedOpp: 'Your opponent used it first',
     usedMe: 'You already used that', base: 'Base forms only ({w} → {b})', proper: 'No names or abbreviations', notword: 'Not in the dictionary',
-    frozen: 'Try again in {n}s',
+    frozen: 'Try again in {n}s', frozenTop: 'Try again in', frozenN: '{n}s',
     buzz: 'I got it!', cancel: 'Cancel', waiting: '{name} is typing...', pass: '{name}, your turn! 10 seconds', timeout: 'Time ran out',
     thinking: 'Thinking...',
     winYou: 'You win!', loseYou: 'So close!', draw: 'Draw', winName: '{name} wins!', timeUp: 'Time up',
-    again: 'Play again', hintLabel: 'Hint', hintOut: 'A hint appeared!', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', home: 'Home', none: 'none', ok: 'OK',
+    again: 'Play again', hintLabel: 'Hint', hintOut: 'A hint appeared!', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', home: 'Home', quit: 'Quit', none: 'none', ok: 'OK',
     tut1: 'Each player picks a letter. The roulette decides which one starts the word and which one ends it',
     tut2: 'Be the first to write 3 words that fit! You can’t use a word your opponent already used',
     tut3: 'Words need 3+ letters, base forms only. No plurals (CATS), -ing forms (STARTING) or past tense (STARTED). Each game lasts 3 minutes',
@@ -854,7 +855,7 @@ function pauseMenu() {
   if (!G.mode || G.phase === 'over') return;
   if (isDuo() && G.active !== null) cancelBuzz(G.active);
   $('sheet').innerHTML = `<h2>${esc(t('paused'))}</h2>
-    <div class="pause-list"><button class="go" type="button" id="pResume">${t('resume')}</button><button class="go alt" type="button" id="pRules">${t('rules')}</button><button class="go soon" type="button" id="pHome">${t('home')}</button></div>`;
+    <div class="pause-list"><button class="go" type="button" id="pResume">${t('resume')}</button><button class="go alt" type="button" id="pRules">${t('rules')}</button><button class="go soon" type="button" id="pHome">${t('quit')}</button></div>`;
   $('ov').hidden = false; renderToggles();
   $('pResume').onclick = () => { $('ov').hidden = true; };
   $('pRules').onclick = () => tutorial(false);
@@ -958,6 +959,17 @@ function setFace(p, face, ms, after) {
 
 /* ---------- panels / keyboard ---------- */
 const ROWS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+/* Aa key: show the keyboard, typing and played words in small letters (start/end tiles stay capitals) */
+let lowerCase = false; try { lowerCase = localStorage.getItem('fl-lower') === '1'; } catch (e) { }
+const cs = x => (lowerCase ? x.toLowerCase() : x.toUpperCase());
+function toggleCase() {
+  lowerCase = !lowerCase; try { localStorage.setItem('fl-lower', lowerCase ? '1' : '0'); } catch (e) { }
+  sfx('key'); renderPanels(); refreshWords();
+}
+function refreshWords() {
+  const box = $('center').querySelector('.words');
+  if (box) box.innerHTML = G.order.map(([x, q]) => `<span class="chip p${q}">${cs(x)}</span>`).join('');
+}
 function panelMode(p) {
   if (G.phase === 'pick') return G.picker === p ? 'pick' : (isDuo() ? 'wait' : 'off');
   if (G.phase === 'play') { if (!isDuo()) return p === 0 ? 'type' : 'off'; return G.active === p ? 'type' : (G.active === null ? 'buzz' : 'wait'); }
@@ -973,16 +985,17 @@ function renderPanels() {
     const who = G.phase === 'pick' ? G.picker : G.active;
     const buzzLabel = locked ? t('frozen', { n: G.lockLeft[p] }) : mode === 'buzz' ? t('buzz') : (who === 0 || who === 1) ? t('waiting', { name: nameOf(who) }) : '...';
     let ki = 0;
-    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(t('ph'))}">${G.input[p].toUpperCase()}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act" type="button" data-go="1">${t('enter')}</button></div>
+    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(t('ph'))}">${cs(G.input[p])}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act" type="button" data-go="1">${t('enter')}</button></div>
       <div class="tbar"><i id="tbar${p}"></i></div>
-      <div class="kb">${ROWS.map((r, ri) => `<div class="r">${[...r].map(c => `<button class="key" type="button" style="--i:${ki++}" data-k="${c}" ${allowed && !allowed.has(c.toLowerCase()) ? 'disabled' : ''}>${c}</button>`).join('')}${ri === 1 && mode !== 'pick' ? `<button class="key wide" type="button" data-k="DEL" aria-label="Delete">⌫</button>` : ''}${ri === 2 && mode !== 'pick' ? `<button class="key wide" type="button" data-k="ENT" aria-label="Enter">⏎</button>` : ''}</div>`).join('')}</div>
+      <div class="kb">${ROWS.map((r, ri) => `<div class="r">${ri === 2 && mode !== 'pick' ? `<button class="key wide case" type="button" data-case="1" aria-label="Aa">${lowerCase ? 'aA' : 'Aa'}</button>` : ''}${[...r].map(c => `<button class="key" type="button" style="--i:${ki++}" data-k="${c}" ${allowed && !allowed.has(c.toLowerCase()) ? 'disabled' : ''}>${mode === 'pick' ? c : cs(c)}</button>`).join('')}${ri === 1 && mode !== 'pick' ? `<button class="key wide" type="button" data-k="DEL" aria-label="Delete">⌫</button>` : ''}${ri === 2 && mode !== 'pick' ? `<button class="key wide" type="button" data-k="ENT" aria-label="Enter">⏎</button>` : ''}</div>`).join('')}</div>
       <button class="buzzer" type="button" data-buzz="1" ${mode !== 'buzz' || locked ? 'disabled' : ''}>${esc(buzzLabel)}</button>
-      ${locked && !isDuo() ? `<div class="frost"><span><b class="lockn">${G.lockLeft[p]}</b>${esc(t('frozen', { n: G.lockLeft[p] }))}</span></div>` : ''}`;
+      ${locked && !isDuo() ? `<div class="frost"><span>${esc(t('frozenTop'))}<b class="lockn">${esc(t('frozenN', { n: G.lockLeft[p] }))}</b></span></div>` : ''}`;
     el.onpointerdown = e => { const b = e.target.closest('button'); if (!b || b.disabled) return; e.preventDefault(); onPanel(p, b); };
     el.onclick = e => { if (e.detail === 0) { const b = e.target.closest('button'); if (b && !b.disabled) onPanel(p, b); } };
   });
 }
 function onPanel(p, b) {
+  if (b.dataset.case) return toggleCase();
   if (b.dataset.buzz) return buzz(p);
   if (b.dataset.hint) return hint();
   if (b.dataset.cancel) return cancelBuzz(p);
@@ -994,7 +1007,7 @@ function onPanel(p, b) {
   if (k === 'DEL') G.input[p] = G.input[p].slice(0, -1);
   else if (k === 'ENT') return submit(p);
   else if (G.input[p].length < 16) G.input[p] += k.toLowerCase();
-  sfx('key'); const ty = $('typed' + p); if (ty) { ty.textContent = G.input[p].toUpperCase(); ty.classList.remove('bad'); }
+  sfx('key'); const ty = $('typed' + p); if (ty) { ty.textContent = cs(G.input[p]); ty.classList.remove('bad'); }
 }
 document.addEventListener('keydown', e => {
   if (!G.mode || paused() || e.metaKey || e.ctrlKey || e.altKey) return;
@@ -1135,7 +1148,7 @@ function penalize(p, msg) {
     if (G.lockLeft[p] <= 0) { clearInterval(G.lockId[p]); G.lock[p] = false; if (G.phase === 'play') renderPanels(); return; }
     /* update only the countdown so the error message stays visible */
     const el = $('panel' + p), n = $('panel' + p).querySelector('.lockn'), bz = el.querySelector('.buzzer');
-    if (n) { n.textContent = G.lockLeft[p]; n.nextSibling.textContent = t('frozen', { n: G.lockLeft[p] }); }
+    if (n) { n.textContent = t('frozenN', { n: G.lockLeft[p] }); n.style.animation = 'none'; void n.offsetWidth; n.style.animation = ''; }
     if (bz && isDuo()) bz.textContent = t('frozen', { n: G.lockLeft[p] });
   }, 1000);
 }
@@ -1146,8 +1159,7 @@ function accept(p, w) {
   if (isDuo()) { clearTimeout(G.buzzId); G.active = null; }
   if (n >= 3) { G.phase = 'ko'; clearInterval(G.clockId); clearTimeout(G.aiId); }
   if (G.hints.some(h => h.w === w)) renderPanels();
-  const box = $('center').querySelector('.words');
-  if (box) box.innerHTML = G.order.map(([x, q]) => `<span class="chip p${q}">${x.toUpperCase()}</span>`).join('');
+  refreshWords();
   renderPanels();
   const tok = G.token;
   attack(p, w, n, tok).then(() => { if (n >= 3 && tok === G.token) finish(p, false); });
@@ -1181,7 +1193,7 @@ function makeHint() {
   return { w, b: blanksFor(w) };
 }
 function hintHTML(h) {
-  const cells = [...h.w].map((c, i) => (h.b.includes(i) ? '<i></i>' : `<span>${c.toUpperCase()}</span>`)).join('');
+  const cells = [...h.w].map((c, i) => (h.b.includes(i) ? '<i></i>' : `<span>${cs(c)}</span>`)).join('');
   return `<span class="hw${G.used.has(h.w) ? ' used' : ''}" aria-label="${h.w.length}">${cells}</span>`;
 }
 function hintBar() { return G.hints && G.hints.length && (G.phase === 'play' || G.phase === 'ko') ? `<div class="hintbar"><b>${t('hintLabel')}</b>${G.hints.map(hintHTML).join('')}</div>` : ''; }
@@ -1282,7 +1294,7 @@ async function attack(p, w, n, tok) {
   voice(p, 'hup');
   if (n === 1) {
     sfx('whoosh');
-    const letters = [...w.toUpperCase()].slice(0, 8);
+    const letters = [...cs(w)].slice(0, 8);
     const flights = letters.map((c, i) => wait(i * 130).then(() => {
       const el = document.createElement('div'); el.className = 'fly'; el.textContent = c; return fly(el, from, to, 1000, 360 * (i % 2 ? 1 : -1), side).then(() => { if (live() && i > 0) sfx('block'); });
     }));
@@ -1330,7 +1342,7 @@ function finish(winner, byTime) {
   if (winner === null) title = t('draw');
   else if (!isDuo()) title = winner === 0 ? t('winYou') : t('loseYou');
   else title = t('winName', { name: nameOf(winner) });
-  const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<button type="button" class="chip p${p}" data-say="${x[0]}">${x[0].toUpperCase()} <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg></button>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
+  const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<button type="button" class="chip p${p}" data-say="${x[0]}">${cs(x[0])} <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg></button>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
   setTimeout(() => {
     if (tok !== G.token) return;
     $('sheet').innerHTML = `<h2>${esc(title)}</h2>${byTime ? `<p>${t('timeUp')}</p>` : ''}
