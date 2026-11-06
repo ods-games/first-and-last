@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106165902';
+  var BUILD = '20261106170234';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -66,7 +66,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .home-top .rt{display:flex;gap:8px}
 .home-top .icon-btn{border-radius:50%;width:42px;height:42px;box-shadow:0 3px 0 var(--ink)}
 .pill{border:3px solid var(--ink);border-radius:999px;background:var(--paper);padding:6px 14px;font-family:var(--korean);font-size:15px;box-shadow:0 3px 0 var(--ink)}
-.title{margin:6px 0 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.title{flex:1 0 auto;margin:0;padding-block:clamp(16px,4vh,40px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,2vh,20px)}
 .t-row{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:2px}
 .t-row .t-tile{width:clamp(56px,17vw,76px);height:clamp(56px,17vw,76px);font-size:clamp(36px,11vw,50px);border-width:5px;border-radius:18px;box-shadow:0 6px 0 var(--ink);animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
 .t-row .t-tile.f{background:var(--mint);transform:rotate(-7deg)}
@@ -75,13 +75,13 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
   text-shadow:3px 0 0 var(--ink),-3px 0 0 var(--ink),0 3px 0 var(--ink),0 -3px 0 var(--ink),2px 2px 0 var(--ink),-2px 2px 0 var(--ink),2px -2px 0 var(--ink),-2px -2px 0 var(--ink),0 7px 0 var(--ink)}
 .t-amp{color:var(--yellow)}
 .ribbon{font-family:var(--korean);font-size:15px;background:var(--yellow);border:3px solid var(--ink);border-radius:999px;padding:4px 16px;box-shadow:0 3px 0 var(--ink);text-align:center;text-wrap:balance;max-width:92%}
-.stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;height:clamp(110px,17vh,145px);margin-top:14px;margin-bottom:-22px}
+.stage{display:flex;justify-content:center;align-items:flex-end;gap:4px;height:clamp(110px,17vh,150px);margin-top:0;margin-bottom:-22px;flex:none}
 .stage .hc{height:100%;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%}
 .stage .hc:last-child{animation-delay:-1.3s}
 .stage svg{height:100%;width:auto;overflow:visible}
 .vs{align-self:center;margin-bottom:10px;width:46px;height:46px;flex:none;border-radius:50%;background:var(--pink);border:4px solid var(--ink);box-shadow:0 4px 0 var(--ink);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--paper);
   text-shadow:2px 0 0 var(--ink),-2px 0 0 var(--ink),0 2px 0 var(--ink),0 -2px 0 var(--ink);transform:rotate(-8deg)}
-.field{flex:1;background:var(--grass);border-top:5px solid var(--ink);border-radius:50% 50% 0 0/38px 38px 0 0;padding-top:40px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
+.field{flex:none;background:var(--grass);border-top:5px solid var(--ink);border-radius:50% 50% 0 0/38px 38px 0 0;padding-top:40px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
 .mcard{border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:var(--c);transition:transform .08s}
 .mcard:has(.mmain:active){transform:translateY(4px);box-shadow:0 2px 0 var(--ink)}
 .mrow{display:flex;align-items:center}
@@ -105,7 +105,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .go:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 .go.alt{background:var(--mint)}
 .go.soon{background:var(--paper)}
-.copy{text-align:center;font-size:12px;color:var(--ink);opacity:.6;margin-top:auto}
+.copy{text-align:center;font-size:12px;color:var(--ink);opacity:.6;margin-top:4px}
 @keyframes bob{50%{transform:translateY(-8px) rotate(var(--r,0deg))}}
 @keyframes tileIn{from{transform:scale(.2) rotate(-40deg);opacity:0}}
 /* ---------- game ---------- */
@@ -260,7 +260,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 <body>
 <div id="app">
   <section id="home" class="screen">
-    <div class="deco" aria-hidden="true"><div class="cl" style="left:-20px;top:120px;width:120px;height:30px"></div><div class="cl" style="right:-30px;top:190px;width:150px;height:34px"></div><div class="ft" style="left:3%;top:122px;background:#FFE07A;--r:-10deg;transform:rotate(-10deg);animation-delay:0s">A</div><div class="ft" style="left:88%;top:150px;background:#BDEBD8;--r:9deg;transform:rotate(9deg);animation-delay:-1s">Q</div></div>
+    <div class="deco" aria-hidden="true"><div class="cl" style="left:-20px;top:120px;width:120px;height:30px"></div><div class="cl" style="right:-30px;top:190px;width:150px;height:34px"></div><div class="ft" style="left:5%;top:33%;background:#FFE07A;--r:-10deg;transform:rotate(-10deg);animation-delay:0s">A</div><div class="ft" style="left:85%;top:30%;background:#BDEBD8;--r:9deg;transform:rotate(9deg);animation-delay:-1s">Q</div></div>
     <div class="home-top gut">
       <button class="pill" id="langBtn" type="button"></button>
       <div class="rt">
