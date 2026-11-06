@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106201759';
+  var BUILD = '20261106202415';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -199,7 +199,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .hintbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px}
 .hintbar b{font-family:var(--korean);font-weight:400;font-size:14px;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:0 9px}
 .hw{display:inline-flex;align-items:center;gap:5px;font-size:20px;font-weight:700}
-.hw i{display:inline-block;width:13px;height:13px;border:3px solid var(--ink);border-radius:50%;box-sizing:border-box}
+.hw i{display:inline-block;width:15px;height:18px;border:2.5px dashed var(--ink);border-radius:3px;box-sizing:border-box}
 .hw.used{opacity:.35;text-decoration:line-through}
 .typed{flex:1;min-width:0;height:46px;box-sizing:border-box;border:4px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;padding:0 12px;font-size:22px;font-weight:600;letter-spacing:2px;overflow:hidden;white-space:nowrap}
 .typed:empty::before{content:attr(data-ph);font-family:var(--korean);font-size:16px;letter-spacing:0;color:#8A7466}
@@ -554,18 +554,19 @@ let AC = null, SFXBUS = null, MUSBUS = null;
 /* ask iOS for the media-playback audio category up front, before any sound is made, so the ring switch doesn't mute the game */
 try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
 function ac() {
+  if ((!soundOn && !musicOn) || !AC || AC.state === 'closed') return null;
+  return AC;
+}
+function wakeAudio() {
   if (!soundOn && !musicOn) return null;
   try {
-    if (!AC) {
+    if (!AC || AC.state === 'closed') {
       const ctx = AC = new (window.AudioContext || window.webkitAudioContext)();
-      SFXBUS = AC.createGain(); SFXBUS.gain.value = 1; SFXBUS.connect(AC.destination);
-      MUSBUS = AC.createGain(); MUSBUS.gain.value = .07; MUSBUS.connect(AC.destination);
-      /* the first tap only asks the audio engine to wake up; it finishes a moment later, so start the music then */
-      ctx.addEventListener('statechange', () => {
-        if (AC !== ctx) return;
-        if (ctx.state === 'running') { if (MUS.want && !MUS.playing) startMusic(); }
-        else if (ctx.state !== 'closed' && !document.hidden) setTimeout(() => { if (AC === ctx && ctx.state !== 'running') ctx.resume().catch(() => { }); }, 60);
-      });
+      NOISE = null;
+      SFXBUS = ctx.createGain(); SFXBUS.gain.value = 1; SFXBUS.connect(ctx.destination);
+      MUSBUS = ctx.createGain(); MUSBUS.gain.value = .07; MUSBUS.connect(ctx.destination);
+      /* waking up finishes a moment after the tap, so start the music then */
+      ctx.addEventListener('statechange', () => { if (AC === ctx && ctx.state === 'running' && MUS.want && !MUS.playing) startMusic(); });
     }
     if (AC.state !== 'running') { const r = AC.resume(); if (r && r.catch) r.catch(() => { }); }
   } catch (e) { return null; }
@@ -593,17 +594,18 @@ function startKeepAlive() {
 let speechPrimed = false;
 function unlockAudio() {
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
-  const a = ac(); if (!a) return;
+  const a = wakeAudio(); if (!a) return;
   startKeepAlive();
   try { const b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) { }
+  /* iPhones only let a page speak after it has spoken once inside a tap */
   if (!speechPrimed && soundOn && 'speechSynthesis' in window) {
     speechPrimed = true;
-    try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } catch (e) { }
+    try { if (!enVoice) pickVoice(); const u = new SpeechSynthesisUtterance('hi'); u.lang = 'en-US'; u.volume = 0; u.rate = 2; speechSynthesis.speak(u); } catch (e) { }
   }
   if (MUS.want && !MUS.playing) startMusic();
 }
 /* capture phase: unlock runs before any button's own handler tries to play a sound */
-['touchstart', 'touchend', 'pointerup', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true, capture: true }));
+['touchend', 'pointerup', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true, capture: true }));
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) releaseAudio();
 });
@@ -614,6 +616,7 @@ function releaseAudio() {
   stopMusic();
   try { speechSynthesis.cancel(); } catch (e) { }
   if (keepAlive) { try { keepAlive.pause(); } catch (e) { } }
+  speechPrimed = false;
   if (AC) { const c = AC; AC = null; NOISE = null; try { c.close(); } catch (e) { } }
 }
 
@@ -692,7 +695,15 @@ function pickVoice() {
 if ('speechSynthesis' in window) { pickVoice(); try { speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (e) { } }
 function sayWord(w) {
   if (!soundOn || !('speechSynthesis' in window)) return;
-  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(w); u.lang = 'en-US'; if (enVoice) u.voice = enVoice; u.rate = .85; u.pitch = 1.75; u.volume = 1; speechSynthesis.speak(u); } catch (e) { }
+  try {
+    const go = () => {
+      const u = new SpeechSynthesisUtterance(w); u.lang = 'en-US'; if (enVoice) u.voice = enVoice;
+      u.rate = .85; u.pitch = 1.75; u.volume = 1;
+      try { speechSynthesis.resume(); } catch (e) { }
+      speechSynthesis.speak(u);
+    };
+    if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(go, 120); } else go();
+  } catch (e) { }
 }
 
 /* background music: a tiny step sequencer (eighth notes) with a home tune and a game tune */
@@ -724,6 +735,7 @@ function startMusic() {
 function stopMusic() { clearInterval(MUS.id); MUS.id = null; MUS.playing = null; }
 function schedMusic() {
   const A = AC, song = SONGS[MUS.playing]; if (!A || !song) return;
+  if (G.mode && paused()) { MUS.next = A.currentTime + .1; return; }
   if (A.currentTime > MUS.next + .5) MUS.next = A.currentTime + .05; // after a stall, don't machine-gun missed notes
   const dt = 60 / (song.bpm * (MUS.fast ? 1.22 : 1)) / 2;
   while (MUS.next < A.currentTime + .2) {
@@ -909,7 +921,6 @@ function renderPanels() {
   });
 }
 function onPanel(p, b) {
-  unlockAudio();
   if (b.dataset.buzz) return buzz(p);
   if (b.dataset.hint) return hint();
   if (b.dataset.cancel) return cancelBuzz(p);
