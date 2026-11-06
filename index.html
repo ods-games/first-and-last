@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106220805';
+  var BUILD = '20261106230035';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -50,7 +50,8 @@ body{margin:0;font:14px system-ui,sans-serif}
   --display:'Fredoka','Jua',ui-rounded,system-ui,sans-serif;
   --korean:'Jua','Fredoka',ui-rounded,system-ui,sans-serif;
 }
-html,body{height:100%;overscroll-behavior:none}
+html,body{height:100%}
+body{overscroll-behavior:none}
 #app{overscroll-behavior:none}
 body{word-break:keep-all;overflow-wrap:break-word;background:var(--page);color:var(--ink);font-family:var(--display);overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -294,8 +295,24 @@ button.chip{cursor:pointer;color:var(--ink)}
    page background is the color of the screen's bottom edge (grass on the home screen, keyboard cream in a game). */
 html,body{background:#CDEFBE}
 html.on-game,html.on-game body{background:#FFF4E8}
+/* the page itself never scrolls: if it did, iPhones can shift the picture away from where taps land */
+html,body{position:fixed;inset:0;overflow:hidden}
 #app{position:fixed;left:0;right:0;top:0;bottom:0;height:auto;margin:0 auto;padding-top:env(safe-area-inset-top,0px);box-sizing:border-box}
 </style>
+<script>
+(function () {
+  function settle() { if (window.scrollX || window.scrollY) window.scrollTo(0, 0); }
+  ['resize', 'orientationchange', 'pageshow', 'focus'].forEach(function (e) { addEventListener(e, function () { setTimeout(settle, 60); }); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) setTimeout(settle, 60); });
+  /* the phone tints its bottom edge with the theme color: keep it matching the screen's bottom */
+  function tint() {
+    var m = document.querySelector('meta[name="theme-color"]'); if (!m) return;
+    m.setAttribute('content', document.documentElement.classList.contains('on-game') ? '#FFF4E8' : '#CDEFBE');
+  }
+  new MutationObserver(tint).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  document.addEventListener('DOMContentLoaded', tint);
+})();
+</script>
 </head>
 <body>
 <div id="app">
@@ -419,7 +436,7 @@ const STR = {
     me: '나', ai: '토리 (AI)', p1: '플레이어 1', p2: '플레이어 2',
     startLbl: '시작', endLbl: '끝',
     pickYou: '알파벳을 하나 고르세요', pickName: '{name}, 알파벳을 고르세요', dimNote: '흐린 글자는 단어가 부족해요',
-    aiPicked: '{name}는 {L}를 골랐어요', tooFew: '단어가 너무 적은 조합이에요. 다시 골라요',
+    aiPicked: '{name}는 {L}를 골랐어요', tooFew: '단어가 너무 적은 조합이에요. 다시 골라요', tooFewPair: '{A}와 {B}로 만들 수 있는 단어가 너무 적어요. 다시 골라주세요!', tooFewOne: '{A}와 짝이 되는 글자가 거의 없어요. 다시 골라주세요!',
     roulette: '어느 글자가 시작일까?', startEnd: '{S}로 시작, {E}로 끝!', fight: '3단어 먼저 맞히면 승리',
     ph: '단어를 입력하세요', enter: '입력', hint: '힌트',
     short: '3글자 이상만 돼요', mismatch: '{S}로 시작해서 {E}로 끝나야 해요', usedOpp: '상대가 먼저 썼어요',
@@ -454,7 +471,7 @@ const STR = {
     me: 'You', ai: 'Tori (AI)', p1: 'Player 1', p2: 'Player 2',
     startLbl: 'Start', endLbl: 'End',
     pickYou: 'Pick a letter', pickName: '{name}, pick a letter', dimNote: 'Faded letters have too few words',
-    aiPicked: '{name} picked {L}', tooFew: 'Too few words for that pair. Pick again',
+    aiPicked: '{name} picked {L}', tooFew: 'Too few words for that pair. Pick again', tooFewPair: 'Too few words with {A} and {B}. Pick again!', tooFewOne: 'Hardly any words work with {A}. Pick again!',
     roulette: 'Which one starts?', startEnd: 'Starts with {S}, ends with {E}!', fight: 'First to 3 words wins',
     ph: 'Type a word', enter: 'Enter', hint: 'Hint',
     short: 'Words need 3+ letters', mismatch: 'Must start with {S} and end with {E}', usedOpp: 'Your opponent used it first',
@@ -1024,7 +1041,7 @@ function pickLetter(p, l) {
   if (p === 0) {
     setTiles(l.toUpperCase(), '?');
     const opts = partners(l);
-    if (!opts.length) { G.picker = -1; renderPanels(); setCenter(`<div class="msg">${esc(t('tooFew'))}</div>`); return later(() => (isOnline() ? onlinePick(false) : beginPick()), 1600); }
+    if (!opts.length) { const m = t('tooFewOne', { A: l.toUpperCase() }); sfx('wrong'); if (isOnline()) return onlinePick(m); G.picker = -1; renderPanels(); setCenter(`<div class="msg">${esc(m)}</div>`); return later(() => beginPick(m), 1800); }
     if (isOnline()) return onlinePicked(l);
     if (G.mode === 'ai') {
       const score = x => Math.max(cnt(l, x), cnt(x, l));
@@ -1040,7 +1057,7 @@ function pickLetter(p, l) {
 function jump(p) { const c = charEl(p); c.classList.remove('jump'); void c.offsetWidth; c.classList.add('jump'); }
 function roulette(forced) {
   const [a, b] = G.picks, dirs = forced ? [forced] : dirsOK(a, b);
-  if (!dirs.length) { setCenter(`<div class="msg">${esc(t('tooFew'))}</div>`); return later(() => beginPick(), 1600); }
+  if (!dirs.length) { const m = t('tooFewPair', { A: a.toUpperCase(), B: b.toUpperCase() }); sfx('wrong'); setCenter(`<div class="msg">${esc(m)}</div>`); return later(() => beginPick(m), 1800); }
   G.phase = 'roulette'; renderPanels();
   const chosen = dirs[Math.floor(Math.random() * dirs.length)];
   const finalIdx = chosen[0] === a ? 0 : 1;
@@ -1133,29 +1150,50 @@ function accept(p, w) {
   attack(p, w, n, tok).then(() => { if (n >= 3 && tok === G.token) finish(p, false); });
 }
 /* hints: a short, common word that fits, shown as letters and hollow circles (easier to count than underscores) */
-function pickHintWord() {
+/* a hint = a short, common, unused word plus which letters are hidden.
+   At most 2 letters are hidden, and two hints on screen never look the same. */
+function hintPattern(h) { return [...h.w].map((c, i) => (h.b.includes(i) ? '_' : c)).join(''); }
+function blanksFor(w) {
+  const n = w.length, inner = []; for (let i = 1; i < n - 1; i++) inner.push(i);
+  const taken = new Set((G.hints || []).map(hintPattern));
+  for (let k = Math.min(2, inner.length); k >= 1; k--) {
+    const combos = [];
+    if (k === 1) inner.forEach(a => combos.push([a]));
+    else inner.forEach((a, x) => inner.slice(x + 1).forEach(b => combos.push([a, b])));
+    combos.sort(() => Math.random() - .5);
+    const ok = combos.find(b => !taken.has(hintPattern({ w, b })));
+    if (ok) return ok;
+  }
+  return inner.slice(0, Math.min(2, inner.length));
+}
+function makeHint() {
   const key = G.start + G.end, shown = new Set(G.hints.map(h => h.w));
   const free = list => (list || []).filter(w => !G.used.has(w) && !shown.has(w));
   let pool = free(IDX_E[key]); if (!pool.length) pool = free(IDX[key]); if (!pool.length) return null;
+  const lens = new Set(G.hints.map(h => h.w.length)), fresh = pool.filter(w => !lens.has(w.length));
+  if (fresh.length) pool = fresh; // prefer a length not shown yet, so hints look different at a glance
   pool.sort((a, b) => a.length - b.length);
   const short = pool.filter(w => w.length <= pool[0].length + 1).slice(0, 8);
-  return short[Math.floor(Math.random() * short.length)];
+  const w = short[Math.floor(Math.random() * short.length)];
+  return { w, b: blanksFor(w) };
 }
 function hintHTML(h) {
-  const w = h.w, n = w.length;
-  const cells = [...w].map((c, i) => (i === 0 || i === n - 1 || (i === 1 && n >= 5)) ? `<span>${c.toUpperCase()}</span>` : '<i></i>').join('');
-  return `<span class="hw${G.used.has(w) ? ' used' : ''}" aria-label="${n}">${cells}</span>`;
+  const cells = [...h.w].map((c, i) => (h.b.includes(i) ? '<i></i>' : `<span>${c.toUpperCase()}</span>`)).join('');
+  return `<span class="hw${G.used.has(h.w) ? ' used' : ''}" aria-label="${h.w.length}">${cells}</span>`;
 }
 function hintBar() { return G.hints && G.hints.length && (G.phase === 'play' || G.phase === 'ko') ? `<div class="hintbar"><b>${t('hintLabel')}</b>${G.hints.map(hintHTML).join('')}</div>` : ''; }
-function addHint(w) {
-  if (!w || G.hints.some(h => h.w === w)) return;
-  G.hints.push({ w }); renderPanels(); sfx('pick');
+function addHint(h) {
+  if (!h) return;
+  if (typeof h === 'string') h = { w: h, b: blanksFor(h) };
+  if (!Array.isArray(h.b)) h.b = blanksFor(h.w);
+  if (G.hints.some(x => x.w === h.w)) return;
+  G.hints.push(h); renderPanels(); sfx('pick');
   [0, 1].forEach(p => { if (p === 0 || isDuo()) toast(p, t('hintOut'), 1800); });
 }
 function hint() {
   if (G.phase !== 'play' || G.hintUsed) return;
-  const w = pickHintWord(); if (!w) return toast(0, t('notword'));
-  G.hintUsed = true; addHint(w);
+  const h = makeHint(); if (!h) return toast(0, t('notword'));
+  G.hintUsed = true; addHint(h);
 }
 /* duo and online: hints at 2:00, 1:00 and 0:30 left, unless someone is already doing well (same for both players) */
 function timedHints() {
@@ -1163,8 +1201,8 @@ function timedHints() {
     if (G.time > at || G.hintDone[at]) return;
     G.hintDone[at] = true;
     if (Math.max(G.scores[0], G.scores[1]) >= enough) return;
-    if (isOnline()) { if (ON && ON.role === 'host') { const w = pickHintWord(); if (w) ON.ref.child('hints/' + at).set(w).catch(() => { }); } }
-    else addHint(pickHintWord());
+    if (isOnline()) { if (ON && ON.role === 'host') { const h = makeHint(); if (h) ON.ref.child('hints/' + at).set(h).catch(() => { }); } }
+    else addHint(makeHint());
   });
 }
 
@@ -1435,7 +1473,7 @@ function onRoom(r) {
     if (ON.key !== k) {
       const fresh = ON.round !== r.round; ON.key = k;
       if (fresh) { ON.round = r.round; newGame('online'); }
-      onlinePick(r.note === 'tooFew');
+      onlinePick(r.note ? t('tooFewPair', { A: (r.note.split(':')[1] || '?').toUpperCase(), B: (r.note.split(':')[2] || '?').toUpperCase() }) : '');
     }
     if (ON.role === 'host' && r.picks && r.picks.host && r.picks.guest && !ON.resolving) resolvePicks(r);
     return;
@@ -1466,16 +1504,17 @@ function showLobby() {
   };
   sfx('buzz'); tick();
 }
-function onlinePick(tooFew) {
+function onlinePick(msg) {
+  if (msg) sfx('wrong');
   G.phase = 'pick'; G.picks = [null, null]; G.picker = 0; G.input = ['', ''];
   $('ov').hidden = true; setTiles('?', '?'); setFace(0, 'look'); setFace(1, 'idle');
-  renderPanels(); pickPrompt(tooFew ? t('tooFew') : '');
+  renderPanels(); pickPrompt(msg || '');
 }
 async function resolvePicks(r) {
   ON.resolving = true;
   try {
     const a = r.picks.host, b = r.picks.guest, dirs = dirsOK(a, b);
-    if (!dirs.length) await ON.ref.update({ picks: null, pickRound: (r.pickRound || 0) + 1, note: 'tooFew' });
+    if (!dirs.length) await ON.ref.update({ picks: null, pickRound: (r.pickRound || 0) + 1, note: 'tooFew:' + a + ':' + b });
     else { const c = dirs[Math.floor(Math.random() * dirs.length)]; await ON.ref.update({ status: 'roulette', start: c[0], end: c[1], note: null }); }
   } catch (e) { } finally { if (ON) ON.resolving = false; }
 }
