@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261106200033';
+  var BUILD = '20261106200902';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -552,13 +552,14 @@ function ac() {
   if (!soundOn && !musicOn) return null;
   try {
     if (!AC) {
-      AC = new (window.AudioContext || window.webkitAudioContext)();
+      const ctx = AC = new (window.AudioContext || window.webkitAudioContext)();
       SFXBUS = AC.createGain(); SFXBUS.gain.value = 1; SFXBUS.connect(AC.destination);
       MUSBUS = AC.createGain(); MUSBUS.gain.value = .07; MUSBUS.connect(AC.destination);
       /* the first tap only asks the audio engine to wake up; it finishes a moment later, so start the music then */
-      AC.addEventListener('statechange', () => {
-        if (AC.state === 'running') { if (MUS.want && !MUS.playing) startMusic(); }
-        else if (!document.hidden) setTimeout(() => { if (AC.state !== 'running') AC.resume().catch(() => { }); }, 60);
+      ctx.addEventListener('statechange', () => {
+        if (AC !== ctx) return;
+        if (ctx.state === 'running') { if (MUS.want && !MUS.playing) startMusic(); }
+        else if (ctx.state !== 'closed' && !document.hidden) setTimeout(() => { if (AC === ctx && ctx.state !== 'running') ctx.resume().catch(() => { }); }, 60);
       });
     }
     if (AC.state !== 'running') { const r = AC.resume(); if (r && r.catch) r.catch(() => { }); }
@@ -599,10 +600,17 @@ function unlockAudio() {
 /* capture phase: unlock runs before any button's own handler tries to play a sound */
 ['touchstart', 'touchend', 'pointerup', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true, capture: true }));
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { if (keepAlive) keepAlive.pause(); stopMusic(); try { speechSynthesis.cancel(); } catch (e) { } return; }
-  /* back from another app: wake the audio engine again and pick the music back up */
-  if (AC) { const r = AC.state !== 'running' ? AC.resume() : null; if (r && r.then) r.then(() => startMusic(), () => { }); else startMusic(); }
+  if (document.hidden) releaseAudio();
 });
+window.addEventListener('pagehide', releaseAudio);
+/* leaving the app: close the audio engine completely, so the phone's "playing" indicator goes away.
+   iPhones often can't wake an engine that was cut off in the background, so the next tap builds a fresh one. */
+function releaseAudio() {
+  stopMusic();
+  try { speechSynthesis.cancel(); } catch (e) { }
+  if (keepAlive) { try { keepAlive.pause(); } catch (e) { } }
+  if (AC) { const c = AC; AC = null; NOISE = null; try { c.close(); } catch (e) { } }
+}
 
 /* building blocks */
 function env(g, t0, a, peak, d) { g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + a); g.gain.exponentialRampToValueAtTime(.0001, t0 + a + d); }
