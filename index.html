@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107125851';
+  var BUILD = '20261107130104';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1330,7 +1330,7 @@ function check(w, p) {
   const S = G.start.toUpperCase(), E = G.end.toUpperCase();
   if (w.length < 3) return { msg: t('short') };
   if (w[0] !== G.start || w[w.length - 1] !== G.end) return { msg: t('mismatch', { S, E }) };
-  if (G.used.has(w)) return { msg: G.used.get(w) === p ? t('usedMe') : t('usedOpp') };
+  if (G.used.has(w)) return { msg: G.used.get(w) === p ? t('usedMe') : t('usedOpp'), used: true };
   if (VALID.has(w)) return null;
   const b = baseOf(w); if (b) return { msg: t('base', { w, b }) };
   if (PROPER.has(w)) return { msg: t('proper') };
@@ -1341,7 +1341,10 @@ function submit(p) {
   const w = G.input[p]; if (!w) return;
   const err = check(w, p);
   if (!err) return isOnline() ? claimWord(w) : accept(p, w);
-  sfx('wrong'); voice(p, 'huh'); setFace(p, 'scratch', 1600);
+  sfx('wrong');
+  /* a word that was already played is a real word: just say so, no freeze (both may have typed it at once) */
+  if (err.used) { G.input[p] = ''; if (isDuo()) { clearTimeout(G.buzzId); G.active = null; } renderPanels(); return toast(p, err.msg, 1800); }
+  voice(p, 'huh'); setFace(p, 'scratch', 1600);
   penalize(p, err.msg);
 }
 /* any wrong answer: that player's keyboard (solo) or buzzer (duo) is locked for 3 seconds */
@@ -1790,7 +1793,7 @@ function claimWord(w) {
   ON.ref.child('used/' + w).transaction(v => (v ? undefined : ON.role)).then(res => {
     G.pending = false; if (!ON) return;
     if (res.committed) return ON.ref.child('order').push({ w, by: ON.role, t: FB.TS });
-    sfx('wrong'); voice(0, 'huh'); setFace(0, 'scratch', 1600); penalize(0, t('usedOpp'));
+    sfx('wrong'); renderPanels(); toast(0, t('usedOpp'), 1800); /* the friend got it a moment earlier: no freeze */
   }).catch(() => { G.pending = false; toast(0, t('cantConnect')); });
 }
 function onOrder(o) {
