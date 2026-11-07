@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107124429';
+  var BUILD = '20261107124533';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -490,7 +490,7 @@ const STR = {
     inviteTitle: '친구 초대', inviteText: '이 링크를 친구에게 보내주세요. 친구가 들어오면 바로 시작해요.', copy: '링크 복사', copied: '복사했어요', share: '공유하기',
     waitingFriend: '친구를 기다리는 중...', expiresIn: '{t} 후 링크가 만료돼요', expired: '링크가 만료됐어요.', newLink: '새 링크 만들기',
     roomGone: '만료됐거나 없는 초대 링크예요.', roomFull: '이미 다른 사람이 들어간 방이에요.', ownLink: '내가 만든 초대 링크예요. 친구에게 보내주세요.',
-    lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
+    lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', lobbyReady: '준비되면 ✓를 눌러요. 둘 다 누르면 시작해요!', waitFriend: '친구를 기다리는 중...', friendReady: '친구는 준비됐어요! ✓를 눌러요', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
     friendLeft: '친구가 나갔어요', friendLeftText: '대결이 끝났어요.', waitRematch: '친구를 기다리는 중...', friendWants: '친구가 한 판 더 하고 싶어해요!',
     shareText: 'First n Last 영어 단어 대결 한 판 할래?',
     soon: '온라인 모드는 준비 중이에요', soonText: '친구에게 초대 링크를 보내서 각자 폰으로 대결하는 기능이 곧 들어와요.',
@@ -531,7 +531,7 @@ const STR = {
     inviteTitle: 'Invite a friend', inviteText: 'Send this link to a friend. The game starts as soon as they join.', copy: 'Copy link', copied: 'Copied', share: 'Share',
     waitingFriend: 'Waiting for your friend...', expiresIn: 'Link expires in {t}', expired: 'The link has expired.', newLink: 'New link',
     roomGone: 'This invite link has expired or doesn’t exist.', roomFull: 'Someone else already joined this game.', ownLink: 'This is your own invite link. Send it to a friend.',
-    lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
+    lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', lobbyReady: 'Tap ✓ when you’re ready. The game starts when you both are!', waitFriend: 'Waiting for your friend...', friendReady: 'Your friend is ready! Tap ✓', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
     friendLeft: 'Your friend left', friendLeftText: 'The game has ended.', waitRematch: 'Waiting for your friend...', friendWants: 'Your friend wants a rematch!',
     shareText: 'Up for a round of First n Last?',
     soon: 'Online mode is coming soon', soonText: 'You will be able to send a friend an invite link and play on your own phones.',
@@ -1703,7 +1703,12 @@ function onRoom(r) {
   if (r.left && r.left[oppRole()] && ON.joined) return friendLeft();
   if (r.status === 'waiting') return;
   if (!ON.joined && r.guest) { ON.joined = true; clearInterval(ON.ttlId); if (ON.role === 'host') { ON.ref.onDisconnect().cancel(); ON.ref.child('left/host').onDisconnect().set(true); } }
-  if (r.status === 'lobby') { if (ON.key !== 'lobby') { ON.key = 'lobby'; showLobby(); } return; }
+  if (r.status === 'lobby') {
+    if (ON.key !== 'lobby') { ON.key = 'lobby'; showLobby(); } else drawLobby();
+    const rd = r.ready || {};
+    if (ON.role === 'host' && rd.host && rd.guest && !ON.starting) { ON.starting = true; ON.ref.update({ status: 'pick', round: 1, pickRound: 0, note: null }).catch(() => { ON.starting = false; }); }
+    return;
+  }
   if (r.status === 'pick') {
     const k = 'pick' + r.round + '.' + (r.pickRound || 0);
     if (ON.key !== k) {
@@ -1728,17 +1733,20 @@ function onRoom(r) {
 }
 function showLobby() {
   newGame('online'); G.phase = 'lobby'; renderPanels();
-  let n = 3;
-  const draw = () => sheet(`<h2>${esc(ON.role === 'host' ? t('lobbyHost') : t('lobbyGuest'))}</h2>
-    <div class="tut-art lobby">${RAB_FRONT}</div><p>${esc(t('startsIn', { n }))}</p>
+  sfx('buzz'); drawLobby();
+}
+/* both players tap the check to say they're ready; the host starts the letter picking once both are in */
+function drawLobby() {
+  if (!ON || ON.key !== 'lobby') return;
+  const rd = (ON.room && ON.room.ready) || {}, me = !!rd[ON.role], friend = !!rd[oppRole()];
+  sheet(`<h2>${esc(ON.role === 'host' ? t('lobbyHost') : t('lobbyGuest'))}</h2>
+    <div class="tut-art lobby">${RAB_FRONT}</div>
+    <p>${esc(me ? t('waitFriend') : friend ? t('friendReady') : t('lobbyReady'))}</p>
+    ${me ? '<div class="spin" aria-hidden="true"></div>' : `<div class="ready-row"><button class="ready-ok" type="button" id="readyOk" aria-label="OK"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div>`}
     <div class="btns"><button class="go soon" type="button" id="leaveBtn">${t('leave')}</button></div>`);
-  const tick = () => {
-    if (!ON || ON.key !== 'lobby') return;
-    draw(); showSvg($('sheet').querySelector('.lobby'), 'rfront', 'happy'); $('leaveBtn').onclick = () => { leaveRoom(); goHome(); };
-    if (n <= 0) { $('ov').hidden = true; if (ON.role === 'host') ON.ref.update({ status: 'pick', round: 1, pickRound: 0, note: null }); return; }
-    n--; ON.lobbyId = setTimeout(tick, 1000);
-  };
-  sfx('buzz'); tick();
+  showSvg($('sheet').querySelector('.lobby'), 'rfront', 'happy');
+  $('leaveBtn').onclick = () => { leaveRoom(); goHome(); };
+  const ok = $('readyOk'); if (ok) ok.onclick = () => { sfx('pick'); ON.ref.child('ready/' + ON.role).set(true).catch(() => { }); };
 }
 function onlinePick(msg) {
   if (msg) sfx('wrong');
