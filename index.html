@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107134355';
+  var BUILD = '20261107134755';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1907,7 +1907,8 @@ function friendLeft() {
   if (!code) return;
   code = code.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
   try { history.replaceState(null, '', location.pathname); } catch (e) { }
-  if (code.length === 6) setTimeout(() => ensureNick(() => joinRoom(code)), 0);
+  /* an invited friend can't back out to home here (they'd need the link again): make a nickname, or "Later" and join anyway */
+  if (code.length === 6) setTimeout(() => (myNick ? joinRoom(code) : askNick(() => joinRoom(code), () => joinRoom(code))), 0);
 })();
 
 (function () {
