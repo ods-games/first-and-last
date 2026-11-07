@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107144907';
+  var BUILD = '20261107145140';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1877,14 +1877,38 @@ function showSearching() {
   ON.searchId = setInterval(() => {
     if (!ON || ON.joined) return clearInterval(ON && ON.searchId);
     sec++;
-    if (sec % 5 === 0) slot.transaction(cur => (cur && cur.uid === FB.uid ? { ...cur, at: FB.now() } : undefined)).catch(() => { });
+    /* keep my waiting spot fresh. (A transaction would silently do nothing here: its first try sees an empty local copy.)
+       The database rules only accept this write while the spot is still mine. */
+    if (sec % 4 === 0) keepSpot();
     if (sec >= MATCH_OFFER && !offered) { offered = true; sfx('pick'); draw(); return; }
     const sm = $('sheet').querySelector('.wait small'); if (sm) sm.textContent = sec + t('secUnit');
   }, 1000);
 }
+/* every few seconds while searching: refresh my waiting spot. If I lost it (e.g. the phone slept and someone else
+   took the empty spot), take it back, or if a fresh player is waiting there now, pair up with them. */
+async function keepSpot() {
+  if (!ON || ON.joined || ON.keeping) return;
+  ON.keeping = true;
+  const me = FB.uid, code = ON.code, slot = FB.db.ref('match/waiting');
+  try {
+    const v = (await slot.once('value')).val();
+    if (!ON || ON.joined || ON.code !== code) return;
+    if (v && v.uid === me) { await slot.child('at').set(FB.now()); return; }
+    let seen = null;
+    const res = await slot.transaction(cur => {
+      seen = cur;
+      if (cur && cur.uid !== me && FB.now() - (cur.at || 0) < MATCH_STALE) return null;
+      return { uid: me, code, at: FB.now() };
+    });
+    if (res.committed && !res.snapshot.exists() && seen && seen.uid !== me && seen.code && ON && !ON.joined && ON.code === code) {
+      clearInterval(ON.searchId); leaveRoom(); /* drop my empty room */
+      if (!(await joinRoom(seen.code, true))) randomMatch();
+    }
+  } catch (e) { } finally { if (ON) ON.keeping = false; }
+}
 /* leave the waiting slot (only if it's still mine) and close my empty room */
 function stopSearch() {
-  if (FB) FB.db.ref('match/waiting').transaction(cur => (cur && cur.uid === FB.uid ? null : undefined)).catch(() => { });
+  if (FB) { const sl = FB.db.ref('match/waiting'); sl.once('value').then(sn => { const v = sn.val(); if (v && v.uid === FB.uid) sl.remove(); }).catch(() => { }); }
   if (ON) clearInterval(ON.searchId);
   leaveRoom();
 }
