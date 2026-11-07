@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107140100';
+  var BUILD = '20261107140340';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -169,6 +169,8 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 #game.tut #card0,#game.tut #card1,#game.tut #hud,#game.tut #tools{visibility:hidden}
 #tutBadge{position:absolute;z-index:6;left:10px;top:8px;background:var(--yellow);border:3px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);font-family:var(--display);font-weight:700;font-size:26px;line-height:1;padding:8px 14px 7px;transform:rotate(-3deg)}
 #game.tut .msg.coach{background:#FFF6CC}
+.go.start-big{width:100%;font-size:22px;padding:14px 0}
+.leave-link{align-self:center;border:0;background:none;font-family:var(--korean);font-size:14px;color:var(--soft);text-decoration:underline;padding:4px 10px;margin-top:-6px}
 .ready-row{display:flex;justify-content:center;margin-top:14px}
 .ready-ok{width:54px;height:54px;border-radius:50%;border:3px solid var(--ink);background:var(--mint);box-shadow:0 4px 0 var(--ink);display:flex;align-items:center;justify-content:center;padding:0;color:var(--ink);animation:tutHi 1s ease-in-out infinite}
 .ready-ok:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
@@ -509,7 +511,7 @@ const STR = {
     inviteTitle: '친구 초대', inviteText: '이 링크를 친구에게 보내주세요. 친구가 들어오면 바로 시작해요.', copy: '링크 복사', copied: '복사했어요', share: '공유하기',
     waitingFriend: '친구를 기다리는 중...', expiresIn: '{t} 후 링크가 만료돼요', expired: '링크가 만료됐어요.', newLink: '새 링크 만들기',
     roomGone: '만료됐거나 없는 초대 링크예요.', roomFull: '이미 다른 사람이 들어간 방이에요.', ownLink: '내가 만든 초대 링크예요. 친구에게 보내주세요.',
-    lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', lobbyReady: '준비되면 ✓를 눌러요. 둘 다 누르면 시작해요!', waitFriend: '친구를 기다리는 중...', friendReady: '친구는 준비됐어요! ✓를 눌러요', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
+    lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', lobbyReady: '둘 다 대결 시작을 누르면 시작해요!', waitFriend: '상대를 기다리는 중...', friendReady: '상대는 준비됐어요! 대결 시작을 눌러요', startMatch: '대결 시작!', lobbyRival: '상대를 찾았어요!', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
     friendLeft: '친구가 나갔어요', friendLeftText: '대결이 끝났어요.', waitRematch: '친구를 기다리는 중...', friendWants: '친구가 한 판 더 하고 싶어해요!',
     shareText: 'First n Last 영어 단어 대결 한 판 할래?',
     soon: '온라인 모드는 준비 중이에요', soonText: '친구에게 초대 링크를 보내서 각자 폰으로 대결하는 기능이 곧 들어와요.',
@@ -550,7 +552,7 @@ const STR = {
     inviteTitle: 'Invite a friend', inviteText: 'Send this link to a friend. The game starts as soon as they join.', copy: 'Copy link', copied: 'Copied', share: 'Share',
     waitingFriend: 'Waiting for your friend...', expiresIn: 'Link expires in {t}', expired: 'The link has expired.', newLink: 'New link',
     roomGone: 'This invite link has expired or doesn’t exist.', roomFull: 'Someone else already joined this game.', ownLink: 'This is your own invite link. Send it to a friend.',
-    lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', lobbyReady: 'Tap ✓ when you’re ready. The game starts when you both are!', waitFriend: 'Waiting for your friend...', friendReady: 'Your friend is ready! Tap ✓', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
+    lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', lobbyReady: 'The game starts when you both tap Start!', waitFriend: 'Waiting for the other player...', friendReady: 'They’re ready! Tap Start', startMatch: 'Start!', lobbyRival: 'Found a player!', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
     friendLeft: 'Your friend left', friendLeftText: 'The game has ended.', waitRematch: 'Waiting for your friend...', friendWants: 'Your friend wants a rematch!',
     shareText: 'Up for a round of First n Last?',
     soon: 'Online mode is coming soon', soonText: 'You will be able to send a friend an invite link and play on your own phones.',
@@ -1930,11 +1932,11 @@ function showLobby() {
 function drawLobby() {
   if (!ON || ON.key !== 'lobby') return;
   const rd = (ON.room && ON.room.ready) || {}, me = !!rd[ON.role], friend = !!rd[oppRole()];
-  sheet(`<h2>${esc(ON.role === 'host' ? t('lobbyHost') : t('lobbyGuest'))}</h2>
+  sheet(`<h2>${esc(ON.random ? t('lobbyRival') : ON.role === 'host' ? t('lobbyHost') : t('lobbyGuest'))}</h2>
     <div class="tut-art lobby">${RAB_FRONT}</div>
     <p>${esc(me ? t('waitFriend') : friend ? t('friendReady') : t('lobbyReady'))}</p>
-    ${me ? '<div class="spin" aria-hidden="true"></div>' : `<div class="ready-row"><button class="ready-ok" type="button" id="readyOk" aria-label="OK"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div>`}
-    <div class="btns"><button class="go soon" type="button" id="leaveBtn">${t('leave')}</button></div>`);
+    ${me ? '<div class="spin" aria-hidden="true"></div>' : `<button class="go start-big" type="button" id="readyOk">${esc(t('startMatch'))}</button>`}
+    <button class="leave-link" type="button" id="leaveBtn">${t('leave')}</button>`);
   showSvg($('sheet').querySelector('.lobby'), 'rfront', 'happy');
   $('leaveBtn').onclick = () => { leaveRoom(); goHome(); };
   const ok = $('readyOk'); if (ok) ok.onclick = () => { sfx('pick'); ON.ref.child('ready/' + ON.role).set(true).catch(() => { }); };
