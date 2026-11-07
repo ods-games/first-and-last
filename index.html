@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107105129';
+  var BUILD = '20261107105437';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -151,7 +151,9 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 #game.tut #card0,#game.tut #card1,#game.tut #hud,#game.tut #tools{visibility:hidden}
 #tutBadge{position:absolute;z-index:6;left:10px;top:8px;background:var(--yellow);border:3px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);font-family:var(--display);font-weight:700;font-size:26px;line-height:1;padding:8px 14px 7px;transform:rotate(-3deg)}
 #game.tut .msg.coach{background:#FFF6CC}
-.coach-b .go.ok{background:var(--mint)}
+.msg.coach.has-ok{position:relative;padding-right:30px;padding-bottom:14px}
+.tut-ok{position:absolute;right:-12px;bottom:-12px;width:42px;height:42px;border-radius:50%;border:3px solid var(--ink);background:var(--mint);box-shadow:0 3px 0 var(--ink);display:flex;align-items:center;justify-content:center;padding:0;color:var(--ink);animation:tutHi 1s ease-in-out infinite}
+.tut-ok:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
 #tutSkip{position:absolute;z-index:6;right:10px;top:12px;border:2.5px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 3px 0 var(--ink);font-family:var(--korean);font-size:14px;color:var(--ink);padding:4px 14px}
 .tut-hi{animation:tutHi 1s ease-in-out infinite;position:relative;z-index:3}
 @keyframes tutHi{0%,100%{box-shadow:0 3px 0 var(--ink),0 0 0 0 rgba(255,143,171,.9)}50%{box-shadow:0 3px 0 var(--ink),0 0 0 8px rgba(255,143,171,0)}}
@@ -1116,7 +1118,7 @@ function coach(text, btn) {
 }
 /* an info step: wait for the check button before moving on */
 function coachNext(text, extra, next) {
-  setCenter(`<div class="msg coach">${esc(text)}<div class="coach-b"><button class="go ok" type="button" id="tutOk">${esc(t('tutOk'))}</button></div></div>` + (extra || ''));
+  setCenter(`<div class="msg coach has-ok">${esc(text)}<button class="tut-ok" type="button" id="tutOk" aria-label="${esc(t('tutOk'))}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div>` + (extra || ''));
   $('tutOk').onclick = () => { sfx('key'); next(); };
 }
 function bindCoach() {
