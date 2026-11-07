@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107133540';
+  var BUILD = '20261107134020';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -81,6 +81,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .nick-in{font:inherit;font-family:var(--korean);font-size:20px;text-align:center;border:3px solid var(--ink);border-radius:14px;padding:10px 12px;background:#fff;color:var(--ink);width:100%;box-sizing:border-box;outline:none}
 .nick-in:focus{box-shadow:0 0 0 4px rgba(255,143,171,.5)}
 .nick-del{align-self:center;border:0;background:none;font-family:var(--korean);font-size:14px;color:var(--soft);text-decoration:underline;padding:2px 8px;margin-top:-4px}
+.go .spin.sm{display:inline-block;width:16px;height:16px;border-width:3px;border-color:rgba(74,52,38,.25);border-top-color:var(--ink);margin:0 8px -2px 0;vertical-align:baseline}
 .nick-err{color:#D9436B;font-size:14px;min-height:1.2em;margin:-6px 0 0;text-align:center}
 .home-top .icon-btn{border-radius:50%;width:42px;height:42px;box-shadow:0 3px 0 var(--ink)}
 .pill{border:3px solid var(--ink);border-radius:999px;background:var(--paper);padding:6px 14px;font-family:var(--korean);font-size:15px;box-shadow:0 3px 0 var(--ink)}
@@ -311,6 +312,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .btns{display:flex;gap:10px}
 .btns .go{flex:1;font-size:19px}
 .btns .go:disabled{visibility:hidden}
+.btns .go.busy:disabled{visibility:visible;opacity:.85}
 .res-words{display:flex;flex-direction:column;gap:8px}
 .res-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .res-head h2{margin:0;flex:1}
@@ -1171,12 +1173,18 @@ function coachNext(text, extra, next) {
   $('tutOk').onclick = () => { sfx('key'); next(); };
 }
 function bindCoach() {
-  const go = $('tutGo'); if (go) go.onclick = () => { sfx('pick'); if (myNick) endTut(true); else askNick(() => endTut(true), () => endTut(true)); };
+  const go = $('tutGo'); if (go) go.onclick = () => { sfx('pick'); endTut(true); };
 }
 /* the practice round shows once per phone (stored on the device as 'fl-tut'); later, once accounts exist, store it per account.
    Set to true while testing to show it before every solo/duo game. */
 const TUT_EVERY_TIME = true;
-function endTut(noReady) { tutSkipBtn(false); const next = G.tut ? G.tut.next : 'ai'; store('fl-tut', '1'); newGame(next, true, noReady); }
+function endTut(noReady) {
+  tutSkipBtn(false); const next = G.tut ? G.tut.next : 'ai'; store('fl-tut', '1');
+  const go = nr => newGame(next, true, nr);
+  /* no nickname yet: ask for one first, then the "Ready?" card */
+  if (!myNick) return askNick(() => go(false), () => go(false));
+  go(noReady);
+}
 /* a "Ready?" card before the letter picking starts, so the countdown never starts by surprise */
 function readyThen(go) {
   const tok = G.token;
@@ -1655,7 +1663,7 @@ function askNick(then, later) {
       <p class="nick-sub">${esc(t('nickSub'))}</p>
       <input class="nick-in" id="nickIn" type="text" maxlength="10" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(val)}" placeholder="${esc(t('nickPh'))}">
       <p class="nick-err" id="nickErr">${esc(err || '')}</p>
-      <div class="btns">${later || myNick ? `<button class="go alt" type="button" id="nickLater">${t(myNick ? 'close' : 'later')}</button>` : ''}<button class="go" type="button" id="nickOk" ${busy ? 'disabled' : ''}>${busy ? t('checking') : t('ok')}</button></div>
+      <div class="btns">${later || myNick ? `<button class="go alt" type="button" id="nickLater">${t(myNick ? 'close' : 'later')}</button>` : ''}<button class="go${busy ? ' busy' : ''}" type="button" id="nickOk" ${busy ? 'disabled' : ''}>${busy ? `<span class="spin sm" aria-hidden="true"></span>${t('checking')}` : t('ok')}</button></div>
       ${myNick && !busy ? `<button class="nick-del" type="button" id="nickDel">${esc(t('nickDel'))}</button>` : ''}`);
     $('sheet').classList.add('nick-sheet');
     const inp = $('nickIn');
@@ -1681,10 +1689,14 @@ function askNick(then, later) {
   };
   const done = f => { $('sheet').classList.remove('nick-sheet'); $('ov').hidden = true; f && f(); };
   draw(myNick, '');
+  fbInit().catch(() => { }); /* start connecting now so saving is quicker */
 }
 const ensureNick = f => (myNick ? f() : askNick(f, () => goHome()));
 
-async function fbInit() {
+/* one shared connection attempt at a time */
+let FBP = null;
+function fbInit() { if (FB) return Promise.resolve(FB); return FBP || (FBP = fbConnect().catch(e => { FBP = null; throw e; })); }
+async function fbConnect() {
   if (FB) return FB;
   const base = `https://cdn.jsdelivr.net/npm/firebase@${FB_VER}/`;
   if (!window.firebase) { await loadScript(base + 'firebase-app-compat.js'); await loadScript(base + 'firebase-auth-compat.js'); await loadScript(base + 'firebase-database-compat.js'); }
