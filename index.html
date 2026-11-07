@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107143134';
+  var BUILD = '20261107143335';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -112,7 +112,7 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 .stage svg{height:100%;width:auto;overflow:visible}
 .vs{align-self:center;margin-bottom:14px;flex:none;font-size:30px;font-weight:700;font-style:italic;color:#F07C98;letter-spacing:1px;transform:rotate(-8deg)}
 .field{flex:none;background:var(--grass);border-top:5px solid var(--ink);border-radius:50% 50% 0 0/38px 38px 0 0;padding-top:32px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
-.mcard{border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:var(--c);transition:transform .08s}
+.mcard{border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:var(--c);transition:transform .08s;width:min(calc(100% - 28px),360px);margin-inline:auto;box-sizing:border-box}
 .mcard:has(.mmain:active){transform:translateY(4px);box-shadow:0 2px 0 var(--ink)}
 .mrow{display:flex;align-items:center}
 .mmain{flex:1;min-width:0;display:flex;align-items:center;gap:12px;background:none;border:0;padding:10px 8px 10px 10px;text-align:left}
