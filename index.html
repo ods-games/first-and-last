@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107140340';
+  var BUILD = '20261107140547';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -170,6 +170,8 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 #tutBadge{position:absolute;z-index:6;left:10px;top:8px;background:var(--yellow);border:3px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);font-family:var(--display);font-weight:700;font-size:26px;line-height:1;padding:8px 14px 7px;transform:rotate(-3deg)}
 #game.tut .msg.coach{background:#FFF6CC}
 .go.start-big{width:100%;font-size:22px;padding:14px 0}
+.leave-x{position:absolute;top:12px;right:12px;border:2.5px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 2px 0 var(--ink);font-family:var(--korean);font-size:13px;color:var(--ink);padding:4px 10px}
+.sheet:has(.leave-x) h2{margin-top:26px}
 .leave-link{align-self:center;border:0;background:none;font-family:var(--korean);font-size:14px;color:var(--soft);text-decoration:underline;padding:4px 10px;margin-top:-6px}
 .ready-row{display:flex;justify-content:center;margin-top:14px}
 .ready-ok{width:54px;height:54px;border-radius:50%;border:3px solid var(--ink);background:var(--mint);box-shadow:0 4px 0 var(--ink);display:flex;align-items:center;justify-content:center;padding:0;color:var(--ink);animation:tutHi 1s ease-in-out infinite}
@@ -511,8 +513,8 @@ const STR = {
     inviteTitle: '친구 초대', inviteText: '이 링크를 친구에게 보내주세요. 친구가 들어오면 바로 시작해요.', copy: '링크 복사', copied: '복사했어요', share: '공유하기',
     waitingFriend: '친구를 기다리는 중...', expiresIn: '{t} 후 링크가 만료돼요', expired: '링크가 만료됐어요.', newLink: '새 링크 만들기',
     roomGone: '만료됐거나 없는 초대 링크예요.', roomFull: '이미 다른 사람이 들어간 방이에요.', ownLink: '내가 만든 초대 링크예요. 친구에게 보내주세요.',
-    lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', lobbyReady: '둘 다 대결 시작을 누르면 시작해요!', waitFriend: '상대를 기다리는 중...', friendReady: '상대는 준비됐어요! 대결 시작을 눌러요', startMatch: '대결 시작!', lobbyRival: '상대를 찾았어요!', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
-    friendLeft: '친구가 나갔어요', friendLeftText: '대결이 끝났어요.', waitRematch: '친구를 기다리는 중...', friendWants: '친구가 한 판 더 하고 싶어해요!',
+    lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', lobbyReady: '둘 다 대결 시작을 누르면 시작해요!', waitFriend: '친구를 기다리는 중...', friendReady: '친구는 준비됐어요! 대결 시작을 눌러요', waitFriendR: '상대방을 기다리는 중...', friendReadyR: '상대방은 준비됐어요! 대결 시작을 눌러요', startMatch: '대결 시작!', lobbyRival: '상대방을 찾았어요!', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
+    friendLeft: '친구가 나갔어요', friendLeftText: '대결이 끝났어요.', waitRematch: '친구를 기다리는 중...', friendWants: '친구가 한 판 더 하고 싶어해요!', friendLeftR: '상대방이 나갔어요', waitRematchR: '상대방을 기다리는 중...', friendWantsR: '상대방이 한 판 더 하고 싶어해요!', leaveX: '나가기',
     shareText: 'First n Last 영어 단어 대결 한 판 할래?',
     soon: '온라인 모드는 준비 중이에요', soonText: '친구에게 초대 링크를 보내서 각자 폰으로 대결하는 기능이 곧 들어와요.',
     easy: '쉬움', medium: '보통', hard: '어려움', start: '시작',
@@ -536,7 +538,7 @@ const STR = {
     prev: '이전', next: '다음', letsgo: '시작하기', close: '닫기', ruleTitle: '이렇게 놀아요',
     tutPick: '연습 판이에요! 먼저 둘이 알파벳을 하나씩 골라요. C를 눌러볼까요?', tutAi: '토리는 T를 골랐어요. 이제 룰렛이 어느 글자로 시작할지 정해요!',
     tutPlay: 'C로 시작해서 T로 끝나는|단어를 쓰고 Enter를 눌러요!',
-    tutHintIntro: '잘했어요!|단어가 생각이 안 나면|힌트를 받을 수 있어요.', tutHintIntroDuo: '잘했어요!|단어가 생각이 안 날 때|종종 깜짝 힌트를|받을 수 있어요.', tutLast: '마지막 한 단어!|3단어를 다 맞히면 이겨요!', tutTip: 'TIP', randomTitle: '랜덤 매칭', randomSub: '지금 접속한 사람과 바로 대결해요', inviteMode: '친구 초대', inviteSub: '링크를 보내서 친구와 대결해요', searching: '상대를 찾는 중...', searchingSub: '조금만 기다려 주세요', noOneYet: '지금은 상대가 없어요. 토리랑 먼저 할까요?', playTori: '토리와 대결', keepWaiting: '계속 기다리기', secUnit: '초', rival: '상대', nickTitle: '닉네임을 정해요', nickChange: '닉네임 바꾸기', nickSub: '친구와 대결할 때 보이는 이름이에요. 실명은 쓰지 마세요!', nickPh: '2~10자 (한글, 영어, 숫자)', nickLen: '2~10자로 정해주세요', nickChars: '한글, 영어, 숫자, _만 쓸 수 있어요', nickBad: '쓸 수 없는 닉네임이에요', nickTaken: '이미 누가 쓰고 있어요. 다른 닉네임을 정해주세요', nickNet: '연결이 안 돼요. 인터넷을 확인하고 다시 해주세요', nickMake: '닉네임', nickSure: '이 닉네임으로 할까요?', nickSureSub: '정하면 하루 동안 바꿀 수 없어요.', nickWait: '닉네임은 하루에 한 번 바꿀 수 있어요. {h}시간 {m}분 뒤에 바꿀 수 있어요.', later: '나중에', checking: '확인 중...', readyQ: '대결할 준비 됐나요?', hintAns: '힌트 정답', missed: '이런 단어도 있었어요', tutHintBtn: '힌트 버튼을 눌러봐요! 한 판에 한 번 쓸 수 있어요.', tutHintUse: '힌트의 빈칸을 채워서 한 단어 더 맞혀봐요!',
+    tutHintIntro: '잘했어요!|단어가 생각이 안 나면|힌트를 받을 수 있어요.', tutHintIntroDuo: '잘했어요!|단어가 생각이 안 날 때|종종 깜짝 힌트를|받을 수 있어요.', tutLast: '마지막 한 단어!|3단어를 다 맞히면 이겨요!', tutTip: 'TIP', randomTitle: '랜덤 매칭', randomSub: '지금 접속한 사람과 바로 대결해요', inviteMode: '친구 초대', inviteSub: '링크를 보내서 친구와 대결해요', searching: '상대방을 찾는 중...', searchingSub: '조금만 기다려 주세요', noOneYet: '지금은 상대방이 없어요. 토리랑 먼저 할까요?', playTori: '토리와 대결', keepWaiting: '계속 기다리기', secUnit: '초', rival: '상대방', nickTitle: '닉네임을 정해요', nickChange: '닉네임 바꾸기', nickSub: '친구와 대결할 때 보이는 이름이에요. 실명은 쓰지 마세요!', nickPh: '2~10자 (한글, 영어, 숫자)', nickLen: '2~10자로 정해주세요', nickChars: '한글, 영어, 숫자, _만 쓸 수 있어요', nickBad: '쓸 수 없는 닉네임이에요', nickTaken: '이미 누가 쓰고 있어요. 다른 닉네임을 정해주세요', nickNet: '연결이 안 돼요. 인터넷을 확인하고 다시 해주세요', nickMake: '닉네임', nickSure: '이 닉네임으로 할까요?', nickSureSub: '정하면 하루 동안 바꿀 수 없어요.', nickWait: '닉네임은 하루에 한 번 바꿀 수 있어요. {h}시간 {m}분 뒤에 바꿀 수 있어요.', later: '나중에', checking: '확인 중...', readyQ: '대결할 준비 됐나요?', hintAns: '힌트 정답', missed: '이런 단어도 있었어요', tutHintBtn: '힌트 버튼을 눌러봐요! 한 판에 한 번 쓸 수 있어요.', tutHintUse: '힌트의 빈칸을 채워서 한 단어 더 맞혀봐요!',
     tutHintTimed: '친구와 할 때는|진행 상황에 따라|힌트가 나와요.', tutHintTimed2: '힌트가 나왔어요! 힌트를 보고 한 단어 더 맞혀봐요!',
     tutDone: '이겼어요! 이렇게 3단어를 먼저 맞히면 이겨요. 틀리면 5초 동안 키보드가 멈춰요. 준비됐나요?',
     tutGo: '진짜 게임 시작!', tutSkip: '튜토리얼 건너뛰기', tutBadge: '튜토리얼', tutOk: '확인 ✓'
@@ -552,8 +554,8 @@ const STR = {
     inviteTitle: 'Invite a friend', inviteText: 'Send this link to a friend. The game starts as soon as they join.', copy: 'Copy link', copied: 'Copied', share: 'Share',
     waitingFriend: 'Waiting for your friend...', expiresIn: 'Link expires in {t}', expired: 'The link has expired.', newLink: 'New link',
     roomGone: 'This invite link has expired or doesn’t exist.', roomFull: 'Someone else already joined this game.', ownLink: 'This is your own invite link. Send it to a friend.',
-    lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', lobbyReady: 'The game starts when you both tap Start!', waitFriend: 'Waiting for the other player...', friendReady: 'They’re ready! Tap Start', startMatch: 'Start!', lobbyRival: 'Found a player!', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
-    friendLeft: 'Your friend left', friendLeftText: 'The game has ended.', waitRematch: 'Waiting for your friend...', friendWants: 'Your friend wants a rematch!',
+    lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', lobbyReady: 'The game starts when you both tap Start!', waitFriend: 'Waiting for your friend...', friendReady: 'Your friend is ready! Tap Start', waitFriendR: 'Waiting for the other player...', friendReadyR: 'They’re ready! Tap Start', startMatch: 'Start!', lobbyRival: 'Found a player!', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
+    friendLeft: 'Your friend left', friendLeftText: 'The game has ended.', waitRematch: 'Waiting for your friend...', friendWants: 'Your friend wants a rematch!', friendLeftR: 'The other player left', waitRematchR: 'Waiting for the other player...', friendWantsR: 'The other player wants a rematch!', leaveX: 'Leave',
     shareText: 'Up for a round of First n Last?',
     soon: 'Online mode is coming soon', soonText: 'You will be able to send a friend an invite link and play on your own phones.',
     easy: 'Easy', medium: 'Medium', hard: 'Hard', start: 'Start',
@@ -1921,7 +1923,7 @@ function onRoom(r) {
   if (r.status === 'over') {
     const rm = r.rematch || {};
     if (ON.role === 'host' && rm.host && rm.guest) return resetRound(r);
-    const note = $('rematchNote'); if (note) note.textContent = rm[oppRole()] && !rm[ON.role] ? t('friendWants') : '';
+    const note = $('rematchNote'); if (note) note.textContent = rm[oppRole()] && !rm[ON.role] ? tf('friendWants') : '';
   }
 }
 function showLobby() {
@@ -1934,9 +1936,9 @@ function drawLobby() {
   const rd = (ON.room && ON.room.ready) || {}, me = !!rd[ON.role], friend = !!rd[oppRole()];
   sheet(`<h2>${esc(ON.random ? t('lobbyRival') : ON.role === 'host' ? t('lobbyHost') : t('lobbyGuest'))}</h2>
     <div class="tut-art lobby">${RAB_FRONT}</div>
-    <p>${esc(me ? t('waitFriend') : friend ? t('friendReady') : t('lobbyReady'))}</p>
+    <p>${esc(me ? tf('waitFriend') : friend ? tf('friendReady') : t('lobbyReady'))}</p>
     ${me ? '<div class="spin" aria-hidden="true"></div>' : `<button class="go start-big" type="button" id="readyOk">${esc(t('startMatch'))}</button>`}
-    <button class="leave-link" type="button" id="leaveBtn">${t('leave')}</button>`);
+    <button class="leave-x" type="button" id="leaveBtn">✕ ${esc(t('leaveX'))}</button>`);
   showSvg($('sheet').querySelector('.lobby'), 'rfront', 'happy');
   $('leaveBtn').onclick = () => { leaveRoom(); goHome(); };
   const ok = $('readyOk'); if (ok) ok.onclick = () => { sfx('pick'); ON.ref.child('ready/' + ON.role).set(true).catch(() => { }); };
@@ -1982,15 +1984,17 @@ function onOrder(o) {
 function requestRematch() {
   if (!ON) return goHome();
   ON.ref.child('rematch/' + ON.role).set(true);
-  const b = $('resAgain'); if (b) { b.disabled = true; b.textContent = t('waitRematch'); }
+  const b = $('resAgain'); if (b) { b.disabled = true; b.textContent = tf('waitRematch'); }
 }
 function resetRound(r) {
   ON.ref.update({ status: 'pick', round: (r.round || 0) + 1, pickRound: 0, picks: null, used: null, order: null, rematch: null, hints: null, start: null, end: null, startAt: null, note: null });
 }
+/* random matches say "the other player" instead of "your friend" */
+const tf = k => t(ON && ON.random ? k + 'R' : k);
 function friendLeft() {
-  const wasPlaying = G.mode === 'online' && G.phase !== 'over';
+  const wasPlaying = G.mode === 'online' && G.phase !== 'over', left = tf('friendLeft');
   leaveRoom(); stopAll(); if (G.mode === 'online') G.phase = 'over';
-  sheet(`<h2>${esc(t('friendLeft'))}</h2>${wasPlaying ? `<p>${esc(t('friendLeftText'))}</p>` : ''}<div class="btns"><button class="go alt" type="button" id="hBtn">${t('home')}</button></div>`);
+  sheet(`<h2>${esc(left)}</h2>${wasPlaying ? `<p>${esc(t('friendLeftText'))}</p>` : ''}<div class="btns"><button class="go alt" type="button" id="hBtn">${t('home')}</button></div>`);
   $('hBtn').onclick = () => goHome();
 }
 /* an invite link opens straight into the room */
