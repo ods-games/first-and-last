@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107151311';
+  var BUILD = '20261107152640';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -480,7 +480,10 @@ const MINW = 10;
 const cnt = (a, b) => (IDX[a + b] || []).length;
 function dirsOK(a, b) { const d = []; if (cnt(a, b) >= MINW) d.push([a, b]); if (a !== b && cnt(b, a) >= MINW) d.push([b, a]); return d; }
 function partners(a) { return [...LETTERS].filter(b => dirsOK(a, b).length > 0); }
+/* irregular forms (feet, mice, went, took...) point back to their base word */
+const IRREG = {"feet":"foot","geese":"goose","mice":"mouse","lice":"louse","women":"woman","children":"child","wolves":"wolf","knives":"knife","wives":"wife","leaves":"leaf","lives":"life","halves":"half","shelves":"shelf","loaves":"loaf","thieves":"thief","calves":"calf","came":"come","ran":"run","took":"take","gave":"give","seen":"see","ate":"eat","eaten":"eat","drank":"drink","sung":"sing","swam":"swim","swum":"swim","began":"begin","begun":"begin","wrote":"write","rode":"ride","ridden":"ride","chose":"choose","froze":"freeze","stolen":"steal","woke":"wake","woken":"wake","wore":"wear","swore":"swear","knew":"know","grew":"grow","threw":"throw","flew":"fly","flown":"fly","blew":"blow","drew":"draw","forgot":"forget","got":"get","gotten":"get","hid":"hide","bitten":"bite","mistook":"mistake","bought":"buy","brought":"bring","caught":"catch","taught":"teach","fought":"fight","told":"tell","stood":"stand","slept":"sleep","wept":"weep","meant":"mean","met":"meet","lent":"lend","fed":"feed","led":"lead","fled":"flee","bled":"bleed","sat":"sit","hung":"hang","spun":"spin","had":"have","has":"have","went":"go","did":"do","was":"be","were":"be","been":"be"};
 function baseOf(w) {
+  if (IRREG[w]) return IRREG[w];
   const c = [];
   if (w.endsWith('ies')) c.push(w.slice(0, -3) + 'y');
   if (w.endsWith('es')) c.push(w.slice(0, -2));
