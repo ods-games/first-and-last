@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107091632';
+  var BUILD = '20261107092734';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -964,10 +964,10 @@ const isDuo = () => G.mode === 'duo';
 function nameOf(p) { if (G.mode === 'ai') return p === 0 ? t('me') : t('ai'); if (G.mode === 'online') return p === 0 ? t('me') : t('friend'); return p === 0 ? t('p1') : t('p2'); }
 const paused = () => !$('ov').hidden;
 
-function newGame(mode) {
+function newGame(mode, noTut) {
   document.documentElement.classList.add('on-game');
   /* the very first game on this phone (solo or duo) is a short practice round against Tori */
-  const tutNext = (mode !== 'online' && store('fl-tut') !== '1') ? mode : null; if (tutNext) mode = 'ai';
+  const tutNext = (!noTut && mode !== 'online' && (TUT_EVERY_TIME || store('fl-tut') !== '1')) ? mode : null; if (tutNext) mode = 'ai';
   stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
@@ -1109,7 +1109,9 @@ function bindCoach() {
   const sk = $('tutSkip'); if (sk) sk.onclick = () => { sfx('key'); endTut(); };
   const go = $('tutGo'); if (go) go.onclick = () => { sfx('pick'); endTut(); };
 }
-function endTut() { const next = G.tut ? G.tut.next : 'ai'; store('fl-tut', '1'); newGame(next); }
+/* testing: show the practice round before every solo/duo game. Set to false to show it only once per phone. */
+const TUT_EVERY_TIME = true;
+function endTut() { const next = G.tut ? G.tut.next : 'ai'; store('fl-tut', '1'); newGame(next, true); }
 function tutPick() {
   G.phase = 'pick'; G.picks = [null, null]; G.picker = 0; G.input = ['', ''];
   setTiles('?', '?'); setFace(0, 'look'); setFace(1, 'idle'); renderPanels();
@@ -1449,7 +1451,7 @@ function finish(winner, byTime) {
       <div class="res-cols">${col(0)}<div class="rcolon">:</div>${col(1)}</div>
       ${isOnline() ? '<p id="rematchNote" style="font-size:15px"></p>' : ''}<div class="btns"><button class="go alt" type="button" id="resHome">${t('quit')}</button><button class="go" type="button" id="resAgain">${t('again')}</button></div>`);
       $('sheet').querySelectorAll('[data-say]').forEach(b => b.onclick = () => { if (!soundOn) toggleSfx(); sayWord(b.dataset.say); });
-      $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else newGame(G.mode); };
+      $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else newGame(G.mode, true); };
       $('resHome').onclick = () => {
         sfx('pick');
         sheet(`<h2>${esc(t('endQ'))}</h2><div class="btns"><button class="go alt" type="button" id="qNo">${t('no')}</button><button class="go" type="button" id="qYes">${t('yes')}</button></div>`);
