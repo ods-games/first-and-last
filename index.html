@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107140547';
+  var BUILD = '20261107140835';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -172,6 +172,8 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 .go.start-big{width:100%;font-size:22px;padding:14px 0}
 .leave-x{position:absolute;top:12px;right:12px;border:2.5px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 2px 0 var(--ink);font-family:var(--korean);font-size:13px;color:var(--ink);padding:4px 10px}
 .sheet:has(.leave-x) h2{margin-top:26px}
+.btns.col{flex-direction:column}
+.btns.col .go{width:100%;white-space:nowrap}
 .leave-link{align-self:center;border:0;background:none;font-family:var(--korean);font-size:14px;color:var(--soft);text-decoration:underline;padding:4px 10px;margin-top:-6px}
 .ready-row{display:flex;justify-content:center;margin-top:14px}
 .ready-ok{width:54px;height:54px;border-radius:50%;border:3px solid var(--ink);background:var(--mint);box-shadow:0 4px 0 var(--ink);display:flex;align-items:center;justify-content:center;padding:0;color:var(--ink);animation:tutHi 1s ease-in-out infinite}
@@ -510,7 +512,7 @@ const STR = {
     duoNote: '한 폰을 가운데 두고 마주 앉아서 해요. 먼저 부저를 누른 사람이 입력해요.',
     onlineNote: '랜덤 매칭으로 지금 접속한 사람과 바로 대결하거나, 초대 링크를 카톡이나 문자로 보내 친구와 대결해요. 각자 폰으로 해요.',
     friend: '친구', connecting: '연결하는 중...', cantConnect: '온라인에 연결할 수 없어요. 인터넷 연결을 확인하거나 ods-games.github.io/first-and-last 에서 열어주세요.',
-    inviteTitle: '친구 초대', inviteText: '이 링크를 친구에게 보내주세요. 친구가 들어오면 바로 시작해요.', copy: '링크 복사', copied: '복사했어요', share: '공유하기',
+    inviteTitle: '친구 초대', inviteText: '초대링크를 친구에게 보내주세요. 친구가 들어오면 대결을 시작할 수 있어요.', copy: '초대링크 복사', copied: '복사했어요', share: '초대링크 공유',
     waitingFriend: '친구를 기다리는 중...', expiresIn: '{t} 후 링크가 만료돼요', expired: '링크가 만료됐어요.', newLink: '새 링크 만들기',
     roomGone: '만료됐거나 없는 초대 링크예요.', roomFull: '이미 다른 사람이 들어간 방이에요.', ownLink: '내가 만든 초대 링크예요. 친구에게 보내주세요.',
     lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', lobbyReady: '둘 다 대결 시작을 누르면 시작해요!', waitFriend: '친구를 기다리는 중...', friendReady: '친구는 준비됐어요! 대결 시작을 눌러요', waitFriendR: '상대방을 기다리는 중...', friendReadyR: '상대방은 준비됐어요! 대결 시작을 눌러요', startMatch: '대결 시작!', lobbyRival: '상대방을 찾았어요!', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
@@ -551,7 +553,7 @@ const STR = {
     duoNote: 'Two players face each other over one phone. Whoever buzzes first gets to type.',
     onlineNote: 'Play someone online right now with Random match, or send an invite link to a friend. Each on your own phone.',
     friend: 'Friend', connecting: 'Connecting...', cantConnect: 'Can’t go online. Check your connection, or open ods-games.github.io/first-and-last.',
-    inviteTitle: 'Invite a friend', inviteText: 'Send this link to a friend. The game starts as soon as they join.', copy: 'Copy link', copied: 'Copied', share: 'Share',
+    inviteTitle: 'Invite a friend', inviteText: 'Send the invite link to a friend. You can start as soon as they join.', copy: 'Copy invite link', copied: 'Copied', share: 'Share invite link',
     waitingFriend: 'Waiting for your friend...', expiresIn: 'Link expires in {t}', expired: 'The link has expired.', newLink: 'New link',
     roomGone: 'This invite link has expired or doesn’t exist.', roomFull: 'Someone else already joined this game.', ownLink: 'This is your own invite link. Send it to a friend.',
     lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', lobbyReady: 'The game starts when you both tap Start!', waitFriend: 'Waiting for your friend...', friendReady: 'Your friend is ready! Tap Start', waitFriendR: 'Waiting for the other player...', friendReadyR: 'They’re ready! Tap Start', startMatch: 'Start!', lobbyRival: 'Found a player!', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
@@ -1764,12 +1766,15 @@ async function createRoom() {
 function showInvite() {
   const url = inviteUrl(ON.code), canShare = !!navigator.share;
   sheet(`<h2>${esc(t('inviteTitle'))}</h2><p>${esc(t('inviteText'))}</p>
-    <div class="linkbox" id="linkBox">${esc(url)}</div>
-    <div class="btns">${canShare ? `<button class="go" type="button" id="shareBtn">${t('share')}</button>` : ''}<button class="go alt" type="button" id="copyBtn">${t('copy')}</button></div>
+    <div class="btns col">${canShare ? `<button class="go" type="button" id="shareBtn">${t('share')}</button>` : ''}<button class="go alt" type="button" id="copyBtn">${t('copy')}</button></div>
     <p class="wait"><span class="spin" aria-hidden="true"></span>${esc(t('waitingFriend'))}<br><small id="ttl"></small></p>`, () => { leaveRoom(); goHome(); });
   $('copyBtn').onclick = async () => {
     try { await navigator.clipboard.writeText(url); $('copyBtn').textContent = t('copied'); }
-    catch (e) { const r = document.createRange(); r.selectNodeContents($('linkBox')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    catch (e) {
+      /* older phones: copy through a hidden text box */
+      const ta = document.createElement('textarea'); ta.value = url; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); $('copyBtn').textContent = t('copied'); } catch (e2) { } ta.remove();
+    }
   };
   if (canShare) $('shareBtn').onclick = () => { navigator.share({ title: 'First n Last', text: t('shareText'), url }).catch(() => { }); };
   const tick = () => {
