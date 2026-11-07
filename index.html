@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107132452';
+  var BUILD = '20261107133146';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1174,7 +1174,7 @@ function bindCoach() {
 }
 /* the practice round shows once per phone (stored on the device as 'fl-tut'); later, once accounts exist, store it per account.
    Set to true while testing to show it before every solo/duo game. */
-const TUT_EVERY_TIME = false;
+const TUT_EVERY_TIME = true;
 function endTut(noReady) { tutSkipBtn(false); const next = G.tut ? G.tut.next : 'ai'; store('fl-tut', '1'); newGame(next, true, noReady); }
 /* a "Ready?" card before the letter picking starts, so the countdown never starts by surprise */
 function readyThen(go) {
