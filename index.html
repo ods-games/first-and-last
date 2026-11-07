@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107113858';
+  var BUILD = '20261107114004';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -196,10 +196,10 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 .msg small{display:block;font-size:13px;color:var(--soft)}
 .count{font-size:min(84px,14cqh);font-weight:700;line-height:1;color:var(--ink);-webkit-text-stroke:0;text-shadow:3px 3px 0 var(--paper),-3px -3px 0 var(--paper),3px -3px 0 var(--paper),-3px 3px 0 var(--paper);animation:countPop .9s ease-out}
 .count.low{color:var(--red)}
-.words{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;padding-top:6px}
-.brow{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;width:100%}
+.words{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;padding:6px 14px 0;box-sizing:border-box}
+.brow{display:flex;flex-wrap:nowrap;justify-content:center;gap:6px;width:100%}
 .brow .chip{font-size:17px;padding:3px 10px;white-space:nowrap}
-.bslot{width:58px;height:31px;border:2.5px dotted var(--ink);border-radius:10px;opacity:.35;box-sizing:border-box;flex:none}
+.bslot{width:58px;min-width:26px;height:31px;border:2.5px dotted var(--ink);border-radius:10px;opacity:.35;box-sizing:border-box;flex:0 1 58px}
 .duo .brow.p1{transform:rotate(180deg)}
 .chip{border:3px solid var(--ink);border-radius:10px;padding:1px 8px;font-size:15px;font-weight:600;background:var(--paper);animation:pop .35s ease-out}
 .chip.p0{background:var(--yellow)}
@@ -1046,6 +1046,11 @@ function refreshWords() {
   const row = q => { const ws = G.order.filter(x => x[1] === q).map(x => `<span class="chip p${q}">${cs(x[0])}</span>`);
     while (ws.length < 3) ws.push('<span class="bslot"></span>'); return `<div class="brow p${q}">${ws.slice(0, 3).join('')}</div>`; };
   box.innerHTML = row(1) + row(0);
+  /* long words: keep each player's words on one line by shrinking the letters until the row fits */
+  box.querySelectorAll('.brow').forEach(r => {
+    let f = 17; const chips = r.querySelectorAll('.chip');
+    while (r.scrollWidth > r.clientWidth + 1 && f > 10) { f -= 1; chips.forEach(c => { c.style.fontSize = f + 'px'; c.style.padding = `3px ${Math.max(5, f - 7)}px`; }); }
+  });
 }
 function panelMode(p) {
   if (G.phase === 'pick') return G.picker === p ? 'pick' : (isDuo() ? 'wait' : 'off');
