@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107135702';
+  var BUILD = '20261107140100';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1712,7 +1712,8 @@ function askNick(then, later, cancel) {
   draw(myNick, '');
   fbInit().catch(() => { }); /* start connecting now so saving is quicker */
 }
-const ensureNick = f => (myNick ? f() : askNick(f, () => goHome(), () => goHome()));
+/* online: make a nickname, or "Later" and go on without one; the X goes back home */
+const ensureNick = f => (myNick ? f() : askNick(f, f, () => goHome()));
 
 /* one shared connection attempt at a time */
 let FBP = null;
