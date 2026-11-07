@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107105437';
+  var BUILD = '20261107105546';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1316,7 +1316,9 @@ function blanksFor(w) {
     if (k === 1) inner.forEach(a => combos.push([a]));
     else inner.forEach((a, x) => inner.slice(x + 1).forEach(b => combos.push([a, b])));
     combos.sort(() => Math.random() - .5);
-    const ok = combos.find(b => !taken.has(hintPattern({ w, b })));
+    /* a hint must not look like a word already played (COAT played -> not C__T for CAST, but CA_T is fine) */
+    const fitsUsed = pat => [...G.used.keys()].some(u => u.length === pat.length && [...pat].every((c, i) => c === '_' || c === u[i]));
+    const ok = combos.find(b => { const pat = hintPattern({ w, b }); return !taken.has(pat) && !fitsUsed(pat); });
     if (ok) return ok;
   }
   return inner.slice(0, Math.min(2, inner.length));
