@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107020222';
+  var BUILD = '20261107091632';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -144,6 +144,13 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 .tools{display:flex;gap:5px}
 .tools .icon-btn{width:30px;height:30px;border-radius:9px;border-width:2.5px}
 .tools .icon-btn svg{width:16px;height:16px}
+.msg.coach{font-size:17px;line-height:1.45}
+.coach-b{display:flex;justify-content:center;margin-top:8px}
+.coach-b .go{font-size:17px;padding:8px 18px}
+.tut-skip{border:0;background:none;font-family:var(--korean);font-size:14px;color:var(--soft);text-decoration:underline;padding:2px 8px}
+.tut-hi{animation:tutHi 1s ease-in-out infinite;position:relative;z-index:3}
+@keyframes tutHi{0%,100%{box-shadow:0 3px 0 var(--ink),0 0 0 0 rgba(255,143,171,.9)}50%{box-shadow:0 3px 0 var(--ink),0 0 0 8px rgba(255,143,171,0)}}
+.key.tut-hi{background:var(--yellow)}
 /* duo: the buttons stand in a column at the right edge, beside the sideways clock */
 .duo #tools{position:absolute;z-index:5;right:8px;top:50%;transform:translateY(-50%);flex-direction:column;gap:6px}
 .duo #tools .icon-btn{width:28px;height:28px}
@@ -452,7 +459,7 @@ const STR = {
   ko: {
     langBtn: 'English', soundOn: '소리 켬', soundOff: '소리 끔', sfx: '효과음', music: '음악', paused: '일시정지', resume: '계속하기', rules: '규칙', fs: '전체 화면', fsExit: '전체 화면 끄기',
     tagline: '세상 모든 단어, 그 시작과 끝',
-    solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드', soloSub: 'AI 토리와 대결', duoSub: '한 폰으로 둘이서', onlineSub: '친구와 각자 폰으로', soonBadge: '준비 중',
+    solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드', soloSub: '혼자서 AI와 대결', duoSub: '친구와 한 폰으로 대결', onlineSub: '친구와 각자 폰으로 대결', soonBadge: '준비 중',
     soloNote: 'AI 토끼 토리와 대결해요. 힌트를 한 번 쓸 수 있어요.',
     duoNote: '한 폰을 가운데 두고 마주 앉아서 해요. 먼저 부저를 누른 사람이 입력해요.',
     onlineNote: '초대 링크를 카톡이나 문자로 보내면, 친구가 링크를 눌러 바로 들어와요. 각자 폰으로 대결해요.',
@@ -481,8 +488,12 @@ const STR = {
     again: '다시 하기', hintLabel: '힌트', hintOut: '힌트가 나왔어요!', quitQ: '게임을 포기할까요?', yes: '네', no: '아니요', tapToHear: '단어를 누르면 발음을 들을 수 있어요', tapShort: '눌러서 듣기', home: '홈으로', quit: '그만하기', endQ: '매치를 끝낼까요?', none: '없음', ok: '확인',
     tut1: '두 사람이 알파벳을 하나씩 고르면, 룰렛이 시작 글자와 끝 글자를 정해요',
     tut2: '조건에 맞는 영어 단어를 3번 먼저 쓰면 승리! 상대가 쓴 단어는 못 써요',
-    tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(STARTING), 과거형(STARTED) 등은 안 돼요. 제한 시간은 3분이에요',
-    prev: '이전', next: '다음', letsgo: '시작하기', close: '닫기', ruleTitle: '이렇게 놀아요'
+    tut3: '3글자 이상, 기본형만 돼요. 복수형(CATS), 진행형(JUMPING), 과거형(JUMPED) 등은 안 돼요. 제한 시간은 3분이에요',
+    prev: '이전', next: '다음', letsgo: '시작하기', close: '닫기', ruleTitle: '이렇게 놀아요',
+    tutPick: '연습 판이에요! 먼저 둘이 알파벳을 하나씩 골라요. B를 눌러볼까요?', tutAi: '토리는 N을 골랐어요. 이제 룰렛이 어느 글자로 시작할지 정해요!',
+    tutPlay: 'B로 시작해서 N으로 끝나는 단어를 쓰고 Enter를 눌러요! (예: BUN, BEAN, BARN)',
+    tutDone: '잘했어요! 이렇게 3단어를 먼저 맞히면 이겨요. 틀리면 5초 동안 키보드가 멈추고, 막히면 힌트를 눌러요!',
+    tutGo: '진짜 게임 시작!', tutSkip: '건너뛰기'
   },
   en: {
     langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', sfx: 'Sounds', music: 'Music', paused: 'Paused', resume: 'Resume', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
@@ -514,10 +525,14 @@ const STR = {
     thinking: 'Thinking...',
     winYou: 'You win!', loseYou: 'You lose', draw: 'Draw', winName: '{name} wins!', timeUp: 'Time up',
     again: 'Play again', hintLabel: 'Hint', hintOut: 'A hint appeared!', quitQ: 'Give up this game?', yes: 'Yes', no: 'No', tapToHear: 'Tap a word to hear it', tapShort: 'Tap to hear', home: 'Home', quit: 'Quit', endQ: 'End the match?', none: 'none', ok: 'OK',
-    tut1: 'Each player picks a letter. The roulette decides which one starts the word and which one ends it',
+    tut1: 'Each player picks a letter.|The roulette decides|which one starts the word|and which one ends it',
     tut2: 'Be the first to write 3 words that fit! You can’t use a word your opponent already used',
-    tut3: 'Words need 3+ letters, base forms only. No plurals (CATS), -ing forms (STARTING) or past tense (STARTED). Each game lasts 3 minutes',
-    prev: 'Back', next: 'Next', letsgo: 'Let’s play', close: 'Close', ruleTitle: 'How to play'
+    tut3: 'Words need 3+ letters,|base forms only.|No plurals (CATS),|-ing forms (JUMPING)|or past tense (JUMPED).|Each game lasts 3 minutes',
+    prev: 'Back', next: 'Next', letsgo: 'Let’s play', close: 'Close', ruleTitle: 'How to play',
+    tutPick: 'Practice round! First, each player picks a letter. Tap B!', tutAi: 'Tori picked N. Now the roulette decides which one starts!',
+    tutPlay: 'Type a word that starts with B and ends with N, then tap Enter! (e.g. BUN, BEAN, BARN)',
+    tutDone: 'Nice! Be the first to get 3 words to win. A wrong word freezes your keyboard for 5 seconds. Stuck? Tap Hint!',
+    tutGo: 'Start the real game!', tutSkip: 'Skip'
   }
 };
 function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -917,6 +932,8 @@ function goHome() {
 
 /* ---------- tutorial ---------- */
 let afterTut = null;
+/* '|' in a string marks phrases that must stay on one line */
+function nbHTML(v) { return v.includes('|') ? v.split('|').map(c => `<span class="nb">${esc(c.trim())}</span>`).join(' ') : esc(v); }
 function tutorial(first) {
   let i = 0; const arts = [
     `<div class="tile tS">B</div><div class="tile tE">N</div>`,
@@ -924,7 +941,7 @@ function tutorial(first) {
     `<div class="tile" style="background:var(--muted);font-size:20px;width:auto;padding:0 10px;text-decoration:line-through">CATS</div><div class="tile" style="background:var(--mint);font-size:22px;width:auto;padding:0 10px">CAT</div>`];
   const done = () => { store('fl-tut', '1'); $('ov').hidden = true; if (afterTut) { const f = afterTut; afterTut = null; f(); } };
   const draw = () => {
-    $('sheet').innerHTML = `<button class="x" type="button" id="xBtn" aria-label="${esc(t('close'))}">${XICON}</button><h2>${t('ruleTitle')}</h2><div class="tut-art">${arts[i]}</div><p>${t('tut' + (i + 1))}</p>
+    $('sheet').innerHTML = `<button class="x" type="button" id="xBtn" aria-label="${esc(t('close'))}">${XICON}</button><h2>${t('ruleTitle')}</h2><div class="tut-art">${arts[i]}</div><p>${nbHTML(t('tut' + (i + 1)))}</p>
       <div class="dots">${[0, 1, 2].map(j => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div>
       <div class="btns"><button class="go alt" type="button" id="tPrev" ${i === 0 ? 'disabled' : ''}>${t('prev')}</button><button class="go" type="button" id="tNext">${i < 2 ? t('next') : (first ? t('letsgo') : t('close'))}</button></div>`;
     $('xBtn').onclick = done;
@@ -949,8 +966,10 @@ const paused = () => !$('ov').hidden;
 
 function newGame(mode) {
   document.documentElement.classList.add('on-game');
+  /* the very first game on this phone (solo or duo) is a short practice round against Tori */
+  const tutNext = (mode !== 'online' && store('fl-tut') !== '1') ? mode : null; if (tutNext) mode = 'ai';
   stopAll(); MUS.fast = false; setMusic('game');
-  Object.assign(G, { mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
+  Object.assign(G, { tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
   if (isDuo()) $('rail').parentNode.insertBefore($('tools'), $('rail').nextSibling); else $('hud').insertBefore($('tools'), $('clock'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
@@ -960,7 +979,8 @@ function newGame(mode) {
   $('fx').innerHTML = ''; document.querySelectorAll('.ko-banner,.bubble').forEach(e => e.remove());
   setTiles('?', '?'); renderClock(); renderNames(); renderHearts();
   if (mode === 'online') return; // the room drives the online flow
-  if (store('fl-tut') !== '1') { afterTut = beginPick; tutorial(true); } else beginPick();
+  if (G.tut) return tutPick();
+  beginPick();
 }
 function setTiles(s, e) { document.querySelectorAll('.tS').forEach(x => { if (x.closest('#arena')) x.textContent = s; }); document.querySelectorAll('.tE').forEach(x => { if (x.closest('#arena')) x.textContent = e; }); }
 function renderNames() { $('name0').textContent = nameOf(0); $('name1').textContent = nameOf(1); }
@@ -1030,7 +1050,7 @@ function renderPanels() {
     const el = $('panel' + p); if (!isDuo() && p === 1) return;
     const mode = panelMode(p), locked = G.lock[p] && G.phase === 'play';
     el.className = 'panel ' + mode + (locked && !isDuo() ? ' frozen' : '');
-    const allowed = (G.phase === 'pick' && p === 1 && G.picks[0]) ? new Set(partners(G.picks[0])) : null;
+    const allowed = (G.tut && G.phase === 'pick' && p === 0) ? new Set(['b']) : (G.phase === 'pick' && p === 1 && G.picks[0]) ? new Set(partners(G.picks[0])) : null;
     const hintBtn = G.mode === 'ai' ? `<button class="act hint" type="button" data-hint="1" ${G.hintUsed || G.phase !== 'play' ? 'disabled' : ''}>${t('hint')}</button>` : '';
     const who = G.phase === 'pick' ? G.picker : G.active;
     const buzzLabel = locked ? t('frozen', { n: G.lockLeft[p] }) : mode === 'buzz' ? t('buzz') : (who === 0 || who === 1) ? t('waiting', { name: nameOf(who) }) : '...';
@@ -1081,6 +1101,33 @@ function bubble(p, text, ms) {
   $('arena').appendChild(d); if (ms) setTimeout(() => d.remove(), ms);
 }
 
+/* ---------- first-time practice round: pick B, Tori picks N, write one word, then the real game ---------- */
+function coach(text, btn) {
+  return `<div class="msg coach">${esc(text)}<div class="coach-b">${btn ? `<button class="go" type="button" id="tutGo">${esc(btn)}</button>` : `<button class="tut-skip" type="button" id="tutSkip">${esc(t('tutSkip'))}</button>`}</div></div>`;
+}
+function bindCoach() {
+  const sk = $('tutSkip'); if (sk) sk.onclick = () => { sfx('key'); endTut(); };
+  const go = $('tutGo'); if (go) go.onclick = () => { sfx('pick'); endTut(); };
+}
+function endTut() { const next = G.tut ? G.tut.next : 'ai'; store('fl-tut', '1'); newGame(next); }
+function tutPick() {
+  G.phase = 'pick'; G.picks = [null, null]; G.picker = 0; G.input = ['', ''];
+  setTiles('?', '?'); setFace(0, 'look'); setFace(1, 'idle'); renderPanels();
+  setCenter(coach(t('tutPick'))); bindCoach();
+  const b = $('panel0').querySelector('[data-k="B"]'); if (b) b.classList.add('tut-hi');
+}
+function tutPlay() {
+  G.phase = 'play'; G.input = ['', ''];
+  setCenter(coach(t('tutPlay')) + '<div class="words"></div>'); bindCoach(); refreshWords();
+  document.querySelectorAll('#arena .tile.tS, #arena .tile.tE').forEach(x => x.classList.add('tut-hi'));
+  setFace(0, 'idle'); setFace(1, 'idle'); renderPanels(); startIdle(); sfx('go');
+}
+function tutDone() {
+  G.phase = 'tutdone'; renderPanels();
+  document.querySelectorAll('.tut-hi').forEach(x => x.classList.remove('tut-hi'));
+  setCenter(coach(t('tutDone'), t('tutGo')) + '<div class="words"></div>'); bindCoach(); refreshWords();
+}
+
 /* ---------- pick + roulette ---------- */
 function beginPick(msg) {
   G.phase = 'pick'; G.picks = [null, null]; G.picker = 0; G.input = ['', ''];
@@ -1111,11 +1158,11 @@ function pickLetter(p, l) {
     if (G.mode === 'ai') {
       const score = x => Math.max(cnt(l, x), cnt(x, l));
       const s = opts.slice().sort((x, y) => G.diff === 'hard' ? score(x) - score(y) : score(y) - score(x));
-      const b = s[Math.floor(Math.random() * Math.min(G.diff === 'hard' ? 4 : 8, s.length))];
+      const b = G.tut ? 'n' : s[Math.floor(Math.random() * Math.min(G.diff === 'hard' ? 4 : 8, s.length))];
       G.picks[1] = b; G.picker = -1; renderPanels();
-      setCenter(`<div class="msg">${esc(t('aiPicked', { name: t('ai'), L: b.toUpperCase() }))}</div>`);
+      setCenter(`<div class="msg">${esc(G.tut ? t('tutAi') : t('aiPicked', { name: t('ai'), L: b.toUpperCase() }))}</div>`);
       jump(1); setTiles(l.toUpperCase(), b.toUpperCase());
-      later(roulette, 1200);
+      if (G.tut) later(() => roulette(['b', 'n']), 2600); else later(roulette, 1200);
     } else { G.picker = 1; renderPanels(); pickPrompt(); }
   } else { setTiles(G.picks[0].toUpperCase(), l.toUpperCase()); G.picker = -1; renderPanels(); later(roulette, 500); }
 }
@@ -1133,7 +1180,7 @@ function roulette(forced) {
     const on = i % 2; $('rs0').classList.toggle('on', on === 0); $('rs1').classList.toggle('on', on === 1); sfx('roll');
     if (i >= total - 1 || a === b) { G.start = chosen[0]; G.end = chosen[1]; setTiles(G.start.toUpperCase(), G.end.toUpperCase());
       if (isOnline()) { if (ON && ON.role === 'host') later(() => ON && ON.ref.update({ status: 'play', startAt: FB.TS }), 900); return; }
-      later(startPlay, 900); return; }
+      later(G.tut ? tutPlay : startPlay, 900); return; }
     i++; later(run, 70 + i * i * 4);
   };
   run();
@@ -1212,7 +1259,8 @@ function accept(p, w) {
   refreshWords();
   renderPanels();
   const tok = G.token;
-  attack(p, w, n, tok).then(() => { if (n >= 3 && tok === G.token) finish(p, false); });
+  if (G.tut) G.phase = 'tutdone';
+  attack(p, w, n, tok).then(() => { if (tok !== G.token) return; if (G.tut) return tutDone(); if (n >= 3) finish(p, false); });
 }
 /* hints: a short, common word that fits, shown as letters and hollow circles (easier to count than underscores) */
 /* a hint = a short, common, unused word plus which letters are hidden.
