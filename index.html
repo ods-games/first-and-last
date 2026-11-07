@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107103952';
+  var BUILD = '20261107104843';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -147,7 +147,11 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 .msg.coach{font-size:17px;line-height:1.45}
 .coach-b{display:flex;justify-content:center;margin-top:8px}
 .coach-b .go{font-size:17px;padding:8px 18px}
-#tutSkip{position:absolute;z-index:6;right:10px;top:56px;border:2.5px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 3px 0 var(--ink);font-family:var(--korean);font-size:14px;color:var(--ink);padding:4px 14px}
+/* tutorial: a big label top-left, skip top-right; hearts, buttons and clock are hidden */
+#game.tut #card0,#game.tut #card1,#game.tut #hud,#game.tut #tools{visibility:hidden}
+#tutBadge{position:absolute;z-index:6;left:10px;top:8px;background:var(--yellow);border:3px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);font-family:var(--display);font-weight:700;font-size:26px;line-height:1;padding:8px 14px 7px;transform:rotate(-3deg)}
+#game.tut .msg.coach{background:#FFF6CC}
+#tutSkip{position:absolute;z-index:6;right:10px;top:12px;border:2.5px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 3px 0 var(--ink);font-family:var(--korean);font-size:14px;color:var(--ink);padding:4px 14px}
 .tut-hi{animation:tutHi 1s ease-in-out infinite;position:relative;z-index:3}
 @keyframes tutHi{0%,100%{box-shadow:0 3px 0 var(--ink),0 0 0 0 rgba(255,143,171,.9)}50%{box-shadow:0 3px 0 var(--ink),0 0 0 8px rgba(255,143,171,0)}}
 .key.tut-hi{background:var(--yellow)}
@@ -495,7 +499,7 @@ const STR = {
     tutHintBtn: '잘했어요! 막히면 힌트 버튼을 눌러요. 한 판에 한 번 쓸 수 있어요. 지금 눌러볼까요?', tutHintUse: '힌트의 빈칸을 채워서 한 단어 더 맞혀봐요!',
     tutHintTimed: '잘했어요! 친구와 대결할 때는 2:00, 1:00, 0:30에 힌트가 나와요.', tutHintTimed2: '힌트가 나왔어요! 힌트를 보고 한 단어 더 맞혀봐요!',
     tutDone: '잘했어요! 이렇게 3단어를 먼저 맞히면 이겨요. 틀리면 5초 동안 키보드가 멈춰요. 준비됐나요?',
-    tutGo: '진짜 게임 시작!', tutSkip: '건너뛰기'
+    tutGo: '진짜 게임 시작!', tutSkip: '튜토리얼 건너뛰기', tutBadge: '튜토리얼'
   },
   en: {
     langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', sfx: 'Sounds', music: 'Music', paused: 'Paused', resume: 'Resume', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
@@ -536,7 +540,7 @@ const STR = {
     tutHintBtn: 'Great! Stuck? Tap Hint. You can use it once per game. Try it now!', tutHintUse: 'Look at the hint and fill in the empty boxes. Get one more word!',
     tutHintTimed: 'Great! In a match with a friend, hints pop up at 2:00, 1:00 and 0:30.', tutHintTimed2: 'Here comes one! Look at the hint and get one more word!',
     tutDone: 'Nice! Be the first to get 3 words to win. A wrong word freezes your keyboard for 5 seconds. Ready?',
-    tutGo: 'Start the real game!', tutSkip: 'Skip'
+    tutGo: 'Start the real game!', tutSkip: 'Skip tutorial', tutBadge: 'Tutorial'
   }
 };
 function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -1117,7 +1121,10 @@ const TUT_EVERY_TIME = true;
 function endTut() { tutSkipBtn(false); const next = G.tut ? G.tut.next : 'ai'; store('fl-tut', '1'); newGame(next, true); }
 function tutSkipBtn(on) {
   let b = $('tutSkip');
-  if (!on) { if (b) b.remove(); return; }
+  $('game').classList.toggle('tut', !!on);
+  if (!on) { if (b) b.remove(); const g = $('tutBadge'); if (g) g.remove(); return; }
+  if (!$('tutBadge')) { const g = document.createElement('div'); g.id = 'tutBadge'; $('arena').appendChild(g); }
+  $('tutBadge').textContent = t('tutBadge');
   if (!b) { b = document.createElement('button'); b.id = 'tutSkip'; b.type = 'button'; b.className = 'tut-skip'; $('arena').appendChild(b); }
   b.textContent = t('tutSkip') + ' ›'; b.onclick = () => { sfx('key'); endTut(); };
 }
