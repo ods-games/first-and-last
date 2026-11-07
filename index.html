@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107142925';
+  var BUILD = '20261107143134';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -121,7 +121,7 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 .mtext{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .mtext b{font-family:var(--korean);font-weight:400;font-size:23px;line-height:1.1}
 .mtext small{font-family:var(--korean);font-size:14px;color:var(--ink);opacity:.75}
-.mgo{width:40px;height:40px;flex:none;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.mgo{height:32px;flex:none;border-radius:999px;background:var(--ink);display:flex;align-items:center;justify-content:center;padding:0 9px;color:#fff;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.3px;line-height:1}
 .mgo svg{width:16px;height:16px}
 .minfo{flex:none;width:44px;height:44px;margin-right:6px;background:none;border:0;display:flex;align-items:center;justify-content:center;padding:0}
 .minfo span{width:26px;height:26px;border-radius:50%;border:3px solid var(--ink);background:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;font-family:var(--display)}
@@ -417,13 +417,13 @@ html,body{position:fixed;inset:0;overflow:hidden}
     <div class="stage" id="homeCast"></div>
     <div class="field gut">
       <div class="mcard" style="--c:var(--pink)">
-        <div class="mrow"><button class="mmain" id="goAI" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="11" r="5.5" fill="#FFB3C7"/><path d="M6.5 27c1.2-5.6 5-8.5 9.5-8.5s8.3 2.9 9.5 8.5" fill="#FFB3C7"/></svg></span><span class="mtext"><b data-t="solo"></b><small data-t="soloSub"></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h9.5M8.5 3.8 12.7 8l-4.2 4.2"/></svg></span></button></div>
+        <div class="mrow"><button class="mmain" id="goAI" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="11" r="5.5" fill="#FFB3C7"/><path d="M6.5 27c1.2-5.6 5-8.5 9.5-8.5s8.3 2.9 9.5 8.5" fill="#FFB3C7"/></svg></span><span class="mtext"><b data-t="solo"></b><small data-t="soloSub"></small></span><span class="mgo" aria-hidden="true">GO!</span></button></div>
       </div>
       <div class="mcard" style="--c:var(--mint)">
-        <div class="mrow"><button class="mmain" id="goDuo" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="12" r="4.5" fill="#BDEBD8"/><circle cx="21.5" cy="12" r="4.5" fill="#FFE07A"/><path d="M3.5 26c1-4.6 4-7 7.5-7s6.5 2.4 7.5 7" fill="#BDEBD8"/><path d="M14 26c1-4.6 4-7 7.5-7s6.5 2.4 7.5 7" fill="#FFE07A"/></svg></span><span class="mtext"><b data-t="duo"></b><small data-t="duoSub"></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h9.5M8.5 3.8 12.7 8l-4.2 4.2"/></svg></span></button></div>
+        <div class="mrow"><button class="mmain" id="goDuo" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="12" r="4.5" fill="#BDEBD8"/><circle cx="21.5" cy="12" r="4.5" fill="#FFE07A"/><path d="M3.5 26c1-4.6 4-7 7.5-7s6.5 2.4 7.5 7" fill="#BDEBD8"/><path d="M14 26c1-4.6 4-7 7.5-7s6.5 2.4 7.5 7" fill="#FFE07A"/></svg></span><span class="mtext"><b data-t="duo"></b><small data-t="duoSub"></small></span><span class="mgo" aria-hidden="true">GO!</span></button></div>
       </div>
       <div class="mcard" style="--c:#D9CCFF">
-        <div class="mrow"><button class="mmain" id="goOnline" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.2" cy="13" r="3" fill="#BDEBD8"/><path d="M1.4 25c.5-3.6 2-5.5 3.8-5.5s3.3 1.9 3.8 5.5" fill="#BDEBD8"/><circle cx="26.8" cy="13" r="3" fill="#FFE07A"/><path d="M23 25c.5-3.6 2-5.5 3.8-5.5s3.3 1.9 3.8 5.5" fill="#FFE07A"/><circle cx="16" cy="17" r="1.3" fill="#4A3426" stroke="none"/><path d="M14 14.8a3 3 0 0 0 0 4.4M18 14.8a3 3 0 0 1 0 4.4" stroke-width="2"/><path d="M12.3 12.6a6 6 0 0 0 0 8.8M19.7 12.6a6 6 0 0 1 0 8.8" stroke-width="2"/></svg></span><span class="mtext"><b><span data-t="online"></span></b><small data-t="onlineSub"></small></span><span class="mgo" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h9.5M8.5 3.8 12.7 8l-4.2 4.2"/></svg></span></button></div>
+        <div class="mrow"><button class="mmain" id="goOnline" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="16.5" r="3.4" fill="#BDEBD8"/><path d="M2.2 28c.6-4.2 2.4-6.4 4.8-6.4s4.2 2.2 4.8 6.4" fill="#BDEBD8"/><circle cx="25" cy="16.5" r="3.4" fill="#FFE07A"/><path d="M20.2 28c.6-4.2 2.4-6.4 4.8-6.4s4.2 2.2 4.8 6.4" fill="#FFE07A"/><circle cx="16" cy="13.6" r="1.5" fill="#4A3426" stroke="none"/><path d="M13.2 10.8a4 4 0 0 1 5.6 0" stroke-width="2.4"/><path d="M10.6 8.2a7.6 7.6 0 0 1 10.8 0" stroke-width="2.4"/></svg></span><span class="mtext"><b><span data-t="online"></span></b><small data-t="onlineSub"></small></span><span class="mgo" aria-hidden="true">GO!</span></button></div>
       </div>
       <div class="copy" id="copyLine">© 2026 ods-games</div>
     </div>
