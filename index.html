@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107151122';
+  var BUILD = '20261107151311';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1384,7 +1384,7 @@ function startClock() {
 /* ---------- words ---------- */
 function check(w, p) {
   const S = G.start.toUpperCase(), E = G.end.toUpperCase();
-  if (w.length < 3) return { msg: t('short') };
+  if (w.length < 3) return { msg: t('short'), soft: true };
   if (w[0] !== G.start || w[w.length - 1] !== G.end) return { msg: t('mismatch', { S, E }) };
   if (G.used.has(w)) return { msg: G.used.get(w) === p ? t('usedMe') : t('usedOpp'), used: true };
   if (VALID.has(w)) return null;
@@ -1397,6 +1397,8 @@ function submit(p) {
   const w = G.input[p]; if (!w) return;
   const err = check(w, p);
   if (!err) return isOnline() ? claimWord(w) : accept(p, w);
+  /* 1-2 letters: probably Enter tapped by mistake. Keep the letters, just remind, no freeze */
+  if (err.soft) { sfx('key'); return toast(p, err.msg, 1400); }
   sfx('wrong');
   /* a word that was already played is a real word: just say so, no freeze (both may have typed it at once) */
   if (err.used) { G.input[p] = ''; if (isDuo()) { clearTimeout(G.buzzId); G.active = null; } renderPanels(); return toast(p, err.msg, 1800); }
