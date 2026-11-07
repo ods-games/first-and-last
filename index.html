@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107143335';
+  var BUILD = '20261107144907';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -533,7 +533,7 @@ const STR = {
     prev: '이전', next: '다음', letsgo: '시작하기', close: '닫기', ruleTitle: '이렇게 놀아요',
     tutPick: '연습 판이에요! 먼저 둘이 알파벳을 하나씩 골라요. C를 눌러볼까요?', tutAi: '토리는 T를 골랐어요. 이제 룰렛이 어느 글자로 시작할지 정해요!',
     tutPlay: 'C로 시작해서 T로 끝나는|단어를 쓰고 Enter를 눌러요!',
-    tutHintIntro: '잘했어요!|단어가 생각이 안 나면|힌트를 받을 수 있어요.', tutHintIntroDuo: '잘했어요!|단어가 생각이 안 날 때|종종 깜짝 힌트를|받을 수 있어요.', tutLast: '마지막 한 단어!|3단어를 다 맞히면 이겨요!', tutTip: 'TIP', randomTitle: '랜덤 매칭', randomSub: '지금 접속한 사람과 바로 대결해요', inviteMode: '친구 초대', inviteSub: '링크를 보내서 친구와 대결해요', searching: '상대방을 찾는 중...', searchingSub: '조금만 기다려 주세요', noOneYet: '지금은 상대방이 없어요. 토리랑 먼저 할까요?', playTori: '토리와 대결', keepWaiting: '계속 기다리기', secUnit: '초', rival: '상대방', nickTitle: '닉네임을 정해요', nickChange: '닉네임 바꾸기', nickSub: '친구와 대결할 때 보이는 이름이에요. 실명은 쓰지 마세요!', nickPh: '2~10자 (한글, 영어, 숫자)', nickLen: '2~10자로 정해주세요', nickChars: '한글, 영어, 숫자, _만 쓸 수 있어요', nickBad: '쓸 수 없는 닉네임이에요', nickTaken: '이미 누가 쓰고 있어요. 다른 닉네임을 정해주세요', nickNet: '연결이 안 돼요. 인터넷을 확인하고 다시 해주세요', nickMake: '닉네임', nickSure: '이 닉네임으로 할까요?', nickSureSub: '정하면 하루 동안 바꿀 수 없어요.', nickWait: '닉네임은 하루에 한 번 바꿀 수 있어요. {h}시간 {m}분 뒤에 바꿀 수 있어요.', later: '나중에', checking: '확인 중...', readyQ: '대결할 준비 됐나요?', hintAns: '힌트 정답', missed: '이런 단어도 있었어요', tutHintBtn: '힌트 버튼을 눌러봐요! 한 판에 한 번 쓸 수 있어요.', tutHintUse: '힌트의 빈칸을 채워서 한 단어 더 맞혀봐요!',
+    tutHintIntro: '잘했어요!|단어가 생각이 안 나면|힌트를 받을 수 있어요.', tutHintIntroDuo: '잘했어요!|단어가 생각이 안 날 때|종종 깜짝 힌트를|받을 수 있어요.', tutLast: '마지막 한 단어!|3단어를 다 맞히면 이겨요!', tutTip: 'TIP', randomTitle: '랜덤 매칭', randomSub: '지금 접속한 사람과 바로 대결해요', inviteMode: '친구 초대', inviteSub: '링크를 보내서 친구와 대결해요', searching: '상대방을 찾는 중...', searchingSub: '조금만 기다려 주세요', noOneYet: '지금은 상대방이 없어요. 토리랑 먼저 할까요?', playTori: '토리와 대결', keepWaiting: '계속 기다리기', secUnit: '초', rival: '상대방', nickTitle: '닉네임을 정해요', nickChange: '닉네임 바꾸기', nickSub: '친구와 대결할 때 보이는 이름이에요. 실명은 쓰지 마세요!', nickPh: '2~10자 (한글, 영어, 숫자)', nickLen: '2~10자로 정해주세요', nickChars: '한글, 영어, 숫자, _만 쓸 수 있어요', nickBad: '쓸 수 없는 닉네임이에요', nickTaken: '이미 누가 쓰고 있어요. 다른 닉네임을 정해주세요', nickNet: '연결이 안 돼요. 인터넷을 확인하고 다시 해주세요', nickMake: '닉네임', nickSure: '이 닉네임으로 할까요?', nickSureSub: '정하면 하루 동안 바꿀 수 없어요.', nickWait: '닉네임은 하루에 한 번 바꿀 수 있어요. {h}시간 {m}분 뒤에 바꿀 수 있어요.', nickDel: '닉네임 지우기', later: '나중에', checking: '확인 중...', readyQ: '대결할 준비 됐나요?', hintAns: '힌트 정답', missed: '이런 단어도 있었어요', tutHintBtn: '힌트 버튼을 눌러봐요! 한 판에 한 번 쓸 수 있어요.', tutHintUse: '힌트의 빈칸을 채워서 한 단어 더 맞혀봐요!',
     tutHintTimed: '친구와 할 때는|진행 상황에 따라|힌트가 나와요.', tutHintTimed2: '힌트가 나왔어요! 힌트를 보고 한 단어 더 맞혀봐요!',
     tutDone: '이겼어요! 이렇게 3단어를 먼저 맞히면 이겨요. 틀리면 5초 동안 키보드가 멈춰요. 준비됐나요?',
     tutGo: '진짜 게임 시작!', tutSkip: '튜토리얼 건너뛰기', tutBadge: '튜토리얼', tutOk: '확인 ✓'
@@ -574,7 +574,7 @@ const STR = {
     prev: 'Back', next: 'Next', letsgo: 'Let’s play', close: 'Close', ruleTitle: 'How to play',
     tutPick: 'Practice round! First, each player picks a letter. Tap C!', tutAi: 'Tori picked T. Now the roulette decides which one starts!',
     tutPlay: 'Type a word that starts with C and ends with T, then tap Enter!',
-    tutHintIntro: 'Nice! If you can’t think of a word, you can get a hint.', tutHintIntroDuo: 'Nice! When you’re stuck, a surprise hint sometimes pops up.', tutLast: 'One more word! Get all 3 words to win!', tutTip: 'TIP', randomTitle: 'Random match', randomSub: 'Play someone who’s online right now', inviteMode: 'Invite a friend', inviteSub: 'Send a link and play your friend', searching: 'Finding a player...', searchingSub: 'Hang on a moment', noOneYet: 'No one’s around right now. Play Tori first?', playTori: 'Play Tori', keepWaiting: 'Keep waiting', secUnit: 's', rival: 'Opponent', nickTitle: 'Choose a nickname', nickChange: 'Change nickname', nickSub: 'This is the name your friends will see. Don’t use your real name!', nickPh: '2–10 letters or numbers', nickLen: 'Use 2–10 characters', nickChars: 'Only letters, numbers and _', nickBad: 'That nickname isn’t allowed', nickTaken: 'Someone already has that one. Try another!', nickNet: 'Can’t connect. Check your internet and try again', nickMake: 'Nickname', nickSure: 'Use this nickname?', nickSureSub: 'You can’t change it again for a day.', nickWait: 'You can change your nickname once a day. Try again in {h}h {m}m.', later: 'Later', checking: 'Checking...', readyQ: 'Ready to play?', hintAns: 'Hint answers', missed: 'You could have tried', tutHintBtn: 'Tap the Hint button! You can use it once per game.', tutHintUse: 'Look at the hint and fill in the empty boxes. Get one more word!',
+    tutHintIntro: 'Nice! If you can’t think of a word, you can get a hint.', tutHintIntroDuo: 'Nice! When you’re stuck, a surprise hint sometimes pops up.', tutLast: 'One more word! Get all 3 words to win!', tutTip: 'TIP', randomTitle: 'Random match', randomSub: 'Play someone who’s online right now', inviteMode: 'Invite a friend', inviteSub: 'Send a link and play your friend', searching: 'Finding a player...', searchingSub: 'Hang on a moment', noOneYet: 'No one’s around right now. Play Tori first?', playTori: 'Play Tori', keepWaiting: 'Keep waiting', secUnit: 's', rival: 'Opponent', nickTitle: 'Choose a nickname', nickChange: 'Change nickname', nickSub: 'This is the name your friends will see. Don’t use your real name!', nickPh: '2–10 letters or numbers', nickLen: 'Use 2–10 characters', nickChars: 'Only letters, numbers and _', nickBad: 'That nickname isn’t allowed', nickTaken: 'Someone already has that one. Try another!', nickNet: 'Can’t connect. Check your internet and try again', nickMake: 'Nickname', nickSure: 'Use this nickname?', nickSureSub: 'You can’t change it again for a day.', nickWait: 'You can change your nickname once a day. Try again in {h}h {m}m.', nickDel: 'Delete nickname', later: 'Later', checking: 'Checking...', readyQ: 'Ready to play?', hintAns: 'Hint answers', missed: 'You could have tried', tutHintBtn: 'Tap the Hint button! You can use it once per game.', tutHintUse: 'Look at the hint and fill in the empty boxes. Get one more word!',
     tutHintTimed: 'When you play with a friend, hints show up as the game goes on.', tutHintTimed2: 'Here comes one! Look at the hint and get one more word!',
     tutDone: 'You win! Be the first to get 3 words to win. A wrong word freezes your keyboard for 5 seconds. Ready?',
     tutGo: 'Start the real game!', tutSkip: 'Skip tutorial', tutBadge: 'Tutorial', tutOk: 'Got it ✓'
@@ -930,8 +930,9 @@ $('nickBtn').onclick = () => {
   const left = myNick ? 864e5 - (Date.now() - (+store('fl-nick-at') || 0)) : 0;
   if (left > 0) {
     const mins = Math.ceil(left / 6e4), h = Math.floor(mins / 60), m = mins % 60;
-    sheet(`<h2>${esc(myNick)}</h2><p>${esc(t('nickWait', { h, m }))}</p><div class="btns"><button class="go alt" type="button" id="nwOk">${t('ok')}</button></div>`, () => { $('ov').hidden = true; });
+    sheet(`<h2>${esc(myNick)}</h2><p>${esc(t('nickWait', { h, m }))}</p><div class="btns"><button class="go alt" type="button" id="nwOk">${t('ok')}</button></div>${delLink()}`, () => { $('ov').hidden = true; });
     $('nwOk').onclick = () => { sfx('key'); $('ov').hidden = true; };
+    $('nickDel').onclick = () => { sfx('key'); $('ov').hidden = true; deleteNick(); };
     return;
   }
   askNick(() => { }, null, () => { });
@@ -1683,7 +1684,7 @@ function askNick(then, later, cancel) {
       <p class="nick-sub">${esc(t('nickSub'))}</p>
       <input class="nick-in" id="nickIn" type="text" maxlength="10" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(val)}" placeholder="${esc(t('nickPh'))}">
       <p class="nick-err" id="nickErr">${esc(err || '')}</p>
-      <div class="btns">${later || myNick ? `<button class="go alt" type="button" id="nickLater">${t(myNick ? 'close' : 'later')}</button>` : ''}<button class="go${busy ? ' busy' : ''}" type="button" id="nickOk" ${busy ? 'disabled' : ''}>${busy ? `<span class="spin sm" aria-hidden="true"></span>${t('checking')}` : t('ok')}</button></div>`, cancel && !busy ? () => { sfx('key'); done(cancel); } : null);
+      <div class="btns">${later || myNick ? `<button class="go alt" type="button" id="nickLater">${t(myNick ? 'close' : 'later')}</button>` : ''}<button class="go${busy ? ' busy' : ''}" type="button" id="nickOk" ${busy ? 'disabled' : ''}>${busy ? `<span class="spin sm" aria-hidden="true"></span>${t('checking')}` : t('ok')}</button></div>${myNick && !busy ? delLink() : ''}`, cancel && !busy ? () => { sfx('key'); done(cancel); } : null);
     $('sheet').classList.add('nick-sheet');
     const inp = $('nickIn');
     inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); $('nickOk').click(); } };
@@ -1694,6 +1695,7 @@ function askNick(then, later, cancel) {
       if (n === myNick) return done(then);
       sfx('key'); confirm(n);
     };
+    const dl = $('nickDel'); if (dl) dl.onclick = () => { sfx('key'); done(() => { }); deleteNick(); };
     const lt = $('nickLater'); if (lt) lt.onclick = () => { sfx('key'); done(later || (() => { })); };
   };
   /* "Is this right?" before it becomes official */
@@ -1716,6 +1718,14 @@ function askNick(then, later, cancel) {
   fbInit().catch(() => { }); /* start connecting now so saving is quicker */
 }
 /* online: make a nickname, or "Later" and go on without one; the X goes back home */
+/* delete the nickname: frees it on the server and on this phone (also clears the once-a-day lock) */
+async function deleteNick() {
+  const key = myNick && myNick.toLowerCase();
+  setNick(''); try { localStorage.removeItem('fl-nick'); localStorage.removeItem('fl-nick-at'); } catch (e) { }
+  if (!key) return;
+  try { await fbInit(); await FB.db.ref('nicks/' + key).remove(); } catch (e) { }
+}
+const delLink = () => `<button class="nick-del" type="button" id="nickDel">${esc(t('nickDel'))}</button>`;
 const ensureNick = f => (myNick ? f() : askNick(f, f, () => goHome()));
 
 /* one shared connection attempt at a time */
