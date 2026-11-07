@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107134020';
+  var BUILD = '20261107134355';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -921,7 +921,7 @@ function applyLang() {
 }
 $('homeCast').innerHTML = `<div class="hc" id="hc0">${CAPY}</div><div class="vs" aria-hidden="true">VS</div><div class="hc" id="hc1">${RAB_FRONT}</div>`;
 showSvg($('hc0'), 'capy', 'front'); showSvg($('hc1'), 'rfront', 'happy');
-$('nickBtn').onclick = () => { sfx('key'); askNick(() => { }); };
+$('nickBtn').onclick = () => { sfx('key'); askNick(() => { }, null, () => { }); };
 $('langBtn').onclick = () => { lang = lang === 'ko' ? 'en' : 'ko'; store('fl-lang', lang); applyLang(); };
 const ICON = {
   user: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20c1.2-4 4.2-5.5 7.5-5.5s6.3 1.5 7.5 5.5"/></svg>',
@@ -1179,10 +1179,10 @@ function bindCoach() {
    Set to true while testing to show it before every solo/duo game. */
 const TUT_EVERY_TIME = true;
 function endTut(noReady) {
-  tutSkipBtn(false); const next = G.tut ? G.tut.next : 'ai'; store('fl-tut', '1');
-  const go = nr => newGame(next, true, nr);
-  /* no nickname yet: ask for one first, then the "Ready?" card */
-  if (!myNick) return askNick(() => go(false), () => go(false));
+  const next = G.tut ? G.tut.next : 'ai';
+  const go = nr => { tutSkipBtn(false); store('fl-tut', '1'); newGame(next, true, nr); };
+  /* no nickname yet: ask for one first, then the "Ready?" card. The X goes back to the tutorial. */
+  if (!myNick) return askNick(() => go(false), () => go(false), () => { });
   go(noReady);
 }
 /* a "Ready?" card before the letter picking starts, so the countdown never starts by surprise */
@@ -1657,14 +1657,14 @@ async function claimNick(n) {
 function setNick(n) { myNick = n; store('fl-nick', n); renderNick(); if (G.mode) renderNames(); }
 function renderNick() { const b = $('nickBtn'); if (b) b.innerHTML = `${ICON.user}<span>${esc(myNick || t('nickMake'))}</span>${ICON.pen}`; }
 /* ask for a nickname; then() runs after it's saved, later() (optional) after "Later" */
-function askNick(then, later) {
+function askNick(then, later, cancel) {
   const draw = (val, err, busy) => {
     sheet(`<h2>${esc(myNick ? t('nickChange') : t('nickTitle'))}</h2>
       <p class="nick-sub">${esc(t('nickSub'))}</p>
       <input class="nick-in" id="nickIn" type="text" maxlength="10" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(val)}" placeholder="${esc(t('nickPh'))}">
       <p class="nick-err" id="nickErr">${esc(err || '')}</p>
       <div class="btns">${later || myNick ? `<button class="go alt" type="button" id="nickLater">${t(myNick ? 'close' : 'later')}</button>` : ''}<button class="go${busy ? ' busy' : ''}" type="button" id="nickOk" ${busy ? 'disabled' : ''}>${busy ? `<span class="spin sm" aria-hidden="true"></span>${t('checking')}` : t('ok')}</button></div>
-      ${myNick && !busy ? `<button class="nick-del" type="button" id="nickDel">${esc(t('nickDel'))}</button>` : ''}`);
+      ${myNick && !busy ? `<button class="nick-del" type="button" id="nickDel">${esc(t('nickDel'))}</button>` : ''}`, cancel && !busy ? () => { sfx('key'); done(cancel); } : null);
     $('sheet').classList.add('nick-sheet');
     const inp = $('nickIn');
     inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); $('nickOk').click(); } };
@@ -1691,7 +1691,7 @@ function askNick(then, later) {
   draw(myNick, '');
   fbInit().catch(() => { }); /* start connecting now so saving is quicker */
 }
-const ensureNick = f => (myNick ? f() : askNick(f, () => goHome()));
+const ensureNick = f => (myNick ? f() : askNick(f, () => goHome(), () => goHome()));
 
 /* one shared connection attempt at a time */
 let FBP = null;
