@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107110812';
+  var BUILD = '20261107111947';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -151,10 +151,9 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 #game.tut #card0,#game.tut #card1,#game.tut #hud,#game.tut #tools{visibility:hidden}
 #tutBadge{position:absolute;z-index:6;left:10px;top:8px;background:var(--yellow);border:3px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);font-family:var(--display);font-weight:700;font-size:26px;line-height:1;padding:8px 14px 7px;transform:rotate(-3deg)}
 #game.tut .msg.coach{background:#FFF6CC}
-#tutTipBox{position:absolute;z-index:5;left:10px;bottom:10px;display:flex;flex-direction:column;align-items:center;gap:5px;background:var(--paper);border:3px solid var(--ink);border-radius:14px;box-shadow:0 3px 0 var(--ink);padding:6px 8px 8px}
-#tutTipBox b{font-family:var(--display);font-size:15px;background:var(--yellow);border:2px solid var(--ink);border-radius:8px;padding:0 8px}
-#tutTipBox .chip{font-size:15px;padding:2px 9px;background:#fff}
-#tutTipBox .chip.used{opacity:.4;text-decoration:line-through}
+#tutTipBox{margin-top:10px;text-align:center;font-family:var(--display);font-size:14px;font-weight:600;color:var(--soft)}
+#tutTipBox span{cursor:pointer}
+#tutTipBox span.used{text-decoration:line-through;opacity:.6}
 .msg.coach.has-ok{position:relative;padding-right:30px;padding-bottom:14px}
 .tut-ok{position:absolute;right:-12px;bottom:-12px;width:42px;height:42px;border-radius:50%;border:3px solid var(--ink);background:var(--mint);box-shadow:0 3px 0 var(--ink);display:flex;align-items:center;justify-content:center;padding:0;color:var(--ink);animation:tutHi 1s ease-in-out infinite}
 .tut-ok:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
@@ -984,7 +983,7 @@ function newGame(mode, noTut) {
   /* the very first game on this phone (solo or duo) is a short practice round against Tori */
   const tutNext = (!noTut && mode !== 'online' && (TUT_EVERY_TIME || store('fl-tut') !== '1')) ? mode : null; if (tutNext) mode = 'ai';
   stopAll(); MUS.fast = false; setMusic('game');
-  Object.assign(G, { tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
+  Object.assign(G, { tipOn: false, tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['look', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
   if (isDuo()) $('rail').parentNode.insertBefore($('tools'), $('rail').nextSibling); else $('hud').insertBefore($('tools'), $('clock'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
@@ -1004,7 +1003,7 @@ function renderClock() {
   const m = Math.floor(G.time / 60), s = G.time % 60, txt = m + ':' + String(s).padStart(2, '0');
   ['clock', 'clockR'].forEach(id => { $(id).textContent = txt; $(id).classList.toggle('hurry', G.phase === 'play' && G.time <= 10); });
 }
-function setCenter(html, flip) { $('center').innerHTML = html; $('center').classList.toggle('flip', !!flip); }
+function setCenter(html, flip) { $('center').innerHTML = html; $('center').classList.toggle('flip', !!flip); if (G.tipOn) tutTip(true); }
 let faceTimers = [null, null];
 function drawFace(p) {
   const face = G.faces[p], el = charEl(p), hits = G.scores[other(p)];
@@ -1179,15 +1178,16 @@ function tutAfterHintWord() {
   refreshWords();
 }
 function tutLast() {
+  G.hints = []; /* the last word is on your own (the TIP words help) */
   G.phase = 'play'; renderPanels();
   setCenter(coach(t('tutLast')) + '<div class="words"></div>'); refreshWords();
 }
 /* example words, shown in their own box for the whole round (tap to hear) */
 function tutTip(on) {
-  let b = $('tutTipBox');
+  G.tipOn = !!on; let b = $('tutTipBox');
   if (!on) { if (b) b.remove(); return; }
-  if (!b) { b = document.createElement('div'); b.id = 'tutTipBox'; $('arena').appendChild(b); }
-  b.innerHTML = `<b>${t('tutTip')}</b>` + ['cat', 'coat', 'count'].map(w => `<button type="button" class="chip${G.used.has(w) ? ' used' : ''}" data-say="${w}">${cs(w)}</button>`).join('');
+  if (!b) { b = document.createElement('div'); b.id = 'tutTipBox'; $('center').appendChild(b); }
+  b.innerHTML = `${t('tutTip')}: ` + ['cat', 'coat', 'count'].map(w => `<span class="${G.used.has(w) ? 'used' : ''}" data-say="${w}">${cs(w)}</span>`).join(', ');
   b.querySelectorAll('[data-say]').forEach(x => x.onclick = () => { if (!soundOn) toggleSfx(); sayWord(x.dataset.say); });
 }
 function tutDone() {
