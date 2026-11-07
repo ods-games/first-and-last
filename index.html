@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107104843';
+  var BUILD = '20261107105129';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -151,6 +151,7 @@ html[lang="ko"] .ribbon{white-space:nowrap}
 #game.tut #card0,#game.tut #card1,#game.tut #hud,#game.tut #tools{visibility:hidden}
 #tutBadge{position:absolute;z-index:6;left:10px;top:8px;background:var(--yellow);border:3px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);font-family:var(--display);font-weight:700;font-size:26px;line-height:1;padding:8px 14px 7px;transform:rotate(-3deg)}
 #game.tut .msg.coach{background:#FFF6CC}
+.coach-b .go.ok{background:var(--mint)}
 #tutSkip{position:absolute;z-index:6;right:10px;top:12px;border:2.5px solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 3px 0 var(--ink);font-family:var(--korean);font-size:14px;color:var(--ink);padding:4px 14px}
 .tut-hi{animation:tutHi 1s ease-in-out infinite;position:relative;z-index:3}
 @keyframes tutHi{0%,100%{box-shadow:0 3px 0 var(--ink),0 0 0 0 rgba(255,143,171,.9)}50%{box-shadow:0 3px 0 var(--ink),0 0 0 8px rgba(255,143,171,0)}}
@@ -499,7 +500,7 @@ const STR = {
     tutHintBtn: '잘했어요! 막히면 힌트 버튼을 눌러요. 한 판에 한 번 쓸 수 있어요. 지금 눌러볼까요?', tutHintUse: '힌트의 빈칸을 채워서 한 단어 더 맞혀봐요!',
     tutHintTimed: '잘했어요! 친구와 대결할 때는 2:00, 1:00, 0:30에 힌트가 나와요.', tutHintTimed2: '힌트가 나왔어요! 힌트를 보고 한 단어 더 맞혀봐요!',
     tutDone: '잘했어요! 이렇게 3단어를 먼저 맞히면 이겨요. 틀리면 5초 동안 키보드가 멈춰요. 준비됐나요?',
-    tutGo: '진짜 게임 시작!', tutSkip: '튜토리얼 건너뛰기', tutBadge: '튜토리얼'
+    tutGo: '진짜 게임 시작!', tutSkip: '튜토리얼 건너뛰기', tutBadge: '튜토리얼', tutOk: '확인 ✓'
   },
   en: {
     langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', sfx: 'Sounds', music: 'Music', paused: 'Paused', resume: 'Resume', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
@@ -540,7 +541,7 @@ const STR = {
     tutHintBtn: 'Great! Stuck? Tap Hint. You can use it once per game. Try it now!', tutHintUse: 'Look at the hint and fill in the empty boxes. Get one more word!',
     tutHintTimed: 'Great! In a match with a friend, hints pop up at 2:00, 1:00 and 0:30.', tutHintTimed2: 'Here comes one! Look at the hint and get one more word!',
     tutDone: 'Nice! Be the first to get 3 words to win. A wrong word freezes your keyboard for 5 seconds. Ready?',
-    tutGo: 'Start the real game!', tutSkip: 'Skip tutorial', tutBadge: 'Tutorial'
+    tutGo: 'Start the real game!', tutSkip: 'Skip tutorial', tutBadge: 'Tutorial', tutOk: 'Got it ✓'
   }
 };
 function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -1113,6 +1114,11 @@ function bubble(p, text, ms) {
 function coach(text, btn) {
   return `<div class="msg coach">${esc(text)}${btn ? `<div class="coach-b"><button class="go" type="button" id="tutGo">${esc(btn)}</button></div>` : ''}</div>`;
 }
+/* an info step: wait for the check button before moving on */
+function coachNext(text, extra, next) {
+  setCenter(`<div class="msg coach">${esc(text)}<div class="coach-b"><button class="go ok" type="button" id="tutOk">${esc(t('tutOk'))}</button></div></div>` + (extra || ''));
+  $('tutOk').onclick = () => { sfx('key'); next(); };
+}
 function bindCoach() {
   const go = $('tutGo'); if (go) go.onclick = () => { sfx('pick'); endTut(); };
 }
@@ -1150,9 +1156,9 @@ function tutHintStep() {
     const hb = $('panel0').querySelector('.act.hint'); if (hb) hb.classList.add('tut-hi');
   } else {
     /* matches between people: hints pop up on their own */
-    setCenter(coach(t('tutHintTimed')) + '<div class="words"></div>'); refreshWords();
     const tok = G.token;
-    later(() => { if (tok !== G.token) return; addHint(makeHint()); setCenter(coach(t('tutHintTimed2')) + '<div class="words"></div>'); refreshWords(); }, 2600);
+    coachNext(t('tutHintTimed'), '<div class="words"></div>', () => { if (tok !== G.token) return; addHint(makeHint()); setCenter(coach(t('tutHintTimed2')) + '<div class="words"></div>'); refreshWords(); });
+    refreshWords();
   }
 }
 function tutDone() {
@@ -1193,9 +1199,10 @@ function pickLetter(p, l) {
       const s = opts.slice().sort((x, y) => G.diff === 'hard' ? score(x) - score(y) : score(y) - score(x));
       const b = G.tut ? 't' : s[Math.floor(Math.random() * Math.min(G.diff === 'hard' ? 4 : 8, s.length))];
       G.picks[1] = b; G.picker = -1; renderPanels();
-      setCenter(`<div class="msg">${esc(G.tut ? t('tutAi') : t('aiPicked', { name: t('ai'), L: b.toUpperCase() }))}</div>`);
       jump(1); setTiles(l.toUpperCase(), b.toUpperCase());
-      if (G.tut) later(() => roulette(['c', 't']), 2600); else later(roulette, 1200);
+      if (G.tut) { const tok = G.token; coachNext(t('tutAi'), '', () => { if (tok === G.token) roulette(['c', 't']); }); return; }
+      setCenter(`<div class="msg">${esc(t('aiPicked', { name: t('ai'), L: b.toUpperCase() }))}</div>`);
+      later(roulette, 1200);
     } else { G.picker = 1; renderPanels(); pickPrompt(); }
   } else { setTiles(G.picks[0].toUpperCase(), l.toUpperCase()); G.picker = -1; renderPanels(); later(roulette, 500); }
 }
