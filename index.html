@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107111947';
+  var BUILD = '20261107112423';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -1178,7 +1178,9 @@ function tutAfterHintWord() {
   refreshWords();
 }
 function tutLast() {
-  G.hints = []; /* the last word is on your own (the TIP words help) */
+  /* last word: one fresh hint that points at an unused TIP word, first two letters shown (COUNT -> CO__T) */
+  const w = ['count', 'coat', 'cat'].find(x => !G.used.has(x));
+  G.hints = w ? [{ w, b: [...w].map((c, i) => i).filter(i => i >= Math.min(2, w.length - 2) && i < w.length - 1).slice(0, 2) }] : [];
   G.phase = 'play'; renderPanels();
   setCenter(coach(t('tutLast')) + '<div class="words"></div>'); refreshWords();
 }
