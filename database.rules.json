@@ -13,6 +13,13 @@
           }
         }
       }
+    },
+    "nicks": {
+      "$nick": {
+        ".read": "auth != null",
+        ".write": "auth != null && (!data.exists() || data.val() === auth.uid) && (!newData.exists() || newData.val() === auth.uid)",
+        ".validate": "$nick.length >= 2 && $nick.length <= 10"
+      }
     }
   }
 }

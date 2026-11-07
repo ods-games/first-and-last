@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107130104';
+  var BUILD = '20261107132452';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -71,6 +71,16 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 #home > *:not(.deco){position:relative;z-index:1}
 .home-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-block:10px}
 .home-top .rt{display:flex;gap:8px}
+.home-top .lt-grp{display:flex;gap:6px;min-width:0}
+.nick-pill{display:flex;align-items:center;gap:5px;min-width:84px;max-width:200px;padding:6px 10px;flex:0 1 auto;font-size:14px}
+.home-top .rt{flex:none}
+.nick-pill span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nick-pill svg{flex:none}
+.sheet.nick-sheet{align-self:flex-start;margin-top:8vh}
+.nick-sub{font-size:14px;margin:0;text-align:center}
+.nick-in{font:inherit;font-family:var(--korean);font-size:20px;text-align:center;border:3px solid var(--ink);border-radius:14px;padding:10px 12px;background:#fff;color:var(--ink);width:100%;box-sizing:border-box;outline:none}
+.nick-in:focus{box-shadow:0 0 0 4px rgba(255,143,171,.5)}
+.nick-err{color:#D9436B;font-size:14px;min-height:1.2em;margin:-6px 0 0;text-align:center}
 .home-top .icon-btn{border-radius:50%;width:42px;height:42px;box-shadow:0 3px 0 var(--ink)}
 .pill{border:3px solid var(--ink);border-radius:999px;background:var(--paper);padding:6px 14px;font-family:var(--korean);font-size:15px;box-shadow:0 3px 0 var(--ink)}
 .title{flex:1 0 auto;margin:0;padding-block:clamp(6px,2vh,24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,1.6vh,16px)}
@@ -376,7 +386,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
   <section id="home" class="screen">
     <div class="deco" aria-hidden="true"><div class="cl" style="--w:78px;left:6%;top:16%"></div><div class="cl" style="--w:96px;right:5%;top:41%"></div><div class="ft" style="left:5%;top:33%;background:#FFE07A;--r:-10deg;transform:rotate(-10deg);animation-delay:0s">A</div><div class="ft" style="left:85%;top:30%;background:#BDEBD8;--r:9deg;transform:rotate(9deg);animation-delay:-1s">Q</div></div>
     <div class="home-top gut">
-      <button class="pill" id="langBtn" type="button"></button>
+      <div class="lt-grp"><button class="pill" id="langBtn" type="button"></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
         <button class="icon-btn" id="fsBtn" type="button" hidden aria-label="Full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
         <button class="icon-btn tog" data-tog="sfx" type="button"></button>
@@ -480,7 +490,7 @@ function baseOf(w) {
 /* ---------- strings ---------- */
 const STR = {
   ko: {
-    langBtn: 'English', soundOn: '소리 켬', soundOff: '소리 끔', sfx: '효과음', music: '음악', paused: '일시정지', resume: '계속하기', rules: '규칙', fs: '전체 화면', fsExit: '전체 화면 끄기',
+    langBtn: 'EN', soundOn: '소리 켬', soundOff: '소리 끔', sfx: '효과음', music: '음악', paused: '일시정지', resume: '계속하기', rules: '규칙', fs: '전체 화면', fsExit: '전체 화면 끄기',
     tagline: '세상 모든 단어, 그 시작과 끝',
     solo: '솔로 모드', duo: '듀오 모드', online: '온라인 모드', soloSub: '혼자서 AI와 대결', duoSub: '친구와 한 폰으로 대결', onlineSub: '친구와 각자 폰으로 대결', soonBadge: '준비 중',
     soloNote: 'AI 토끼 토리와 대결해요. 힌트를 한 번 쓸 수 있어요.',
@@ -515,13 +525,13 @@ const STR = {
     prev: '이전', next: '다음', letsgo: '시작하기', close: '닫기', ruleTitle: '이렇게 놀아요',
     tutPick: '연습 판이에요! 먼저 둘이 알파벳을 하나씩 골라요. C를 눌러볼까요?', tutAi: '토리는 T를 골랐어요. 이제 룰렛이 어느 글자로 시작할지 정해요!',
     tutPlay: 'C로 시작해서 T로 끝나는|단어를 쓰고 Enter를 눌러요!',
-    tutHintIntro: '잘했어요!|단어가 생각이 안 나면|힌트를 받을 수 있어요.', tutHintIntroDuo: '잘했어요!|단어가 생각이 안 날 때|종종 깜짝 힌트를|받을 수 있어요.', tutLast: '마지막 한 단어!|3단어를 다 맞히면 이겨요!', tutTip: 'TIP', readyQ: '대결할 준비 됐나요?', hintAns: '힌트 정답', missed: '이런 단어도 있었어요', tutHintBtn: '힌트 버튼을 눌러봐요! 한 판에 한 번 쓸 수 있어요.', tutHintUse: '힌트의 빈칸을 채워서 한 단어 더 맞혀봐요!',
+    tutHintIntro: '잘했어요!|단어가 생각이 안 나면|힌트를 받을 수 있어요.', tutHintIntroDuo: '잘했어요!|단어가 생각이 안 날 때|종종 깜짝 힌트를|받을 수 있어요.', tutLast: '마지막 한 단어!|3단어를 다 맞히면 이겨요!', tutTip: 'TIP', nickTitle: '닉네임을 정해요', nickChange: '닉네임 바꾸기', nickSub: '친구와 대결할 때 보이는 이름이에요. 실명은 쓰지 마세요!', nickPh: '2~10자 (한글, 영어, 숫자)', nickLen: '2~10자로 정해주세요', nickChars: '한글, 영어, 숫자, _만 쓸 수 있어요', nickBad: '쓸 수 없는 닉네임이에요', nickTaken: '이미 누가 쓰고 있어요. 다른 닉네임을 정해주세요', nickNet: '연결이 안 돼요. 인터넷을 확인하고 다시 해주세요', nickMake: '닉네임', later: '나중에', checking: '확인 중...', readyQ: '대결할 준비 됐나요?', hintAns: '힌트 정답', missed: '이런 단어도 있었어요', tutHintBtn: '힌트 버튼을 눌러봐요! 한 판에 한 번 쓸 수 있어요.', tutHintUse: '힌트의 빈칸을 채워서 한 단어 더 맞혀봐요!',
     tutHintTimed: '친구와 할 때는|진행 상황에 따라|힌트가 나와요.', tutHintTimed2: '힌트가 나왔어요! 힌트를 보고 한 단어 더 맞혀봐요!',
     tutDone: '이겼어요! 이렇게 3단어를 먼저 맞히면 이겨요. 틀리면 5초 동안 키보드가 멈춰요. 준비됐나요?',
     tutGo: '진짜 게임 시작!', tutSkip: '튜토리얼 건너뛰기', tutBadge: '튜토리얼', tutOk: '확인 ✓'
   },
   en: {
-    langBtn: '한국어', soundOn: 'Sound on', soundOff: 'Sound off', sfx: 'Sounds', music: 'Music', paused: 'Paused', resume: 'Resume', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
+    langBtn: '한글', soundOn: 'Sound on', soundOff: 'Sound off', sfx: 'Sounds', music: 'Music', paused: 'Paused', resume: 'Resume', rules: 'Rules', fs: 'Full screen', fsExit: 'Exit full screen',
     tagline: 'All the words in the world,\nfrom first to last.',
     solo: 'Solo', duo: 'Duo', online: 'Online', soloSub: 'Play Tori the AI', duoSub: 'Two players, one phone', onlineSub: 'Each on your own phone', soonBadge: 'Soon',
     soloNote: 'Play against Tori the AI rabbit. You get one hint per game.',
@@ -556,7 +566,7 @@ const STR = {
     prev: 'Back', next: 'Next', letsgo: 'Let’s play', close: 'Close', ruleTitle: 'How to play',
     tutPick: 'Practice round! First, each player picks a letter. Tap C!', tutAi: 'Tori picked T. Now the roulette decides which one starts!',
     tutPlay: 'Type a word that starts with C and ends with T, then tap Enter!',
-    tutHintIntro: 'Nice! If you can’t think of a word, you can get a hint.', tutHintIntroDuo: 'Nice! When you’re stuck, a surprise hint sometimes pops up.', tutLast: 'One more word! Get all 3 words to win!', tutTip: 'TIP', readyQ: 'Ready to play?', hintAns: 'Hint answers', missed: 'You could have tried', tutHintBtn: 'Tap the Hint button! You can use it once per game.', tutHintUse: 'Look at the hint and fill in the empty boxes. Get one more word!',
+    tutHintIntro: 'Nice! If you can’t think of a word, you can get a hint.', tutHintIntroDuo: 'Nice! When you’re stuck, a surprise hint sometimes pops up.', tutLast: 'One more word! Get all 3 words to win!', tutTip: 'TIP', nickTitle: 'Choose a nickname', nickChange: 'Change nickname', nickSub: 'This is the name your friends will see. Don’t use your real name!', nickPh: '2–10 letters or numbers', nickLen: 'Use 2–10 characters', nickChars: 'Only letters, numbers and _', nickBad: 'That nickname isn’t allowed', nickTaken: 'Someone already has that one. Try another!', nickNet: 'Can’t connect. Check your internet and try again', nickMake: 'Nickname', later: 'Later', checking: 'Checking...', readyQ: 'Ready to play?', hintAns: 'Hint answers', missed: 'You could have tried', tutHintBtn: 'Tap the Hint button! You can use it once per game.', tutHintUse: 'Look at the hint and fill in the empty boxes. Get one more word!',
     tutHintTimed: 'When you play with a friend, hints show up as the game goes on.', tutHintTimed2: 'Here comes one! Look at the hint and get one more word!',
     tutDone: 'You win! Be the first to get 3 words to win. A wrong word freezes your keyboard for 5 seconds. Ready?',
     tutGo: 'Start the real game!', tutSkip: 'Skip tutorial', tutBadge: 'Tutorial', tutOk: 'Got it ✓'
@@ -898,7 +908,7 @@ const fsOK = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled) 
 function applyLang() {
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-t]').forEach(el => { const v = t(el.dataset.t); if (v.includes('|')) el.innerHTML = v.split('|').map(c => `<span class="nb">${esc(c.trim())}</span>`).join(' '); else el.textContent = v; });
-  $('langBtn').textContent = t('langBtn');
+  $('langBtn').textContent = t('langBtn'); renderNick();
   renderToggles();
   $('diffNote').textContent = t('note_' + diff);
   $('diffNow').textContent = t(diff);
@@ -908,8 +918,11 @@ function applyLang() {
 }
 $('homeCast').innerHTML = `<div class="hc" id="hc0">${CAPY}</div><div class="vs" aria-hidden="true">VS</div><div class="hc" id="hc1">${RAB_FRONT}</div>`;
 showSvg($('hc0'), 'capy', 'front'); showSvg($('hc1'), 'rfront', 'happy');
+$('nickBtn').onclick = () => { sfx('key'); askNick(() => { }); };
 $('langBtn').onclick = () => { lang = lang === 'ko' ? 'en' : 'ko'; store('fl-lang', lang); applyLang(); };
 const ICON = {
+  user: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20c1.2-4 4.2-5.5 7.5-5.5s6.3 1.5 7.5 5.5"/></svg>',
+  pen: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>',
   del: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-6-7z"/><path d="M12 9.5l5 5M17 9.5l-5 5"/></svg>',
   sfxOn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>',
   sfxOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>',
@@ -964,7 +977,7 @@ document.querySelectorAll('.minfo').forEach(b => b.onclick = () => {
 document.querySelectorAll('.diff').forEach(b => b.onclick = () => { diff = b.dataset.d; store('fl-diff', diff); applyLang(); sfx('key'); });
 $('goAI').onclick = () => { primeSpeech(); sfx('pick'); newGame('ai'); };
 $('goDuo').onclick = () => { primeSpeech(); sfx('pick'); newGame('duo'); };
-$('goOnline').onclick = () => { primeSpeech(); sfx('pick'); createRoom(); };
+$('goOnline').onclick = () => { primeSpeech(); sfx('pick'); ensureNick(createRoom); };
 function goHome() {
   document.documentElement.classList.remove('on-game');
   document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
@@ -1001,7 +1014,7 @@ function stopAll() { tutSkipBtn(false); timers.forEach(clearTimeout); timers = [
 const other = p => 1 - p;
 const charEl = p => $('char' + p);
 const isDuo = () => G.mode === 'duo';
-function nameOf(p) { if (G.mode === 'ai') return p === 0 ? t('me') : t('ai'); if (G.mode === 'online') return p === 0 ? t('me') : t('friend'); return p === 0 ? t('p1') : t('p2'); }
+function nameOf(p) { if (G.mode === 'ai') return p === 0 ? (myNick || t('me')) : t('ai'); if (G.mode === 'online') return p === 0 ? (myNick || t('me')) : ((ON && ON.room && ON.room.names && ON.room.names[oppRole()]) || t('friend')); return p === 0 ? t('p1') : t('p2'); }
 const paused = () => !$('ov').hidden;
 
 function newGame(mode, noTut, noReady) {
@@ -1157,7 +1170,7 @@ function coachNext(text, extra, next) {
   $('tutOk').onclick = () => { sfx('key'); next(); };
 }
 function bindCoach() {
-  const go = $('tutGo'); if (go) go.onclick = () => { sfx('pick'); endTut(true); };
+  const go = $('tutGo'); if (go) go.onclick = () => { sfx('pick'); if (myNick) endTut(true); else askNick(() => endTut(true), () => endTut(true)); };
 }
 /* the practice round shows once per phone (stored on the device as 'fl-tut'); later, once accounts exist, store it per account.
    Set to true while testing to show it before every solo/duo game. */
@@ -1610,6 +1623,58 @@ const FB_VER = '10.12.2', ROOM_TTL = 10 * 60 * 1000, CODE_CHARS = 'ABCDEFGHJKLMN
 let FB = null, ON = null;
 const isOnline = () => G.mode === 'online';
 function loadScript(src) { return new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+/* ---------- nickname ----------
+   Typed by the player (2-10 letters: Korean, English, numbers, _), checked for rude words, and kept unique
+   across all players through nicks/{lowercase nickname} = owner id in the database. Saved on this phone. */
+const BAD_NICK = ["2g1c","acrotomophilia","anal","anilingus","anus","apeshit","arsehole","ass","asshole","assmunch","autoerotic","babeland","bangbros","bangbus","bareback","barenaked","bastard","bastardo","bastinado","bbw","bdsm","beaner","beaners","beastiality","bestiality","bimbos","birdlock","bitch","bitches","blowjob","blumpkin","bollocks","bondage","boner","boob","boobs","bukkake","bulldyke","bullshit","bunghole","busty","butt","buttcheeks","butthole","camgirl","camslut","camwhore","carpetmuncher","cialis","circlejerk","clit","clitoris","clusterfuck","cock","cocks","coon","coons","coprolagnia","coprophilia","cornhole","creampie","cum","cumming","cumshot","cumshots","cunnilingus","cunt","darkie","daterape","deepthroat","dendrophilia","dick","dildo","dingleberries","dingleberry","doggiestyle","doggystyle","dolcett","domination","dominatrix","dommes","dvda","ecchi","ejaculation","erotic","erotism","escort","eunuch","fag","faggot","fecal","felch","fellatio","feltch","femdom","figging","fingerbang","fingering","fisting","footjob","frotting","fuck","fuckin","fucking","fucktards","fudgepacker","futanari","g-spot","gangbang","genitals","goatcx","goatse","gokkun","goodpoop","goregasm","grope","guro","handjob","hardcore","hentai","homoerotic","honkey","hooker","horny","humping","incest","intercourse","jailbait","jigaboo","jiggaboo","jiggerboo","jizz","juggs","kike","kinbaku","kinkster","kinky","knobbing","livesex","lolita","lovemaking","masturbate","masturbating","masturbation","milf","mong","motherfucker","muffdiving","nambla","nawashi","negro","neonazi","nigga","nigger","nimphomania","nipple","nipples","nsfw","nude","nudity","nutten","nympho","nymphomania","octopussy","omorashi","orgasm","orgy","paedophile","paki","panties","panty","pedobear","pedophile","pegging","penis","pikey","pissing","pisspig","playboy","ponyplay","poof","poon","poontang","poopchute","porn","porno","pornography","pthc","pubes","punany","pussy","queaf","queef","quim","raghead","rape","raping","rapist","rectum","rimjob","rimming","s&m","sadism","santorum","scat","schlong","scissoring","semen","sex","sexcam","sexo","sexual","sexuality","sexually","sexy","shemale","shibari","shit","shitblimp","shitty","shota","shrimping","skeet","slanteye","slut","smut","snatch","snowballing","sodomize","sodomy","spastic","spic","splooge","spooge","spunk","strapon","strappado","suck","sucks","swastika","swinger","threesome","throating","thumbzilla","tit","tits","titties","titty","topless","tosser","towelhead","tranny","tribadism","tubgirl","tushy","twat","twink","twinkie","undressing","upskirt","urophilia","vagina","viagra","vibrator","vorarephilia","voyeur","voyeurweb","voyuer","vulva","wank","wetback","whore","worldsex","xx","xxx","yaoi","yiffy","zoophilia","강간","개새끼","개자식","개좆","개차반","거유","계집년","고자","근친","노모","니기미","뒤질래","딸딸이","때씹","또라이","뙤놈","로리타","망가","몰카","미친","미친새끼","바바리맨","변태","병신","보지","불알","빠구리","사까시","섹스","스와핑","쌍놈","씨발","씨발놈","씨팔","씹","씹물","씹빨","씹새끼","씹알","씹창","씹팔","암캐","애자","야동","야사","야애니","엄창","에로","염병","옘병","유모","육갑","은꼴","자위","자지","잡년","종간나","좆","좆만","죽일년","쥐좆","직촬","짱깨","쪽바리","창녀","포르노","하드코어","호로","화냥년","후레아들","후장","희쭈그리","🖕"];
+const NICK_RESERVED = ['admin', 'fnl', 'firstnlast', 'tori', '운영자', '관리자', '토리'];
+let myNick = store('fl-nick') || '';
+function nickProblem(n) {
+  if (n.length < 2 || n.length > 10) return t('nickLen');
+  if (!/^[a-zA-Z0-9_가-힣]+$/.test(n)) return t('nickChars');
+  const low = n.toLowerCase(), bare = low.replace(/[0-9_]/g, '');
+  if (NICK_RESERVED.includes(low) || BAD_NICK.some(b => b.length >= 4 || /[가-힣]/.test(b) ? low.includes(b) || bare.includes(b) : low === b || bare === b)) return t('nickBad');
+  return '';
+}
+async function claimNick(n) {
+  await fbInit();
+  const key = n.toLowerCase(), old = myNick && myNick.toLowerCase();
+  if (key === old) return true;
+  const res = await FB.db.ref('nicks/' + key).transaction(v => (v && v !== FB.uid ? undefined : FB.uid));
+  if (!res.committed) return false;
+  if (old) FB.db.ref('nicks/' + old).remove().catch(() => { });
+  return true;
+}
+function setNick(n) { myNick = n; store('fl-nick', n); renderNick(); if (G.mode) renderNames(); }
+function renderNick() { const b = $('nickBtn'); if (b) b.innerHTML = `${ICON.user}<span>${esc(myNick || t('nickMake'))}</span>${ICON.pen}`; }
+/* ask for a nickname; then() runs after it's saved, later() (optional) after "Later" */
+function askNick(then, later) {
+  const draw = (val, err, busy) => {
+    sheet(`<h2>${esc(myNick ? t('nickChange') : t('nickTitle'))}</h2>
+      <p class="nick-sub">${esc(t('nickSub'))}</p>
+      <input class="nick-in" id="nickIn" type="text" maxlength="10" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(val)}" placeholder="${esc(t('nickPh'))}">
+      <p class="nick-err" id="nickErr">${esc(err || '')}</p>
+      <div class="btns">${later || myNick ? `<button class="go alt" type="button" id="nickLater">${t(myNick ? 'close' : 'later')}</button>` : ''}<button class="go" type="button" id="nickOk" ${busy ? 'disabled' : ''}>${busy ? t('checking') : t('ok')}</button></div>`);
+    $('sheet').classList.add('nick-sheet');
+    const inp = $('nickIn');
+    inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); $('nickOk').click(); } };
+    if (!busy) setTimeout(() => { try { inp.focus(); } catch (e) { } }, 60);
+    $('nickOk').onclick = async () => {
+      const n = inp.value.trim(), bad = nickProblem(n);
+      if (bad) { sfx('wrong'); return draw(n, bad); }
+      draw(n, '', true);
+      try {
+        if (!(await claimNick(n))) { sfx('wrong'); return draw(n, t('nickTaken')); }
+      } catch (e) { sfx('wrong'); return draw(n, t('nickNet')); }
+      sfx('pick'); setNick(n); done(then);
+    };
+    const lt = $('nickLater'); if (lt) lt.onclick = () => { sfx('key'); done(later || (() => { })); };
+  };
+  const done = f => { $('sheet').classList.remove('nick-sheet'); $('ov').hidden = true; f && f(); };
+  draw(myNick, '');
+}
+const ensureNick = f => (myNick ? f() : askNick(f, () => goHome()));
+
 async function fbInit() {
   if (FB) return FB;
   const base = `https://cdn.jsdelivr.net/npm/firebase@${FB_VER}/`;
@@ -1643,7 +1708,7 @@ async function createRoom() {
   try { await fbInit(); } catch (e) { return sheetError(t('cantConnect')); }
   try {
     const code = makeCode(), ref = FB.db.ref('rooms/' + code);
-    await ref.set({ host: FB.uid, status: 'waiting', created: FB.TS, round: 0 });
+    await ref.set({ host: FB.uid, status: 'waiting', created: FB.TS, round: 0, names: { host: myNick } });
     ref.onDisconnect().remove();
     ON = { code, role: 'host', ref, joined: false, key: '' };
     listenRoom(); showInvite();
@@ -1690,6 +1755,7 @@ async function joinRoom(code) {
       if (!res.committed) return sheetError(t('roomFull'));
       await ref.update({ status: 'lobby' });
     }
+    ref.child('names/guest').set(myNick).catch(() => { });
     ref.child('left/guest').onDisconnect().set(true);
     ON = { code, role: 'guest', ref, joined: true, key: '' };
     listenRoom();
@@ -1713,7 +1779,7 @@ const oppRole = () => (ON.role === 'host' ? 'guest' : 'host');
 function onRoom(r) {
   if (!ON) return;
   if (!r) { if (ON.joined) return friendLeft(); return; }
-  ON.room = r;
+  ON.room = r; if (G.mode === 'online') renderNames();
   if (r.left && r.left[oppRole()] && ON.joined) return friendLeft();
   if (r.status === 'waiting') return;
   if (!ON.joined && r.guest) { ON.joined = true; clearInterval(ON.ttlId); if (ON.role === 'host') { ON.ref.onDisconnect().cancel(); ON.ref.child('left/host').onDisconnect().set(true); } }
@@ -1820,7 +1886,7 @@ function friendLeft() {
   if (!code) return;
   code = code.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
   try { history.replaceState(null, '', location.pathname); } catch (e) { }
-  if (code.length === 6) setTimeout(() => joinRoom(code), 0);
+  if (code.length === 6) setTimeout(() => ensureNick(() => joinRoom(code)), 0);
 })();
 
 (function () {
