@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261107152854';
+  var BUILD = '20261108200541';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -271,7 +271,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .hw i{display:inline-block;width:15px;height:18px;border:2px dotted var(--ink);border-radius:3px;box-sizing:border-box}
 .hw.used{opacity:.35;text-decoration:line-through}
 .typed{flex:1;min-width:0;height:46px;box-sizing:border-box;border:4px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;padding:0 12px;font-size:22px;font-weight:600;letter-spacing:2px;overflow:hidden;white-space:nowrap}
-.typed:empty::before{content:attr(data-ph);font-family:var(--korean);font-size:16px;letter-spacing:0;color:#8A7466}
+.typed:empty::before{content:attr(data-ph);font-family:var(--korean);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0;color:#8A7466}
 .typed.bad{animation:shake .35s linear;border-color:var(--red)}
 .act{height:46px;border:4px solid var(--ink);border-radius:14px;background:var(--pink);box-shadow:0 4px 0 var(--ink);padding:0 12px;font-family:var(--korean);font-size:18px;white-space:nowrap}
 .act.hint{background:var(--yellow);font-size:15px;padding:0 9px}
@@ -565,7 +565,7 @@ const STR = {
     pickYou: 'Pick a letter', pickName: '{name}, pick a letter', dimNote: 'Faded letters have too few words',
     aiPicked: '{name} picked {L}', tooFew: 'Too few words for that pair. Pick again', tooFewPair: 'Too few words with {A} and {B}. Pick again!', tooFewOne: 'Hardly any words work with {A}. Pick again!',
     roulette: 'Which one starts?', startEnd: 'Starts with {S}, ends with {E}!', fight: 'First to 3 words wins',
-    ph: 'Type a word', enter: 'Enter', hint: 'Hint',
+    ph: 'Type a word', phSE: 'Start {S}, end {E}', enter: 'Enter', hint: 'Hint',
     short: 'Words need 3+ letters', mismatch: 'Must start with {S} and end with {E}', usedOpp: 'Your opponent used it first',
     usedMe: 'You already used that', base: 'Base forms only ({w} → {b})', proper: 'No names or abbreviations', notword: 'Not in the dictionary',
     frozen: 'Try again in {n}s', frozenTop: 'Try again in', frozenN: '{n}s',
@@ -1121,6 +1121,14 @@ function panelMode(p) {
   if (G.phase === 'play') { if (!isDuo()) return p === 0 ? 'type' : 'off'; return G.active === p ? 'type' : (G.active === null ? 'buzz' : 'wait'); }
   return 'off';
 }
+/* input placeholder: "N으로 시작, R로 끝나는 단어" while playing (Korean particle follows how the letter is read: 엠/엔 → 으로) */
+function phText() {
+  if (G.phase !== 'play' || !G.start || !G.end) return t('ph');
+  const S = G.start.toUpperCase(), E = G.end.toUpperCase();
+  if (lang !== 'ko') return t('phSE', { S, E });
+  const ro = L => ('MN'.includes(L) ? '으로' : '로');
+  return `${S}${ro(S)} 시작, ${E}${ro(E)} 끝`;
+}
 function kbHTML(mode, allowed) {
   let ki = 0;
   const key = c => `<button class="key" type="button" style="--i:${ki++}" data-k="${c}" ${allowed && !allowed.has(c.toLowerCase()) ? 'disabled' : ''}>${mode === 'pick' ? c : cs(c)}</button>`;
@@ -1147,7 +1155,7 @@ function renderPanels() {
     const hintBtn = G.mode === 'ai' && !(G.tut && G.tut.next !== 'ai') ? `<button class="act hint" type="button" data-hint="1" ${G.hintUsed || G.phase !== 'play' ? 'disabled' : ''}>${t('hint')}</button>` : '';
     const who = G.phase === 'pick' ? G.picker : G.active;
     const buzzLabel = locked ? t('frozen', { n: G.lockLeft[p] }) : mode === 'buzz' ? t('buzz') : (who === 0 || who === 1) ? t('waiting', { name: nameOf(who) }) : '...';
-    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(t('ph'))}">${cs(G.input[p])}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act del" type="button" data-k="DEL" aria-label="Delete">${ICON.del}</button></div>
+    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(phText())}">${cs(G.input[p])}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act del" type="button" data-k="DEL" aria-label="Delete">${ICON.del}</button></div>
       <div class="tbar"><i id="tbar${p}"></i></div>
       ${kbHTML(mode, allowed)}
       <button class="buzzer" type="button" data-buzz="1" ${mode !== 'buzz' || locked ? 'disabled' : ''}>${esc(buzzLabel)}</button>
