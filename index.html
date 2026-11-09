@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109163355';
+  var BUILD = '20261109164651';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -378,7 +378,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261109163355) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261109164651) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -387,7 +387,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109163355) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109164651) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 #home>.stage{z-index:0}
@@ -411,7 +411,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261109163355) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261109164651) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -433,14 +433,14 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261109163355) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261109164651) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 </style>
 
 <style>
 /* iPhone home-screen apps (see-through status bar) only draw the page down to the screen height minus the
    status bar; below that the phone just paints the page background. So: the game fits the drawn area, and the
    page background is the color of the screen's bottom edge (grass on the home screen, keyboard cream in a game). */
-html,body{background:#6E9654}
+html,body{background:var(--edge,#6E9654)}
 html.on-game,html.on-game body{background:#FFF4E8}
 /* the page itself never scrolls: if it did, iPhones can shift the picture away from where taps land */
 html,body{position:fixed;inset:0;overflow:hidden}
@@ -456,8 +456,10 @@ html,body{position:fixed;inset:0;overflow:hidden}
   /* the phone tints its bottom edge with the theme color: keep it matching the screen's bottom */
   function tint() {
     var m = document.querySelector('meta[name="theme-color"]'); if (!m) return;
-    m.setAttribute('content', document.documentElement.classList.contains('on-game') ? '#FFF4E8' : '#6E9654');
+    var e = getComputedStyle(document.documentElement).getPropertyValue('--edge').trim() || '#6E9654';
+    m.setAttribute('content', document.documentElement.classList.contains('on-game') ? '#FFF4E8' : e);
   }
+  window.tintEdge = tint;
   new MutationObserver(tint).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   document.addEventListener('DOMContentLoaded', tint);
 })();
@@ -467,7 +469,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
 <div id="app">
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109163355" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109163355" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109164651" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109164651" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button"></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -478,7 +480,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261109163355" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261109164651" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"></div>
@@ -503,7 +505,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261109163355" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261109164651" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -745,7 +747,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261109163355';
+const IMGV = '20261109164651';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1018,16 +1020,34 @@ function applyLang() {
 $('homeCast').innerHTML = `<img class="hc cu" src="${img('cast_capy_up')}" alt="" draggable="false"><img class="vsimg" src="${img('vs')}" alt="" draggable="false"><img class="hc pd" src="${img('cast_panda34')}" alt="" draggable="false">`;
 /* the cast stands behind the plateau's grass edge: line the background up so that edge meets the cast's legs,
    and lay a masked copy of the background (only the part below that edge) on top of the cast */
+const EDGE = '8bc5bd 85bdc1 91c0bf bccb60 a3bc4b aeab6c bda87d bcbd69 bac464 a3b458 8c9f53 929561 a99c70 a7a557 a9bc3f 9fbb41 97b33b 90ae44 80a342 749943 808c52 968e62 9b9a6a 98a35f 84a154 8aa850 91b13f b1ba48 abb749 b7b45a a0af4a 9fb54a b1c145 aebc45 aab36c 8c9d60 8d9d5f 7f9c56 6e9756 679152'.split(' ');
 const BG = { w: 1193, h: 2576, ridge: 1372, cut: 1340 }, SINK = .2;
 function fitHome() {
   const h = $('home'), st = $('homeCast'), hill = $('homeHill');
   if (!h || h.hidden || !h.clientWidth) return;
+  /* fit everything on one screen (no scrolling): shrink the logo first, then the cast */
+  if (!fitHome.busy) {
+    fitHome.busy = true;
+    const logo = h.querySelector('.logo-img');
+    logo.style.width = ''; logo.style.minWidth = ''; st.style.removeProperty('--sh');
+    let over = h.scrollHeight - h.clientHeight;
+    if (over > 0) {
+      const w0 = logo.offsetWidth, nw = Math.max(150, w0 - over * 1.92);
+      logo.style.minWidth = '0'; logo.style.width = nw + 'px';
+      over = h.scrollHeight - h.clientHeight;
+      if (over > 0) st.style.setProperty('--sh', Math.max(110, st.offsetHeight - over) + 'px');
+    }
+    fitHome.busy = false;
+  }
   const W = h.clientWidth, H = Math.max(h.clientHeight, h.scrollHeight), y = st.offsetTop + st.offsetHeight * (1 - SINK);
   const s = Math.max(W / BG.w, H / BG.h, y / BG.ridge, (H - y) / (BG.h - BG.ridge));
   /* lean the picture right so the castle on its right edge stays in view */
   const bx = (W - BG.w * s).toFixed(1);
   const size = `${(BG.w * s).toFixed(1)}px auto`, pos = `${bx}px ${(y - BG.ridge * s).toFixed(1)}px`;
   h.style.backgroundSize = size; h.style.backgroundPosition = pos; hill.style.height = H + 'px';
+  /* the strip the phone paints under the page (home-screen app) takes the colour of the picture's bottom edge */
+  const row = Math.min(BG.h - 1, (H - (y - BG.ridge * s)) / s), ci = Math.max(0, Math.min(EDGE.length - 1, Math.round((row - 1300) / 32)));
+  document.documentElement.style.setProperty('--edge', '#' + EDGE[ci]); if (window.tintEdge) tintEdge();
   /* hillfg = the background from row BG.cut down, see-through above the grass edge */
   hill.style.backgroundSize = size; hill.style.backgroundPosition = `${bx}px ${(y - (BG.ridge - BG.cut) * s).toFixed(1)}px`;
 }
