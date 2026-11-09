@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109205527';
+  var BUILD = '20261109211828';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -381,7 +381,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261109205527) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261109211828) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -390,7 +390,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109205527) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109211828) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -426,7 +426,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261109205527) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261109211828) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -448,7 +448,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261109205527) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261109211828) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -606,7 +606,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109205527" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109205527" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109211828" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109211828" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -617,7 +617,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261109205527" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261109211828" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -642,7 +642,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261109205527" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261109211828" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -718,7 +718,7 @@ const STR = {
     waitingFriend: '친구를 기다리는 중...', expiresIn: '{t} 후 링크가 만료돼요', expired: '링크가 만료됐어요.', newLink: '새 링크 만들기',
     roomGone: '만료됐거나 없는 초대 링크예요.', roomFull: '이미 다른 사람이 들어간 방이에요.', ownLink: '내가 만든 초대 링크예요. 친구에게 보내주세요.',
     lobbyHost: '친구가 들어왔어요!', lobbyGuest: '대결 입장!', lobbyReady: '둘 다 대결 시작을 누르면 시작해요!', waitFriend: '친구를 기다리는 중...', friendReady: '친구는 준비됐어요! 대결 시작을 눌러요', waitFriendR: '상대방을 기다리는 중...', friendReadyR: '상대방은 준비됐어요! 대결 시작을 눌러요', startMatch: '대결 시작!', lobbyRival: '상대방을 찾았어요!', startsIn: '{n}초 후 시작해요', leave: '나가기', waitPick: '친구가 고르는 중...',
-    friendLeft: '친구가 나갔어요', friendLeftText: '대결이 끝났어요.', waitRematch: '친구를 기다리는 중...', friendWants: '친구가 한 판 더 하고 싶어해요!', friendLeftR: '상대방이 나갔어요', waitRematchR: '상대방을 기다리는 중...', friendWantsR: '상대방이 한 판 더 하고 싶어해요!', leaveX: '나가기',
+    friendLeft: '친구가 나갔어요', friendLeftText: '대결이 끝났어요.', waitRematch: '친구를 기다리는 중...', friendWants: '친구가 한 판 더 하고 싶어해요!', friendLeftR: '상대방이 나갔어요', oppLeftWin: '친구가 나갔어요. 승리!', oppLeftWinR: '상대방이 나갔어요. 승리!', oppWait: '친구 연결을 기다리는 중...', oppWaitR: '상대방 연결을 기다리는 중...', waitRematchR: '상대방을 기다리는 중...', friendWantsR: '상대방이 한 판 더 하고 싶어해요!', leaveX: '나가기',
     shareText: 'First n Last 영어 단어 대결 한 판 할래?',
     soon: '온라인 모드는 준비 중이에요', soonText: '친구에게 초대 링크를 보내서 각자 폰으로 대결하는 기능이 곧 들어와요.',
     easy: '쉬움', medium: '보통', hard: '어려움', start: '시작',
@@ -759,7 +759,7 @@ const STR = {
     waitingFriend: 'Waiting for your friend...', expiresIn: 'Link expires in {t}', expired: 'The link has expired.', newLink: 'New link',
     roomGone: 'This invite link has expired or doesn’t exist.', roomFull: 'Someone else already joined this game.', ownLink: 'This is your own invite link. Send it to a friend.',
     lobbyHost: 'Your friend is here!', lobbyGuest: 'You’re in!', lobbyReady: 'The game starts when you both tap Start!', waitFriend: 'Waiting for your friend...', friendReady: 'Your friend is ready! Tap Start', waitFriendR: 'Waiting for the other player...', friendReadyR: 'They’re ready! Tap Start', startMatch: 'Start!', lobbyRival: 'Found a player!', startsIn: 'Starting in {n}', leave: 'Leave', waitPick: 'Your friend is picking...',
-    friendLeft: 'Your friend left', friendLeftText: 'The game has ended.', waitRematch: 'Waiting for your friend...', friendWants: 'Your friend wants a rematch!', friendLeftR: 'The other player left', waitRematchR: 'Waiting for the other player...', friendWantsR: 'The other player wants a rematch!', leaveX: 'Leave',
+    friendLeft: 'Your friend left', friendLeftText: 'The game has ended.', waitRematch: 'Waiting for your friend...', friendWants: 'Your friend wants a rematch!', friendLeftR: 'The other player left', oppLeftWin: 'Your friend left. You win!', oppLeftWinR: 'The other player left. You win!', oppWait: 'Waiting for your friend to reconnect...', oppWaitR: 'Waiting for the other player to reconnect...', waitRematchR: 'Waiting for the other player...', friendWantsR: 'The other player wants a rematch!', leaveX: 'Leave',
     shareText: 'Up for a round of First n Last?',
     soon: 'Online mode is coming soon', soonText: 'You will be able to send a friend an invite link and play on your own phones.',
     easy: 'Easy', medium: 'Medium', hard: 'Hard', start: 'Start',
@@ -884,7 +884,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261109205527';
+const IMGV = '20261109211828';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1291,7 +1291,16 @@ document.querySelectorAll('.diff').forEach(b => b.onclick = () => { diff = b.dat
 $('goAI').onclick = () => { primeSpeech(); sfx('pick'); newGame('ai'); };
 $('goDuo').onclick = () => { primeSpeech(); sfx('pick'); newGame('duo'); };
 $('goOnline').onclick = () => { primeSpeech(); sfx('pick'); ensureNick(onlineMenu); };
+/* leaving an online game that has started counts as a lost game (no XP, no mission progress) */
+function progQuit() {
+  try {
+    if (G.mode !== 'online' || !(G.phase === 'play' || G.phase === 'ko') || G.awarded === G.token) return;
+    G.awarded = G.token; const P = progState(); P.games++; P.ogames = (P.ogames || 0) + 1; progSave();
+  } catch (e) { }
+}
+window.addEventListener('pagehide', progQuit);
 function goHome() {
+  progQuit();
   document.documentElement.classList.remove('on-game');
   document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
   leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; renderNick(); renderEvent(); }
@@ -1335,7 +1344,7 @@ function newGame(mode, noTut, noReady) {
   /* the very first game on this phone (solo or duo) is a short practice round against Lexi */
   const tutNext = (!noTut && mode !== 'online' && (TUT_EVERY_TIME || store('fl-tut') !== '1')) ? mode : null; if (tutNext) mode = 'ai';
   stopAll(); MUS.fast = false; setMusic('game');
-  Object.assign(G, { tipOn: false, tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, pending: false, hints: [], hintDone: {}, faces: ['idle', 'idle'], token: (G.token || 0) + 1 });
+  Object.assign(G, { tipOn: false, tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, oppLeft: false, pending: false, hints: [], hintDone: {}, faces: ['idle', 'idle'], token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
   if (isDuo()) $('rail').parentNode.insertBefore($('tools'), $('rail').nextSibling); else $('hud').insertBefore($('tools'), $('clkW'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
@@ -2147,6 +2156,7 @@ function finish(winner, byTime) {
   if (winner === null) title = t('draw');
   else if (!isDuo()) title = winner === 0 ? t('winYou') : t('loseYou');
   else title = t('winName', { name: nameOf(winner) });
+  if (G.oppLeft && winner === 0) title = t(G.oppLeft === 'R' ? 'oppLeftWinR' : 'oppLeftWin');
   const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<button type="button" class="chip p${p}" data-say="${x[0]}">${cs(x[0])} <svg viewBox="0 0 16 16" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg></button>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
   setTimeout(() => {
     if (tok !== G.token) return;
@@ -2164,6 +2174,7 @@ function finish(winner, byTime) {
         sayWord(b.dataset.say, () => { saying = Date.now() + 150; });
       });
       if (award && !award.shown) { award.shown = true; awardFx(award); }
+      if (G.oppLeft) $('resAgain').hidden = true;
       $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else newGame(G.mode, true); };
       $('resHome').onclick = () => {
         sfx('pick');
@@ -2455,13 +2466,16 @@ function stopSearch() {
 
 function listenRoom() {
   ON.ref.on('value', s => onRoom(s.val()));
+  /* back online after a drop: say I'm here again and re-arm the disconnect marker */
+  const me = ON;
+  FB.db.ref('.info/connected').on('value', s => { if (!s.val() || ON !== me || !me.joined) return; const l = me.ref.child('left/' + me.role); l.set(false).catch(() => { }); l.onDisconnect().set(true); });
   ON.ref.child('order').on('child_added', s => onOrder(s.val()));
 }
 function leaveRoom() {
   if (!ON) return; const o = ON; ON = null;
   try {
     clearInterval(o.ttlId); clearTimeout(o.lobbyId); o.ref.off(); o.ref.child('order').off();
-    if (o.joined) { o.ref.child('left/' + o.role).set(true); o.ref.child('left/' + o.role).onDisconnect().cancel(); }
+    if (o.joined) { o.ref.child('left/' + o.role).set('quit'); o.ref.child('left/' + o.role).onDisconnect().cancel(); }
     else if (o.role === 'host') { o.ref.onDisconnect().cancel(); o.ref.remove(); }
   } catch (e) { }
 }
@@ -2471,7 +2485,13 @@ function onRoom(r) {
   if (!ON) return;
   if (!r) { if (ON.joined) return friendLeft(); return; }
   ON.room = r; if (G.mode === 'online') renderNames();
-  if (r.left && r.left[oppRole()] && ON.joined) return friendLeft();
+  const gone = r.left && r.left[oppRole()];
+  if (gone && ON.joined) {
+    const started = G.mode === 'online' && (G.phase === 'play' || G.phase === 'ko');
+    if (gone === true && started) { /* connection dropped mid-game: give them 30 seconds to come back */
+      if (!ON.graceId) { ON.graceId = setTimeout(() => friendLeft(), 30000); toast(0, tf('oppWait'), 3000); }
+    } else return friendLeft();
+  } else if (ON.graceId) { clearTimeout(ON.graceId); ON.graceId = null; }
   if (r.status === 'waiting') return;
   if (!ON.joined && r.guest) { ON.joined = true; clearInterval(ON.ttlId); clearInterval(ON.searchId); if (ON.role === 'host') { ON.ref.onDisconnect().cancel(); ON.ref.child('left/host').onDisconnect().set(true); } }
   if (r.status === 'lobby') {
@@ -2567,6 +2587,8 @@ function resetRound(r) {
 /* random matches say "the other player" instead of "your friend" */
 const tf = k => t(ON && ON.random ? k + 'R' : k);
 function friendLeft() {
+  if (ON && ON.graceId) { clearTimeout(ON.graceId); ON.graceId = null; }
+  if (G.mode === 'online' && (G.phase === 'play' || G.phase === 'ko')) { G.oppLeft = ON && ON.random ? 'R' : 'F'; leaveRoom(); clearInterval(G.clockId); return finish(0); }
   const wasPlaying = G.mode === 'online' && G.phase !== 'over', left = tf('friendLeft');
   leaveRoom(); stopAll(); if (G.mode === 'online') G.phase = 'over';
   sheet(`<h2>${esc(left)}</h2>${wasPlaying ? `<p>${esc(t('friendLeftText'))}</p>` : ''}<div class="btns"><button class="go alt" type="button" id="hBtn">${t('home')}</button></div>`);
