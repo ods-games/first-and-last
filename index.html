@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109131146';
+  var BUILD = '20261109132007';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -374,12 +374,14 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261109131146) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261109132007) center bottom/cover no-repeat;background-attachment:local}
 .char.peek img.cimg{animation:peek 1.1s ease-in-out both}
 @keyframes peek{0%,100%{transform:none}30%,75%{transform:perspective(520px) rotateY(var(--py,26deg)) rotate(var(--pr,2.5deg))}}
 .char.pl{--py:-26deg;--pr:-2.5deg}
-.hill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/bg.webp?v=20261109131146) center bottom/cover no-repeat;-webkit-mask:url(img/hillmask.png?v=20261109131146) center bottom/cover no-repeat;mask:url(img/hillmask.png?v=20261109131146) center bottom/cover no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109132007) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
+#home>.fghill{position:absolute;flex:none;z-index:1}
+#home>.stage{z-index:0}
 .deco .dtile{position:absolute;width:52px;height:auto;opacity:.9;transform:rotate(var(--r));animation:bob 4s ease-in-out infinite}
 @keyframes bob{50%{transform:rotate(var(--r)) translateY(-6px)}}
 .logo-img{width:min(82vw,320px,calc((100dvh - 540px) * 1.3));min-width:190px;height:auto;filter:drop-shadow(0 6px 10px rgba(40,60,120,.25));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
@@ -397,7 +399,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261109131146) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261109132007) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -414,18 +416,20 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261109131146) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261109132007) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 </style>
 
 <style>
 /* iPhone home-screen apps (see-through status bar) only draw the page down to the screen height minus the
    status bar; below that the phone just paints the page background. So: the game fits the drawn area, and the
    page background is the color of the screen's bottom edge (grass on the home screen, keyboard cream in a game). */
-html,body{background:#CDEFBE}
+html,body{background:#6E9654}
 html.on-game,html.on-game body{background:#FFF4E8}
 /* the page itself never scrolls: if it did, iPhones can shift the picture away from where taps land */
 html,body{position:fixed;inset:0;overflow:hidden}
-#app{position:fixed;left:0;right:0;top:0;bottom:0;height:auto;margin:0 auto;padding-top:env(safe-area-inset-top,0px);box-sizing:border-box}
+#app{position:fixed;left:0;right:0;top:0;bottom:0;height:auto;margin:0 auto;box-sizing:border-box}
+/* the home picture runs up under the status bar; the game keeps a sky strip there */
+#app>#home,#app>#game{padding-top:env(safe-area-inset-top,0px);box-sizing:border-box}
 </style>
 <script>
 (function () {
@@ -435,7 +439,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
   /* the phone tints its bottom edge with the theme color: keep it matching the screen's bottom */
   function tint() {
     var m = document.querySelector('meta[name="theme-color"]'); if (!m) return;
-    m.setAttribute('content', document.documentElement.classList.contains('on-game') ? '#FFF4E8' : '#CDEFBE');
+    m.setAttribute('content', document.documentElement.classList.contains('on-game') ? '#FFF4E8' : '#6E9654');
   }
   new MutationObserver(tint).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   document.addEventListener('DOMContentLoaded', tint);
@@ -445,8 +449,8 @@ html,body{position:fixed;inset:0;overflow:hidden}
 <body>
 <div id="app">
   <section id="home" class="screen">
-    <div class="hill" id="homeHill" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109131146" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109131146" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="fghill" id="homeHill" aria-hidden="true"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109132007" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109132007" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button"></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -457,7 +461,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261109131146" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261109132007" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"></div>
@@ -482,7 +486,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261109131146" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261109132007" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -724,7 +728,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261109131146';
+const IMGV = '20261109132007';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -996,7 +1000,7 @@ function applyLang() {
 $('homeCast').innerHTML = `<img class="hc" src="${img('cast_capy')}" alt="" draggable="false"><img class="vsimg" src="${img('vs')}" alt="" draggable="false"><img class="hc pd" src="${img('cast_panda')}" alt="" draggable="false">`;
 /* the cast stands behind the plateau's grass edge: line the background up so that edge meets the cast's legs,
    and lay a masked copy of the background (only the part below that edge) on top of the cast */
-const BG = { w: 1193, h: 2576, ridge: 1372 }, SINK = .27;
+const BG = { w: 1193, h: 2576, ridge: 1372, cut: 1340 }, SINK = .2;
 function fitHome() {
   const h = $('home'), st = $('homeCast'), hill = $('homeHill');
   if (!h || h.hidden || !h.clientWidth) return;
@@ -1004,8 +1008,8 @@ function fitHome() {
   const s = Math.max(W / BG.w, H / BG.h, y / BG.ridge, (H - y) / (BG.h - BG.ridge));
   const size = `${(BG.w * s).toFixed(1)}px auto`, pos = `${((W - BG.w * s) / 2).toFixed(1)}px ${(y - BG.ridge * s).toFixed(1)}px`;
   h.style.backgroundSize = size; h.style.backgroundPosition = pos; hill.style.height = H + 'px';
-  for (const k of ['backgroundSize', 'webkitMaskSize', 'maskSize']) hill.style[k] = size;
-  for (const k of ['backgroundPosition', 'webkitMaskPosition', 'maskPosition']) hill.style[k] = pos;
+  /* hillfg = the background from row BG.cut down, see-through above the grass edge */
+  hill.style.backgroundSize = size; hill.style.backgroundPosition = `${((W - BG.w * s) / 2).toFixed(1)}px ${(y - (BG.ridge - BG.cut) * s).toFixed(1)}px`;
 }
 if (window.ResizeObserver) { const ro = new ResizeObserver(() => fitHome()); ro.observe($('home')); ro.observe($('homeCast')); ro.observe(document.querySelector('#home .title')); }
 window.addEventListener('resize', fitHome); document.fonts && document.fonts.ready.then(fitHome); $('homeCast').querySelectorAll('img').forEach(i => i.addEventListener('load', fitHome));
