@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109141148';
+  var BUILD = '20261109141500';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -244,7 +244,11 @@ button.chip{cursor:pointer;color:var(--ink)}
 .bubble{position:absolute;z-index:5;border:3px solid var(--ink);border-radius:14px;background:var(--paper);padding:2px 10px;font-family:var(--korean);font-size:15px;white-space:nowrap;animation:pop .3s ease-out}
 #fx{position:absolute;inset:0;pointer-events:none;z-index:6;overflow:hidden}
 .fly{position:absolute;left:0;top:0;width:32px;height:32px;margin:-16px 0 0 -16px;border:3px solid var(--ink);border-radius:8px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
-.burst{position:absolute;left:0;top:0;width:96px;height:80px;margin:-40px 0 0 -48px;display:flex;align-items:center;justify-content:center;font-family:var(--korean);font-size:22px}
+.hitring{position:absolute;left:0;top:0;width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;border:5px solid rgba(255,250,215,.95);box-shadow:0 0 18px rgba(255,230,120,.8),inset 0 0 14px rgba(255,240,170,.7);pointer-events:none}
+.hitring.wet{border-color:rgba(225,245,255,.95);box-shadow:0 0 18px rgba(120,200,255,.8),inset 0 0 14px rgba(170,225,255,.7)}
+.pt{position:absolute;left:0;top:0;pointer-events:none;display:block}
+.pt.star{width:28px;height:28px;margin:-14px 0 0 -14px;background:radial-gradient(circle at 38% 32%,#FFFBE0 0,#FFE066 30%,#FFB800 70%,#E68A00 100%);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 2px 2px rgba(150,80,0,.35))}
+.pt.drop{width:17px;height:23px;margin:-11px 0 0 -8px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;background:radial-gradient(circle at 36% 30%,#fff 0,#BDE8FF 22%,#5EC0FF 60%,#1F8FE0 100%);box-shadow:0 2px 3px rgba(20,90,160,.3)}
 .burst svg{position:absolute;inset:0;width:100%;height:100%}
 .burst span{position:relative}
 .ko-banner{position:absolute;left:50%;top:44cqh;transform:translate(-50%,-50%) rotate(-6deg);z-index:7;background:var(--yellow);border:5px solid var(--ink);border-radius:20px;box-shadow:0 6px 0 var(--ink);padding:2px 22px;font-size:min(52px,9cqh);font-weight:700;animation:stamp .4s cubic-bezier(.2,1.6,.4,1)}
@@ -374,10 +378,10 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261109141148) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261109141500) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109141148) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109141500) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 #home>.stage{z-index:0}
@@ -399,7 +403,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261109141148) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261109141500) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -419,7 +423,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261109141148) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261109141500) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 </style>
 
 <style>
@@ -453,7 +457,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
 <div id="app">
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109141148" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109141148" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109141500" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109141500" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button"></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -464,7 +468,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261109141148" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261109141500" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"></div>
@@ -489,7 +493,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261109141148" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261109141500" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -731,7 +735,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261109141148';
+const IMGV = '20261109141500';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1660,11 +1664,26 @@ function fly(el, from, to, dur, spin, side) {
     { transform: `translate(${mx}px,${my}px) rotate(${spin / 2}deg) scale(1.25)`, offset: .5 },
     { transform: `translate(${to.x}px,${to.y}px) rotate(${spin}deg) scale(1)` }], { duration: dur, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'forwards' }).finished.then(() => el.remove());
 }
-function burst(at, html, text) {
-  const d = document.createElement('div'); d.className = 'burst'; d.innerHTML = html + `<span>${text}</span>`;
-  $('fx').appendChild(d);
-  const T = s => `translate(${at.x}px,${at.y}px) scale(${s})`;
-  d.animate([{ transform: T(.3), opacity: 0 }, { transform: T(1.15), opacity: 1, offset: .25 }, { transform: T(1), opacity: 1, offset: .8 }, { transform: T(1), opacity: 0 }], { duration: 1200, fill: 'forwards' }).finished.then(() => d.remove());
+/* hit effect: a soft flash ring plus a spray of glossy stars (or water drops), no comic text */
+function burst(at, kind, big) {
+  const fx = $('fx'), drops = kind === 'drop';
+  const ring = document.createElement('div'); ring.className = 'hitring' + (drops ? ' wet' : '');
+  fx.appendChild(ring);
+  const R = big ? 1.5 : 1, T = (s, x = 0, y = 0) => `translate(${at.x + x}px,${at.y + y}px) scale(${s})`;
+  ring.animate([{ transform: T(.2), opacity: .95 }, { transform: T(1.3 * R), opacity: 0 }], { duration: 520, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' }).finished.then(() => ring.remove());
+  const n = big ? 11 : 8;
+  for (let i = 0; i < n; i++) {
+    const d = document.createElement('i'); d.className = 'pt ' + (drops ? 'drop' : 'star'); fx.appendChild(d);
+    const ang = (i / n) * Math.PI * 2 + Math.random() * .5, dist = (46 + Math.random() * 34) * R;
+    const dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist * .8 - (drops ? 0 : 10), sz = .7 + Math.random() * .6;
+    const rot = drops ? (ang * 180 / Math.PI + 90) : (Math.random() * 360);
+    const fall = drops ? 38 : 14;
+    d.animate([
+      { transform: `${T(.3 * sz)} rotate(${rot}deg)`, opacity: 1 },
+      { transform: `${T(sz, dx, dy)} rotate(${rot + (drops ? 0 : 120)}deg)`, opacity: 1, offset: .55 },
+      { transform: `${T(sz * .6, dx * 1.12, dy + fall)} rotate(${rot + (drops ? 0 : 200)}deg)`, opacity: 0 }
+    ], { duration: 900 + Math.random() * 300, easing: 'cubic-bezier(.15,.8,.35,1)', fill: 'forwards' }).finished.then(() => d.remove());
+  }
 }
 function shakeArena() { const a = $('arena'); a.classList.remove('shake'); void a.offsetWidth; a.classList.add('shake'); }
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -1679,13 +1698,13 @@ async function attack(p, w, n, tok) {
     const flights = letters.map((c, i) => wait(i * 130).then(() => {
       const el = document.createElement('div'); el.className = 'fly'; el.textContent = c; return fly(el, from, to, 1000, 360 * (i % 2 ? 1 : -1), side).then(() => { if (live() && i > 0) sfx('block'); });
     }));
-    await flights[0]; if (!live()) return; burst(to, BURST, lang === 'ko' ? '뿅!' : 'POP!'); sfx('block'); sfx('pop'); voice(q, 'ouch'); setFace(q, 'hit', 1600); await Promise.all(flights);
+    await flights[0]; if (!live()) return; burst(to, 'star'); sfx('block'); sfx('pop'); voice(q, 'ouch'); setFace(q, 'hit', 1600); await Promise.all(flights);
   } else if (n === 2) {
     sfx('whoosh');
     const el = document.createElement('div'); el.style.cssText = 'position:absolute;left:0;top:0;margin:-30px 0 0 -24px'; el.innerHTML = `<img src="${img('balloon')}" alt="" style="width:48px;height:auto;display:block">`;
     await fly(el, from, to, 1200, 160, side);
     if (!live()) return;
-    burst(to, SPLASH, lang === 'ko' ? '철퍽!' : 'SPLASH!'); sfx('splash'); voice(q, 'ouch'); setFace(q, 'wet', 1900); shakeArena();
+    burst(to, 'drop', true); sfx('splash'); voice(q, 'ouch'); setFace(q, 'wet', 1900); shakeArena();
   } else {
     /* the hammer swings down around its handle end so the head's face lands on the target's head */
     const holder = document.createElement('div');
@@ -1699,7 +1718,7 @@ async function attack(p, w, n, tok) {
     /* raised high above the head, then slammed straight down */
     await el.animate([{ transform: 'translate(6px,-150px) rotate(-38deg)', opacity: 0 }, { transform: 'translate(6px,-130px) rotate(-38deg)', opacity: 1, offset: .35 }, { transform: 'translate(4px,-140px) rotate(-48deg)', opacity: 1, offset: .55 }, { transform: 'translate(0,0) rotate(0deg)', opacity: 1 }], { duration: 760, easing: 'cubic-bezier(.6,0,.9,.5)', fill: 'forwards' }).finished;
     if (!live()) return;
-    burst(to, BURST, lang === 'ko' ? '뿅!' : 'BONK!'); sfx('bonk'); setTimeout(() => live() && voice(q, 'aww'), 350); setFace(q, 'ko'); shakeArena();
+    burst(to, 'star', true); sfx('bonk'); setTimeout(() => live() && voice(q, 'aww'), 350); setFace(q, 'ko'); shakeArena();
     el.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: 'translate(0,-26px) rotate(-14deg)' }], { duration: 250, fill: 'forwards' });
     setTimeout(() => holder.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }).finished.then(() => holder.remove()), 700);
   }
