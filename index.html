@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109121758';
+  var BUILD = '20261109123752';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -372,6 +372,38 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes rainbow{0%{background:#FFE07A}20%{background:#FFB3C7}40%{background:#C9B8FF}60%{background:#8FD0FF}80%{background:#BDEBD8}100%{background:#FFE07A}}
 @keyframes twinkle{to{transform:translateY(-2px);box-shadow:0 5px 0 var(--ink)}}
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
+
+/* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
+#home{background:#8FD3FF url(img/bg.webp?v=20261109123752) center bottom/cover no-repeat}
+.deco .dtile{position:absolute;width:52px;height:auto;opacity:.9;transform:rotate(var(--r));animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:rotate(var(--r)) translateY(-6px)}}
+.logo-img{width:min(86vw,360px,calc((100dvh - 470px) * 1.25));min-width:220px;height:auto;filter:drop-shadow(0 6px 10px rgba(40,60,120,.25));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
+.ribbon{background:rgba(255,248,240,.92);border:2.5px solid #F2A7BC;border-radius:999px;padding:6px 18px;box-shadow:0 3px 8px rgba(80,60,40,.15);font-size:16px}
+.stage{flex:0 1 150px;min-height:70px;margin-bottom:-6px;align-items:flex-end}
+.stage img.hc{height:100%;width:auto;filter:drop-shadow(0 8px 6px rgba(40,60,20,.25))}
+.stage .vsimg{align-self:center;height:min(52%,60px);width:auto;margin:0 -4px 18px;animation:bob 2.2s ease-in-out infinite;--r:0deg}
+.field{background:none;border-top:0;border-radius:0;padding-top:14px}
+.mcard{--d:color-mix(in srgb,var(--c) 70%,#5a2a3a);border:0;border-radius:24px;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 70%,#fff) 0%,var(--c) 55%);box-shadow:0 6px 0 var(--d),0 10px 18px rgba(40,40,80,.22),inset 0 2px 0 rgba(255,255,255,.7)}
+.mcard:has(.mmain:active){box-shadow:0 2px 0 var(--d),0 4px 8px rgba(40,40,80,.2),inset 0 2px 0 rgba(255,255,255,.7)}
+.micon{border:0;background:#FFF9F3;box-shadow:0 3px 0 rgba(0,0,0,.12),inset 0 -2px 0 rgba(0,0,0,.05)}
+.mgo{background:linear-gradient(180deg,color-mix(in srgb,var(--c) 55%,#7a1f45),color-mix(in srgb,var(--c) 35%,#4a1030));box-shadow:0 3px 0 rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.35);height:36px;padding:0 12px;font-size:16px}
+.copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+/* game arena: the painted meadow; the opponent stands on the grassy ledge */
+#arena{background:#8FD3FF url(img/bg.webp?v=20261109123752) center 66%/cover no-repeat}
+#arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
+.char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
+#char1 img.cimg{animation-delay:-1.3s}
+.char.jump img.cimg{animation:jump .45s ease-out}
+.char .cfx{position:absolute;inset:0;pointer-events:none}
+.char.ko .cfx i{position:absolute;top:2%;left:50%;font-style:normal;font-size:22px;color:#FFD54A;text-shadow:0 0 2px #7a5a00;animation:orbit 1.4s linear infinite}
+.char.ko .cfx i:nth-child(2){animation-delay:-.47s}.char.ko .cfx i:nth-child(3){animation-delay:-.93s}
+@keyframes orbit{0%{transform:translate(-50%,0) rotate(0deg) translateX(34px) rotate(0deg)}100%{transform:translate(-50%,0) rotate(360deg) translateX(34px) rotate(-360deg)}}
+.char.wet .cfx b{position:absolute;top:8%;width:9px;height:13px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#7EC8FF;box-shadow:inset -2px -2px 0 rgba(0,0,0,.12);animation:drip 1s ease-in infinite}
+.char.wet .cfx b:nth-child(1){left:32%}.char.wet .cfx b:nth-child(2){left:55%;animation-delay:-.35s}.char.wet .cfx b:nth-child(3){left:70%;animation-delay:-.7s}
+@keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
+.tut-art.lobby img{height:100%;width:auto}
+/* letter tiles thrown on the first hit look like the toy block */
+.fly{background:url(img/block.webp?v=20261109123752) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 </style>
 
 <style>
@@ -402,7 +434,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
 <body>
 <div id="app">
   <section id="home" class="screen">
-    <div class="deco" aria-hidden="true"><div class="cl" style="--w:78px;left:6%;top:16%"></div><div class="cl" style="--w:96px;right:5%;top:41%"></div><div class="ft" style="left:5%;top:33%;background:#FFE07A;--r:-10deg;transform:rotate(-10deg);animation-delay:0s">A</div><div class="ft" style="left:85%;top:30%;background:#BDEBD8;--r:9deg;transform:rotate(9deg);animation-delay:-1s">Q</div></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109123752" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109123752" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button"></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -413,7 +445,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <span class="logo" aria-hidden="true"><span class="lt f"><b>F</b><i>irst</i></span><span class="ln">n</span><span class="lt l"><b>L</b><i>ast</i></span></span>
+      <img class="logo-img" src="img/logo.webp?v=20261109123752" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"></div>
@@ -677,6 +709,28 @@ const HAMMER = `<svg viewBox="0 0 200 160" width="160" height="128" aria-hidden=
 const HEART = f => `<svg viewBox="0 0 24 22" aria-hidden="true"><path d="M12 20 3 11a5 5 0 0 1 9-6 5 5 0 0 1 9 6Z" fill="${f}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
 const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg>';
 
+/* ---------- 3D character art (img/*.webp) ----------
+   Each animal has 8 poses, seen from the front (f) and from behind (b):
+   1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
+const IMGV = '20261109123752';
+const img = n => `img/${n}.webp?v=${IMGV}`;
+const ANIMALS = ['capy', 'panda'];
+function preloadArt() {
+  if (preloadArt.done) return; preloadArt.done = true;
+  ANIMALS.forEach(a => ['f', 'b'].forEach(v => { for (let n = 1; n <= 8; n++) new Image().src = img(`${a}_${v}${n}`); }));
+  ['balloon', 'hammer', 'block'].forEach(n => { new Image().src = img(n); });
+}
+/* random animals for a game; online both phones work it out from the room code so they agree */
+function pickAnimals() {
+  if (G.mode === 'online' && ON && ON.code) {
+    let h = 0; for (const ch of ON.code) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    const host = ANIMALS[h % 2], guest = ANIMALS[1 - (h % 2)];
+    return ON.role === 'host' ? [host, guest] : [guest, host];
+  }
+  if (G.mode === 'ai') return ['capy', 'panda']; /* the AI is Lexi the red panda */
+  const a = Math.random() < .5 ? 0 : 1; return [ANIMALS[a], ANIMALS[1 - a]];
+}
+function charArt(el) { if (!el.querySelector('.cimg')) el.innerHTML = '<img class="cimg" alt="" draggable="false"><div class="cfx"></div>'; return el; }
 function showSvg(container, svgName, g, opts = {}) {
   container.querySelectorAll('svg[data-s]').forEach(s => s.style.display = s.dataset.s === svgName ? 'block' : 'none');
   const s = container.querySelector(`svg[data-s="${svgName}"]`); if (!s) return;
@@ -927,8 +981,7 @@ function applyLang() {
   document.querySelectorAll('.diff').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === diff ? 'true' : 'false'));
   if (G.mode) { renderNames(); renderPanels(); }
 }
-$('homeCast').innerHTML = `<div class="hc" id="hc0">${CAPY}</div><div class="vs" aria-hidden="true">VS</div><div class="hc" id="hc1">${RAB_FRONT}</div>`;
-showSvg($('hc0'), 'capy', 'front'); showSvg($('hc1'), 'rfront', 'happy');
+$('homeCast').innerHTML = `<img class="hc" id="hc0" src="${img('cast_capy')}" alt=""><img class="vsimg" src="${img('vs')}" alt="VS"><img class="hc" id="hc1" src="${img('cast_panda')}" alt="">`;
 $('nickBtn').onclick = () => {
   sfx('key');
   /* a nickname can be changed once a day */
@@ -1050,7 +1103,8 @@ function newGame(mode, noTut, noReady) {
   if (isDuo()) $('rail').parentNode.insertBefore($('tools'), $('rail').nextSibling); else $('hud').insertBefore($('tools'), $('clkW'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
   $('panel1').hidden = !isDuo();
-  $('char1').innerHTML = RAB_FRONT + RAB_BACK; $('char0').innerHTML = CAPY;
+  G.anim = pickAnimals(); preloadArt();
+  $('char1').innerHTML = ''; $('char0').innerHTML = '';
   setFace(0, 'look'); setFace(1, isDuo() ? 'look' : 'idle');
   $('fx').innerHTML = ''; document.querySelectorAll('.ko-banner,.bubble').forEach(e => e.remove());
   setTiles('?', '?'); renderClock(); renderNames(); renderHearts();
@@ -1086,9 +1140,14 @@ function drawFace(p) {
   const fmap = { idle: 'normal', throw: 'normal', look: 'normal', hit: 'hit', wet: 'wet', ko: 'ko', lose: 'ko', win: 'happy', scratch: 'normal' };
   const ko = face === 'ko' || (face === 'lose' && G.scores[other(p)] >= 3);
   const opts = { hits: Math.min(hits, 2), stars: ko, drops: face === 'wet', flat: ko };
-  if (p === 0) showSvg(el, 'capy', map[face], opts);
-  else if (backStyle && face !== 'win') showSvg(el, 'rback', map[face], opts);
-  else showSvg(el, 'rfront', fmap[face], opts);
+  const view = backStyle && face !== 'win' ? 'b' : 'f';
+  const pose = { idle: 1, look: 1, throw: 8, hit: 4, wet: 4, scratch: 3, win: 2, ko: 7, lose: ko ? 7 : 3 }[face] || 1;
+  const n = pose === 1 ? [1, 5, 6][opts.hits] : pose;
+  charArt(el);
+  const im = el.querySelector('.cimg'), src = img(`${(G.anim || ANIMALS)[p]}_${view}${n}`);
+  if (im.getAttribute('src') !== src) im.setAttribute('src', src);
+  el.classList.toggle('ko', ko); el.classList.toggle('wet', face === 'wet');
+  el.querySelector('.cfx').innerHTML = ko ? '<i>★</i><i>★</i><i>★</i>' : face === 'wet' ? '<b></b><b></b><b></b>' : '';
 }
 function setFace(p, face, ms, after) {
   G.faces[p] = face; drawFace(p); clearTimeout(faceTimers[p]);
@@ -1552,7 +1611,8 @@ function runBuzzTimer(p) {
 /* ---------- attacks ---------- */
 function anchor(p) {
   const a = $('arena').getBoundingClientRect(), r = charEl(p).getBoundingClientRect();
-  let fy = p === 1 ? .48 : .34; if (isDuo() && p === 1) fy = .66;
+  /* aim at the head of the 3D art (the top quarter); in duo the top character is upside down */
+  let fy = .24; if (isDuo() && p === 1) fy = .76;
   return { x: r.left - a.left + r.width / 2, y: r.top - a.top + r.height * fy };
 }
 function fly(el, from, to, dur, spin, side) {
@@ -1585,7 +1645,7 @@ async function attack(p, w, n, tok) {
     await flights[0]; if (!live()) return; burst(to, BURST, lang === 'ko' ? '뿅!' : 'POP!'); sfx('block'); sfx('pop'); voice(q, 'ouch'); setFace(q, 'hit', 1600); await Promise.all(flights);
   } else if (n === 2) {
     sfx('whoosh');
-    const el = document.createElement('div'); el.style.cssText = 'position:absolute;left:0;top:0;margin:-26px 0 0 -22px'; el.innerHTML = BALLOON;
+    const el = document.createElement('div'); el.style.cssText = 'position:absolute;left:0;top:0;margin:-30px 0 0 -24px'; el.innerHTML = `<img src="${img('balloon')}" alt="" style="width:48px;height:auto;display:block">`;
     await fly(el, from, to, 1200, 160, side);
     if (!live()) return;
     burst(to, SPLASH, lang === 'ko' ? '철퍽!' : 'SPLASH!'); sfx('splash'); voice(q, 'ouch'); setFace(q, 'wet', 1900); shakeArena();
@@ -1594,9 +1654,10 @@ async function attack(p, w, n, tok) {
     const holder = document.createElement('div');
     const flipT = isDuo() && q === 1;
     holder.style.cssText = `position:absolute;left:0;top:0;transform:translate(${to.x}px,${to.y}px) rotate(${flipT ? 180 : 0}deg)`;
-    const el = document.createElement('div'); el.innerHTML = HAMMER;
-    // hammer art: 160x128; head face bottom at (45,122), handle end at (152,64)
-    el.style.cssText = 'position:absolute;left:-45px;top:-122px;transform-origin:152px 64px';
+    const el = document.createElement('div'); el.innerHTML = `<img src="${img('hammer')}" alt="" style="width:120px;height:auto;display:block">`;
+    // hammer art (120 wide, ~150 tall): the head sits at the top, the handle ends at the bottom left.
+    // Swing around the handle end so the bottom of the head lands on the target.
+    el.style.cssText = 'position:absolute;left:-70px;top:-62px;transform-origin:14px 140px';
     holder.appendChild(el); $('fx').appendChild(holder);
     await el.animate([{ transform: 'rotate(80deg)', opacity: 0 }, { transform: 'rotate(80deg)', opacity: 1, offset: .3 }, { transform: 'rotate(0deg)', opacity: 1 }], { duration: 700, easing: 'cubic-bezier(.55,0,.9,.55)', fill: 'forwards' }).finished;
     if (!live()) return;
@@ -1891,10 +1952,9 @@ function showSearching() {
   const slot = FB.db.ref('match/waiting');
   const draw = () => {
     if (!ON || ON.joined) return;
-    sheet(`<h2>${esc(t('searching'))}</h2><div class="tut-art lobby">${RAB_FRONT}</div>
+    sheet(`<h2>${esc(t('searching'))}</h2><div class="tut-art lobby"><img src="${img('panda_f2')}" alt=""></div>
       <p class="wait"><span class="spin" aria-hidden="true"></span>${offered ? esc(t('noOneYet')) : esc(t('searchingSub'))}<br><small>${sec}${esc(t('secUnit'))}</small></p>
       <div class="btns">${offered ? `<button class="go alt" type="button" id="sTori">${t('playTori')}</button><button class="go" type="button" id="sWait">${t('keepWaiting')}</button>` : `<button class="go alt" type="button" id="sCancel">${t('cancel')}</button>`}</div>`, () => { stopSearch(); goHome(); });
-    showSvg($('sheet').querySelector('.lobby'), 'rfront', 'happy');
     const c = $('sCancel'); if (c) c.onclick = () => { sfx('key'); stopSearch(); goHome(); };
     const w = $('sWait'); if (w) w.onclick = () => { sfx('key'); offered = false; sec = 0; draw(); };
     const tt = $('sTori'); if (tt) tt.onclick = () => { sfx('pick'); stopSearch(); newGame('ai', true); };
@@ -1997,11 +2057,10 @@ function drawLobby() {
   if (!ON || ON.key !== 'lobby') return;
   const rd = (ON.room && ON.room.ready) || {}, me = !!rd[ON.role], friend = !!rd[oppRole()];
   sheet(`<h2>${esc(ON.random ? t('lobbyRival') : ON.role === 'host' ? t('lobbyHost') : t('lobbyGuest'))}</h2>
-    <div class="tut-art lobby">${RAB_FRONT}</div>
+    <div class="tut-art lobby"><img src="${img('panda_f2')}" alt=""></div>
     <p>${esc(me ? tf('waitFriend') : friend ? tf('friendReady') : t('lobbyReady'))}</p>
     ${me ? '<div class="spin" aria-hidden="true"></div>' : `<button class="go start-big" type="button" id="readyOk">${esc(t('startMatch'))}</button>`}
     <button class="leave-x" type="button" id="leaveBtn">✕ ${esc(t('leaveX'))}</button>`);
-  showSvg($('sheet').querySelector('.lobby'), 'rfront', 'happy');
   $('leaveBtn').onclick = () => { leaveRoom(); goHome(); };
   const ok = $('readyOk'); if (ok) ok.onclick = () => { sfx('pick'); ON.ref.child('ready/' + ON.role).set(true).catch(() => { }); };
 }
