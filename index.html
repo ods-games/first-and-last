@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109152307';
+  var BUILD = '20261109152636';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -378,7 +378,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261109152307) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261109152636) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -387,7 +387,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109152307) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109152636) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 #home>.stage{z-index:0}
@@ -411,7 +411,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261109152307) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261109152636) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -433,7 +433,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261109152307) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261109152636) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 </style>
 
 <style>
@@ -467,7 +467,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
 <div id="app">
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109152307" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109152307" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109152636" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109152636" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button"></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -478,7 +478,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261109152307" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261109152636" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"></div>
@@ -503,7 +503,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261109152307" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261109152636" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -745,7 +745,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261109152307';
+const IMGV = '20261109152636';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1713,7 +1713,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 async function attack(p, w, n, tok) {
   const live = () => tok === G.token;
   const q = other(p), to = anchor(q), side = p === 0 ? 60 : -60;
-  if (p === 0 || isDuo()) setFace(p, 'throw'); else jump(1);
+  setFace(p, 'throw', 1300, 'idle'); /* everyone winds up and throws, the AI too */
   const from = handAnchor(p); /* things leave from the throwing paw */
   voice(p, 'hup');
   if (n === 1) {
@@ -1730,21 +1730,16 @@ async function attack(p, w, n, tok) {
     if (!live()) return;
     burst(to, 'drop', true); sfx('splash'); voice(q, 'ouch'); setFace(q, 'wet', 1900); shakeArena();
   } else {
-    /* the hammer swings down around its handle end so the head's face lands on the target's head */
-    const holder = document.createElement('div');
-    const flipT = isDuo() && q === 1;
-    holder.style.cssText = `position:absolute;left:0;top:0;transform:translate(${to.x}px,${to.y}px) rotate(${flipT ? 180 : 0}deg)`;
-    const el = document.createElement('div'); el.innerHTML = `<img src="${img('hammer')}" alt="" style="width:120px;height:auto;display:block">`;
-    // hammer art (120 wide, ~150 tall): the head sits at the top, the handle ends at the bottom left.
-    // Swing around the handle end so the bottom of the head lands on the target.
-    el.style.cssText = 'position:absolute;left:-70px;top:-62px;transform-origin:14px 140px';
-    holder.appendChild(el); $('fx').appendChild(holder);
-    /* raised high above the head, then slammed straight down */
-    await el.animate([{ transform: 'translate(6px,-150px) rotate(-38deg)', opacity: 0 }, { transform: 'translate(6px,-130px) rotate(-38deg)', opacity: 1, offset: .35 }, { transform: 'translate(4px,-140px) rotate(-48deg)', opacity: 1, offset: .55 }, { transform: 'translate(0,0) rotate(0deg)', opacity: 1 }], { duration: 760, easing: 'cubic-bezier(.6,0,.9,.5)', fill: 'forwards' }).finished;
+    /* the toy hammer is thrown end over end from the paw and bonks the head */
+    sfx('whoosh');
+    const mk = () => { const d = document.createElement('div'); d.style.cssText = 'position:absolute;left:0;top:0;margin:-50px 0 0 -50px'; d.innerHTML = `<img src="${img('hammer')}" alt="" style="width:100px;height:auto;display:block">`; return d; };
+    await fly(mk(), from, to, 950, side > 0 ? 720 : -720, side);
     if (!live()) return;
     burst(to, 'star', true); sfx('bonk'); setTimeout(() => live() && voice(q, 'aww'), 350); setFace(q, 'ko'); shakeArena();
-    el.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: 'translate(0,-26px) rotate(-14deg)' }], { duration: 250, fill: 'forwards' });
-    setTimeout(() => holder.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }).finished.then(() => holder.remove()), 700);
+    /* it bounces off and drops away */
+    const bh = mk(); $('fx').appendChild(bh);
+    const dx = side > 0 ? 70 : -70, dy = isDuo() && q === 1 ? 1 : -1;
+    bh.animate([{ transform: `translate(${to.x}px,${to.y}px) rotate(0deg)`, opacity: 1 }, { transform: `translate(${to.x + dx * .6}px,${to.y + dy * 70}px) rotate(${dx * 2}deg)`, opacity: 1, offset: .45 }, { transform: `translate(${to.x + dx}px,${to.y - dy * 40}px) rotate(${dx * 4}deg)`, opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.2,.6,.5,1)', fill: 'forwards' }).finished.then(() => bh.remove());
   }
   if (!live()) return;
   renderHearts(); drawFace(q);
