@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109123752';
+  var BUILD = '20261109125856';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -374,12 +374,13 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261109123752) center bottom/cover no-repeat}
+#home{background:#8FD3FF url(img/bg.webp?v=20261109125856) center bottom/cover no-repeat}
 .deco .dtile{position:absolute;width:52px;height:auto;opacity:.9;transform:rotate(var(--r));animation:bob 4s ease-in-out infinite}
 @keyframes bob{50%{transform:rotate(var(--r)) translateY(-6px)}}
-.logo-img{width:min(86vw,360px,calc((100dvh - 470px) * 1.25));min-width:220px;height:auto;filter:drop-shadow(0 6px 10px rgba(40,60,120,.25));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
+.logo-img{width:min(86vw,360px,calc((100dvh - 520px) * 1.4));min-width:190px;height:auto;filter:drop-shadow(0 6px 10px rgba(40,60,120,.25));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
 .ribbon{background:rgba(255,248,240,.92);border:2.5px solid #F2A7BC;border-radius:999px;padding:6px 18px;box-shadow:0 3px 8px rgba(80,60,40,.15);font-size:16px}
-.stage{flex:0 1 150px;min-height:70px;margin-bottom:-6px;align-items:flex-end}
+.stage{flex:none;min-height:0;margin-bottom:-4px;align-items:flex-end}
+.stage img.hcast{display:block;width:100%;height:auto;max-height:min(190px,21dvh);object-fit:contain;object-position:center bottom;animation:none}
 .stage img.hc{height:100%;width:auto;filter:drop-shadow(0 8px 6px rgba(40,60,20,.25))}
 .stage .vsimg{align-self:center;height:min(52%,60px);width:auto;margin:0 -4px 18px;animation:bob 2.2s ease-in-out infinite;--r:0deg}
 .field{background:none;border-top:0;border-radius:0;padding-top:14px}
@@ -388,11 +389,15 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .micon{border:0;background:#FFF9F3;box-shadow:0 3px 0 rgba(0,0,0,.12),inset 0 -2px 0 rgba(0,0,0,.05)}
 .mgo{background:linear-gradient(180deg,color-mix(in srgb,var(--c) 55%,#7a1f45),color-mix(in srgb,var(--c) 35%,#4a1030));box-shadow:0 3px 0 rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.35);height:36px;padding:0 12px;font-size:16px}
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+@media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261109123752) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261109125856) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
+/* the grassy ledge the opponent stands on */
+.plat{position:absolute;z-index:1;left:50%;transform:translateX(-50%);width:min(96cqw,90cqh);top:calc(10cqh + min(32cqh,200px) - 4.5cqh);pointer-events:none}
+.duo .plat{display:none}
 .char.jump img.cimg{animation:jump .45s ease-out}
 .char .cfx{position:absolute;inset:0;pointer-events:none}
 .char.ko .cfx i{position:absolute;top:2%;left:50%;font-style:normal;font-size:22px;color:#FFD54A;text-shadow:0 0 2px #7a5a00;animation:orbit 1.4s linear infinite}
@@ -403,7 +408,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261109123752) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261109125856) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 </style>
 
 <style>
@@ -434,7 +439,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
 <body>
 <div id="app">
   <section id="home" class="screen">
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109123752" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109123752" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109125856" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109125856" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button"></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -445,7 +450,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261109123752" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261109125856" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"></div>
@@ -470,7 +475,7 @@ html,body{position:fixed;inset:0;overflow:hidden}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261109125856" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -712,7 +717,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261109123752';
+const IMGV = '20261109125856';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -981,7 +986,7 @@ function applyLang() {
   document.querySelectorAll('.diff').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === diff ? 'true' : 'false'));
   if (G.mode) { renderNames(); renderPanels(); }
 }
-$('homeCast').innerHTML = `<img class="hc" id="hc0" src="${img('cast_capy')}" alt=""><img class="vsimg" src="${img('vs')}" alt="VS"><img class="hc" id="hc1" src="${img('cast_panda')}" alt="">`;
+$('homeCast').innerHTML = `<img class="hcast" src="${img('homecast')}" alt="" draggable="false">`;
 $('nickBtn').onclick = () => {
   sfx('key');
   /* a nickname can be changed once a day */
