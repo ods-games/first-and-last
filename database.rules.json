@@ -27,6 +27,12 @@
         ".write": "auth != null",
         ".validate": "newData.child('uid').val() === auth.uid && newData.child('code').isString()"
       }
+    },
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
     }
   }
 }

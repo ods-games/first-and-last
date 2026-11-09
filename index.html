@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109185523';
+  var BUILD = '20261109192115';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -381,7 +381,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261109185523) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261109192115) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -390,7 +390,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109185523) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109192115) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -426,7 +426,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261109185523) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261109192115) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -448,7 +448,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261109185523) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261109192115) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -497,6 +497,57 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* start/end tiles line up with the middle of the word board */
 .mid{align-items:center}
 .mid>.side{padding-top:18px}
+
+/* ===== progress: level chip, profile, result XP ===== */
+.nick-pill{position:relative;display:inline-flex;align-items:center;gap:6px}
+.lvchip{font-family:var(--display);font-weight:700;font-size:12px;color:#fff;background:linear-gradient(180deg,#FFB547,#F58A07);border-radius:999px;padding:2px 7px;box-shadow:0 1.5px 0 #C86A00;white-space:nowrap}
+.mdot{position:absolute;right:-2px;top:-2px;width:11px;height:11px;border-radius:50%;background:#FF4D6D;border:2px solid #fff}
+.ev-banner{position:absolute;left:50%;top:-6px;transform:translateX(-50%) rotate(-2deg);z-index:3;white-space:nowrap;font-family:var(--korean);font-size:14px;color:#fff;padding:5px 14px;border-radius:999px;background:linear-gradient(180deg,#FF9F43,#F2551B);box-shadow:0 3px 0 #B43A0A,0 6px 12px rgba(0,0,0,.2);border:2px solid #fff;animation:bob 2.4s ease-in-out infinite;--r:-2deg}
+.xpbar{height:12px;border-radius:999px;background:#EFE3D8;box-shadow:inset 0 2px 3px rgba(0,0,0,.12);overflow:hidden}
+.xpbar span{display:block;height:100%;border-radius:999px;background:linear-gradient(180deg,#FFD25A,#FFA51F);box-shadow:inset 0 2px 0 rgba(255,255,255,.55);transition:width .8s ease-out}
+.xpnum{font-family:var(--display);font-weight:600;font-size:12px;color:#8A7466;text-align:right;margin-top:2px}
+.award{display:flex;flex-direction:column;gap:5px;background:linear-gradient(180deg,#FFFBEA,#FFF1C9);border-radius:16px;padding:10px 12px;box-shadow:inset 0 0 0 2px #F3D27A;text-align:left}
+.aw-top{display:flex;align-items:center;gap:8px}
+.aw-gain{font-family:var(--display);font-weight:700;font-size:22px;color:#E07A00}
+.aw-x2{font-family:var(--display);font-weight:700;font-size:13px;color:#fff;background:#F2551B;border-radius:999px;padding:1px 7px}
+.aw-lv{margin-left:auto;font-family:var(--display);font-weight:700;font-size:15px}
+.aw-line{font-family:var(--korean);font-size:15px}
+.aw-line b{font-family:var(--display);color:#E07A00}
+.aw-note{font-size:12px;color:#8A7466}
+.lvup{position:absolute;left:50%;top:42%;z-index:40;display:flex;flex-direction:column;align-items:center;gap:2px;padding:16px 30px;border-radius:28px;background:linear-gradient(180deg,#FFE27A,#FFB21F);border:3px solid #fff;box-shadow:0 8px 0 #C77F00,0 18px 40px rgba(0,0,0,.35);pointer-events:none;text-align:center}
+.lvup b{font-family:var(--korean);font-weight:400;font-size:24px;color:#7A3D00}
+.lvup span{font-family:var(--display);font-weight:700;font-size:44px;color:#fff;text-shadow:0 3px 0 #C77F00}
+.pf{display:flex;flex-direction:column;gap:12px;text-align:left}
+.pf-head{display:flex;align-items:center;gap:12px}
+.pf-head img{width:64px;height:64px;object-fit:contain}
+.pf-name{font-family:var(--korean);font-size:24px}
+.pf-lv{display:inline-block;margin-top:2px;font-family:var(--display);font-weight:700;font-size:14px;color:#fff;background:linear-gradient(180deg,#FFB547,#F58A07);border-radius:999px;padding:2px 10px;box-shadow:0 2px 0 #C86A00}
+.pf-event{font-family:var(--korean);font-size:15px;color:#fff;background:linear-gradient(180deg,#FF9F43,#F2551B);border-radius:12px;padding:6px 10px;text-align:center}
+.pf-box{background:#fff;border-radius:16px;padding:10px 12px;box-shadow:0 0 0 1.5px #EBDCCD,0 2px 0 1.5px #EBDCCD;display:flex;flex-direction:column;gap:7px}
+.pf-t{font-family:var(--korean);font-size:17px;display:flex;align-items:center;gap:8px}
+.pf-streak,.pf-cnt{margin-left:auto;font-size:14px;color:#E07A00}
+.pf-cnt{font-family:var(--display);font-weight:600;color:#8A7466}
+.pf-m{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--korean);font-size:16px;background:#FFF6EC;border-radius:12px;padding:8px 10px}
+.pf-m b{font-family:var(--display);font-weight:700;white-space:nowrap}
+.pf-m.done{background:#E3F7EE;color:#1F7A55}
+.pf-sub{font-size:12.5px;color:#8A7466}
+.stamps{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.stamp{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:600;font-size:13px;color:#C9B6A6;border:2px dashed #E2D2C3}
+.stamp.on{border:0;background:radial-gradient(circle at 35% 30%,#FFE6EE,#FFB3C7);font-size:17px;box-shadow:0 2px 0 #E58AA4}
+.pf-stats{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-family:var(--korean);font-size:13px;color:#8A7466}
+.pf-stats b{display:block;font-family:var(--display);font-weight:700;font-size:22px;color:var(--ink)}
+.bdgs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bdg{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;padding:6px 2px;border-radius:12px;background:#F6F0EA;opacity:.6}
+.bdg.on{background:linear-gradient(180deg,#FFF7DA,#FFE9A8);opacity:1;box-shadow:0 2px 0 #E7C66A}
+.bdg .be{font-size:26px;line-height:1.1;font-family:var(--display);font-weight:700;color:#C9B6A6}
+.bdg b{font-family:var(--korean);font-weight:400;font-size:13px}
+.bdg small{font-size:10.5px;color:#8A7466;line-height:1.2}
+.nick-pill .lvchip{flex:none;overflow:visible}
+.home-top .lt-grp{min-width:0;flex:1 1 auto}
+.home-top .nick-pill{flex:0 1 auto;max-width:none;min-width:0}
+.home-top .rt{gap:6px}
+.home-top .rt .icon-btn{width:38px;height:38px}
+.nick-pill span:not(.lvchip){min-width:0}
 </style>
 
 <style>
@@ -537,7 +588,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109185523" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109185523" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109192115" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109192115" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button"></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -548,10 +599,10 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261109185523" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261109192115" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
-    <div class="stage" id="homeCast"></div>
+    <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
     <div class="field gut">
       <div class="mcard" style="--c:var(--pink)">
         <div class="mrow"><button class="mmain" id="goAI" type="button"><span class="micon"><svg viewBox="0 0 32 32" fill="none" stroke="#4A3426" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="11" r="5.5" fill="#FFB3C7"/><path d="M6.5 27c1.2-5.6 5-8.5 9.5-8.5s8.3 2.9 9.5 8.5" fill="#FFB3C7"/></svg></span><span class="mtext"><b data-t="solo"></b><small data-t="soloSub"></small></span><span class="mgo" aria-hidden="true">GO!</span></button></div>
@@ -573,7 +624,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261109185523" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261109192115" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -815,7 +866,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261109185523';
+const IMGV = '20261109192115';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1106,7 +1157,7 @@ const fsOK = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled) 
 function applyLang() {
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-t]').forEach(el => { const v = t(el.dataset.t); if (v.includes('|')) el.innerHTML = v.split('|').map(c => `<span class="nb">${esc(c.trim())}</span>`).join(' '); else el.textContent = v; });
-  $('langBtn').textContent = t('langBtn'); renderNick();
+  $('langBtn').textContent = t('langBtn'); renderNick(); try { renderEvent(); } catch (e) { }
   renderToggles();
   $('fsBtn').hidden = !fsOK;
   document.querySelectorAll('.diff').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === diff ? 'true' : 'false'));
@@ -1150,19 +1201,19 @@ function fitHome() {
 if (window.ResizeObserver) { const ro = new ResizeObserver(() => fitHome()); ro.observe($('home')); ro.observe($('homeCast')); ro.observe(document.querySelector('#home .title')); }
 window.addEventListener('resize', fitHome); document.fonts && document.fonts.ready.then(fitHome); $('homeCast').querySelectorAll('img').forEach(i => i.addEventListener('load', fitHome));
 fitHome();
-$('nickBtn').onclick = () => {
-  sfx('key');
+$('nickBtn').onclick = () => { sfx('key'); openProfile(); };
+function editNick() {
   /* a nickname can be changed once a day */
   const left = myNick ? 864e5 - (Date.now() - (+store('fl-nick-at') || 0)) : 0;
   if (left > 0) {
     const mins = Math.ceil(left / 6e4), h = Math.floor(mins / 60), m = mins % 60;
     sheet(`<h2>${esc(myNick)}</h2><p>${esc(t('nickWait', { h, m }))}</p><div class="btns"><button class="go alt" type="button" id="nwOk">${t('ok')}</button></div>${delLink()}`, () => { $('ov').hidden = true; });
     $('nwOk').onclick = () => { sfx('key'); $('ov').hidden = true; };
-    $('nickDel').onclick = () => { sfx('key'); $('ov').hidden = true; deleteNick(); };
+    const nd = $('nickDel'); if (nd) nd.onclick = () => { sfx('key'); $('ov').hidden = true; deleteNick(); };
     return;
   }
   askNick(() => { }, null, () => { });
-};
+}
 $('langBtn').onclick = () => { lang = lang === 'ko' ? 'en' : 'ko'; store('fl-lang', lang); applyLang(); };
 const ICON = {
   user: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20c1.2-4 4.2-5.5 7.5-5.5s6.3 1.5 7.5 5.5"/></svg>',
@@ -1225,7 +1276,7 @@ $('goOnline').onclick = () => { primeSpeech(); sfx('pick'); ensureNick(onlineMen
 function goHome() {
   document.documentElement.classList.remove('on-game');
   document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
-  leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; }
+  leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; renderNick(); renderEvent(); }
 
 /* ---------- tutorial ---------- */
 let afterTut = null;
@@ -1883,6 +1934,158 @@ async function attack(p, w, n, tok) {
   if (n >= 3) { const b = document.createElement('div'); b.className = 'ko-banner'; b.textContent = 'K.O.!'; $('arena').appendChild(b); await wait(1300); }
 }
 
+/* ---------- progress: experience, levels, daily mission, stamp card, badges, events ----------
+   Kept on this phone (fl-prog) and, once the phone has signed in to the online service, backed up to
+   users/{uid}/prog so a future login can carry it over. Tutorial games give nothing. */
+const PT = {
+  ko: { lv: '레벨', xp: '경험치', profile: '내 정보', editNick: '닉네임 바꾸기', mission: '오늘의 미션', missionDone: '완료!', stamps: '도장 카드', stampsNote: '오늘의 미션을 하면 도장 1개. 7개를 모으면 보너스 +100', streak: '연속 {n}일', stats: '기록', games: '대결', wins: '승리', words: '찾은 단어', badges: '배지', close: '닫기', levelUp: '레벨 업!', newBadge: '새 배지', capNote: '오늘 솔로·듀오 경험치를 다 받았어요. 온라인은 계속 받을 수 있어요', event2x: '주말 이벤트 · 경험치 2배!', missionClear: '오늘의 미션 완료', cardFull: '도장 카드 완성', reward: '보상' },
+  en: { lv: 'Level', xp: 'XP', profile: 'My profile', editNick: 'Change nickname', mission: "Today's mission", missionDone: 'Done!', stamps: 'Stamp card', stampsNote: "One stamp for each day's mission. Collect 7 for +100 bonus", streak: '{n}-day streak', stats: 'Stats', games: 'Games', wins: 'Wins', words: 'Words', badges: 'Badges', close: 'Close', levelUp: 'Level up!', newBadge: 'New badge', capNote: "That's today's solo/duo XP. Online games still give XP", event2x: 'Weekend event · Double XP!', missionClear: "Today's mission complete", cardFull: 'Stamp card complete', reward: 'Reward' }
+};
+const pt = (k, v) => { let x = (PT[lang] || PT.ko)[k] || k; if (v) for (const n in v) x = x.replace('{' + n + '}', v[n]); return x; };
+/* daily missions: one per day, the same for everyone (picked from the date) */
+const MISSIONS = [
+  { id: 'winai', goal: 1, ko: 'AI를 1번 이기기', en: 'Beat the AI once' },
+  { id: 'words', goal: 6, ko: '단어 6개 찾기', en: 'Find 6 words' },
+  { id: 'long5', goal: 2, ko: '5글자 이상 단어 2개 쓰기', en: 'Play 2 words of 5+ letters' },
+  { id: 'nohint', goal: 1, ko: '힌트 없이 AI 이기기', en: 'Beat the AI without a hint' },
+  { id: 'games', goal: 3, ko: '3판 하기', en: 'Play 3 games' },
+  { id: 'winmed', goal: 1, ko: '보통 이상 AI 이기기', en: 'Beat a Medium or Hard AI' }
+];
+const BADGES = [
+  { id: 'first_game', e: '🎮', ko: '첫 대결', en: 'First game', cko: '1판 하기', cen: 'Play a game' },
+  { id: 'first_win', e: '🏆', ko: '첫 승리', en: 'First win', cko: '처음으로 이기기', cen: 'Win a game' },
+  { id: 'perfect', e: '⚡', ko: '완승', en: 'Flawless', cko: '3:0으로 이기기', cen: 'Win 3-0' },
+  { id: 'no_hint', e: '🧠', ko: '스스로 해냄', en: 'No help', cko: '힌트 없이 AI 이기기', cen: 'Beat the AI with no hint' },
+  { id: 'win_hard', e: '🔥', ko: '고수', en: 'Pro', cko: '어려움 AI 이기기', cen: 'Beat the Hard AI' },
+  { id: 'word6', e: '📏', ko: '긴 단어', en: 'Long word', cko: '6글자 이상 단어', cen: 'A word of 6+ letters' },
+  { id: 'word8', e: '🦒', ko: '기린 단어', en: 'Giraffe word', cko: '8글자 이상 단어', cen: 'A word of 8+ letters' },
+  { id: 'games10', e: '🎯', ko: '10판', en: '10 games', cko: '10판 하기', cen: 'Play 10 games' },
+  { id: 'games50', e: '💪', ko: '50판', en: '50 games', cko: '50판 하기', cen: 'Play 50 games' },
+  { id: 'online_win', e: '🌏', ko: '온라인 첫 승', en: 'Online win', cko: '온라인에서 이기기', cen: 'Win an online game' },
+  { id: 'online10', e: '👑', ko: '온라인 10승', en: '10 online wins', cko: '온라인 10번 이기기', cen: 'Win 10 online games' },
+  { id: 'stamp7', e: '📅', ko: '개근', en: 'Full card', cko: '도장 카드 채우기', cen: 'Fill a stamp card' },
+  { id: 'lv5', e: '⭐', ko: '레벨 5', en: 'Level 5', cko: '레벨 5 되기', cen: 'Reach level 5' },
+  { id: 'lv10', e: '🌟', ko: '레벨 10', en: 'Level 10', cko: '레벨 10 되기', cen: 'Reach level 10' },
+  { id: 'weekend', e: '🎉', ko: '주말 이벤트', en: 'Weekend event', cko: '주말 이벤트에 참여', cen: 'Play during a weekend event' }
+];
+/* events: weekends give double XP; dated events can be added here, e.g. { from: '2026-12-24', to: '2026-12-26', mult: 3 } */
+const EVENTS = [];
+const DAY_CAP = 200; /* solo + duo game XP per day (online is not capped) */
+const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const dayNum = k => Math.round(new Date(k + 'T12:00:00').getTime() / 864e5);
+function todayMission() { const n = dayNum(dayKey()); return MISSIONS[((n * 7 + 3) % MISSIONS.length + MISSIONS.length) % MISSIONS.length]; }
+function eventNow() {
+  const k = dayKey(), wd = new Date().getDay();
+  const ev = EVENTS.find(e => k >= e.from && k <= e.to); if (ev) return { mult: ev.mult || 2, weekend: false };
+  return (wd === 0 || wd === 6) ? { mult: 2, weekend: true } : null;
+}
+function levelOf(xp) { let lv = 1, need = 50, left = xp; while (left >= need) { left -= need; lv++; need = 50 + 30 * (lv - 1); } return { lv, cur: left, need }; }
+let PROG = null;
+function progState() {
+  if (!PROG) { try { PROG = JSON.parse(store('fl-prog') || 'null'); } catch (e) { PROG = null; } }
+  if (!PROG || typeof PROG.xp !== 'number') PROG = { xp: 0, games: 0, wins: 0, words: 0, owins: 0, badges: {}, stamps: 0, streak: 0, lastMission: '', day: {} };
+  const k = dayKey(); if (PROG.day.k !== k) PROG.day = { k, mp: 0, done: false, capUsed: 0 };
+  return PROG;
+}
+function missionDone(P) { return !!(P || progState()).day.done; }
+function progSave() { store('fl-prog', JSON.stringify(PROG)); progBackup(); }
+function progBackup() { try { if (FB && FB.uid && PROG) FB.db.ref('users/' + FB.uid + '/prog').set(PROG).catch(() => { }); } catch (e) { } }
+/* when the online service connects, keep whichever copy has more XP */
+function progSync() {
+  try {
+    if (!FB || !FB.uid) return;
+    FB.db.ref('users/' + FB.uid + '/prog').once('value').then(sn => {
+      const v = sn.val(), P = progState();
+      if (v && typeof v.xp === 'number' && v.xp > P.xp) { PROG = Object.assign(P, v); store('fl-prog', JSON.stringify(PROG)); renderNick(); } else progBackup();
+    }).catch(() => { });
+  } catch (e) { }
+}
+function giveBadge(P, id, out) { if (!P.badges[id]) { P.badges[id] = Date.now(); P.xp += 20; out.badges.push(id); } }
+function progAward(winner) {
+  if (G.awarded === G.token) return null; G.awarded = G.token;
+  const P = progState(), lv0 = levelOf(P.xp).lv, out = { gain: 0, parts: [], badges: [], mission: false, card: false, capped: false, lv0 };
+  const mode = G.mode, won = winner === 0, mine = G.order.filter(x => x[1] === 0).map(x => x[0]);
+  const ev = eventNow(), mult = ev ? ev.mult : 1;
+  /* game XP */
+  let base = mode === 'online' ? 20 : 10;
+  if (won && mode === 'ai') base += { easy: 5, medium: 10, hard: 20 }[G.diff] || 5;
+  if (won && mode === 'online') base += 30;
+  let wordXp = 0; mine.forEach(w => { wordXp += 2 + (w.length >= 6 ? 3 : 0); });
+  let game = (base + wordXp) * mult;
+  if (mode !== 'online') { const room = Math.max(0, DAY_CAP * mult - P.day.capUsed); if (game > room) { game = room; out.capped = true; } P.day.capUsed += game; }
+  out.parts.push(['game', game]); out.gain += game; P.xp += game;
+  /* stats */
+  P.games++; if (won && mode !== 'duo') P.wins++; if (won && mode === 'online') P.owins++; P.words += mine.length;
+  /* today's mission */
+  const m = todayMission(), d = P.day;
+  if (!d.done) {
+    const winAI = won && mode === 'ai';
+    const inc = { winai: winAI ? 1 : 0, words: mine.length, long5: mine.filter(w => w.length >= 5).length, nohint: winAI && !G.hintUsed ? 1 : 0, games: 1, winmed: winAI && G.diff !== 'easy' ? 1 : 0 }[m.id] || 0;
+    d.mp = Math.min(m.goal, d.mp + inc);
+    if (d.mp >= m.goal) {
+      d.done = true; out.mission = true; const mx = 30 * mult; P.xp += mx; out.gain += mx; out.parts.push(['mission', mx]);
+      const y = dayKey(new Date(Date.now() - 864e5)); P.streak = P.lastMission === y ? P.streak + 1 : 1; P.lastMission = d.k;
+      P.stamps++; if (P.stamps >= 7) { P.stamps = 0; out.card = true; P.xp += 100; out.gain += 100; out.parts.push(['card', 100]); giveBadge(P, 'stamp7', out); }
+    }
+  }
+  /* badges */
+  giveBadge(P, 'first_game', out);
+  if (won) giveBadge(P, 'first_win', out);
+  if (won && G.scores[1] === 0 && G.scores[0] >= 3) giveBadge(P, 'perfect', out);
+  if (won && mode === 'ai' && !G.hintUsed) giveBadge(P, 'no_hint', out);
+  if (won && mode === 'ai' && G.diff === 'hard') giveBadge(P, 'win_hard', out);
+  if (mine.some(w => w.length >= 6)) giveBadge(P, 'word6', out);
+  if (mine.some(w => w.length >= 8)) giveBadge(P, 'word8', out);
+  if (P.games >= 10) giveBadge(P, 'games10', out);
+  if (P.games >= 50) giveBadge(P, 'games50', out);
+  if (won && mode === 'online') giveBadge(P, 'online_win', out);
+  if (P.owins >= 10) giveBadge(P, 'online10', out);
+  if (ev && ev.weekend) giveBadge(P, 'weekend', out);
+  let lv = levelOf(P.xp).lv; if (lv >= 5) giveBadge(P, 'lv5', out); if (lv >= 10) giveBadge(P, 'lv10', out);
+  if (out.badges.length) { out.gain += 20 * out.badges.length; out.parts.push(['badge', 20 * out.badges.length]); }
+  out.lv = levelOf(P.xp).lv; out.mult = mult;
+  progSave(); renderNick();
+  return out;
+}
+const badgeOf = id => BADGES.find(b => b.id === id);
+const bname = b => lang === 'ko' ? b.ko : b.en;
+function xpBar(xp) { const L = levelOf(xp); return `<div class="xpbar"><span style="width:${Math.round(100 * L.cur / L.need)}%"></span></div><div class="xpnum">${L.cur} / ${L.need} XP</div>`; }
+function awardHTML(a) {
+  const P = progState();
+  return `<div class="award"><div class="aw-top"><b class="aw-gain">+${a.gain} XP</b>${a.mult > 1 ? '<span class="aw-x2">×2</span>' : ''}<span class="aw-lv">Lv.${a.lv}</span></div>${xpBar(P.xp)}
+    ${a.mission ? `<div class="aw-line">📅 ${esc(pt('missionClear'))} <b>+${30 * a.mult}</b></div>` : ''}${a.card ? `<div class="aw-line">🎁 ${esc(pt('cardFull'))} <b>+100</b></div>` : ''}
+    ${a.badges.map(id => { const b = badgeOf(id); return `<div class="aw-line">${b.e} ${esc(pt('newBadge'))}: ${esc(bname(b))} <b>+20</b></div>`; }).join('')}
+    ${a.capped ? `<div class="aw-note">${esc(pt('capNote'))}</div>` : ''}</div>`;
+}
+function awardFx(a) {
+  if (a.lv > a.lv0) {
+    const el = document.createElement('div'); el.className = 'lvup'; el.innerHTML = `<b>${esc(pt('levelUp'))}</b><span>Lv.${a.lv}</span>`;
+    $('app').appendChild(el); sfx('win'); setTimeout(() => sfx('cheer'), 300);
+    el.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1.12)', opacity: 1, offset: .25 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .8 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 0 }], { duration: 2400, fill: 'forwards' }).finished.then(() => el.remove());
+  } else if (a.mission || a.badges.length) sfx('buzz');
+}
+function openProfile() {
+  const P = progState(), L = levelOf(P.xp), m = todayMission(), ev = eventNow();
+  const stamps = Array.from({ length: 7 }, (_, i) => `<span class="stamp${i < P.stamps ? ' on' : ''}">${i < P.stamps ? '🐾' : i + 1}</span>`).join('');
+  const badges = BADGES.map(b => { const got = !!P.badges[b.id]; return `<div class="bdg${got ? ' on' : ''}"><span class="be">${got ? b.e : '?'}</span><b>${esc(bname(b))}</b><small>${esc(lang === 'ko' ? b.cko : b.cen)}</small></div>`; }).join('');
+  sheet(`<div class="pf">
+    <div class="pf-head"><img src="${img('capy_f2')}" alt=""><div><div class="pf-name">${esc(myNick || t('nickMake'))}</div><div class="pf-lv">${esc(pt('lv'))} ${L.lv}</div></div></div>
+    ${xpBar(P.xp)}
+    ${ev ? `<div class="pf-event">🎉 ${esc(ev.weekend ? pt('event2x') : pt('event2x').replace(/^[^·]*·\s*/, ''))}</div>` : ''}
+    <div class="pf-box"><div class="pf-t">${esc(pt('mission'))}${P.streak > 1 ? ` <span class="pf-streak">🔥 ${esc(pt('streak', { n: P.streak }))}</span>` : ''}</div>
+      <div class="pf-m${P.day.done ? ' done' : ''}"><span>${esc(lang === 'ko' ? m.ko : m.en)}</span><b>${P.day.done ? '✓ ' + esc(pt('missionDone')) : `${P.day.mp} / ${m.goal}`}</b></div>
+      <div class="pf-sub">${esc(pt('reward'))}: +30 XP · 🐾</div></div>
+    <div class="pf-box"><div class="pf-t">${esc(pt('stamps'))}</div><div class="stamps">${stamps}</div><div class="pf-sub">${esc(pt('stampsNote'))}</div></div>
+    <div class="pf-box"><div class="pf-t">${esc(pt('stats'))}</div><div class="pf-stats"><div><b>${P.games}</b>${esc(pt('games'))}</div><div><b>${P.wins}</b>${esc(pt('wins'))}</div><div><b>${P.words}</b>${esc(pt('words'))}</div></div></div>
+    <div class="pf-box"><div class="pf-t">${esc(pt('badges'))} <span class="pf-cnt">${Object.keys(P.badges).length} / ${BADGES.length}</span></div><div class="bdgs">${badges}</div></div>
+    <div class="btns"><button class="go alt" type="button" id="pfNick">${esc(pt('editNick'))}</button><button class="go" type="button" id="pfClose">${esc(pt('close'))}</button></div></div>`, () => { sfx('key'); $('ov').hidden = true; });
+  $('pfClose').onclick = () => { sfx('key'); $('ov').hidden = true; };
+  $('pfNick').onclick = () => { sfx('key'); $('ov').hidden = true; editNick(); };
+}
+/* home: a small event banner while an event is on */
+setTimeout(() => { try { renderNick(); renderEvent(); } catch (e) { } }, 0); /* after the rest of the script has run */
+function renderEvent() { const el = $('evBanner'); if (!el) return; const ev = eventNow(); el.hidden = !ev; if (ev) el.textContent = '🎉 ' + pt('event2x'); }
+
 /* ---------- finish ---------- */
 /* hints nobody solved: show the answer, with the hidden letters in pink (tap to hear) */
 function hintAnswers() {
@@ -1908,6 +2111,7 @@ function finish(winner, byTime) {
   if (winner === 0) { setFace(0, 'win'); setFace(1, 'lose'); }
   else if (winner === 1) { setFace(1, 'win'); setFace(0, 'lose'); }
   setMusic(null); MUS.fast = false;
+  const award = G.tut ? null : progAward(winner);
   if (winner === null) sfx('draw'); else if (winner === 0 || isDuo()) sfx('win'); else sfx('lose');
   if (winner !== null) { if (winner === 0 || isDuo()) setTimeout(() => tok === G.token && sfx('cheer'), 650); confetti(winner); }
   if (winner !== null) { setTimeout(() => { if (tok === G.token) { voice(winner, 'yay'); voice(other(winner), 'aww'); } }, 700); [250, 1250, 2250, 3100].forEach(ms => setTimeout(() => { if (tok === G.token && G.phase === 'over') jump(winner); }, ms)); }
@@ -1921,7 +2125,7 @@ function finish(winner, byTime) {
     const col = q => `<div class="rc"><b>${esc(nameOf(q))}</b><div class="rs">${G.scores[q]}</div><div class="rw">${list(q)}</div></div>`;
     const show = () => {
       sheet(`<div class="res-head"><div class="tile tS">${G.start.toUpperCase()}</div><h2>${esc(title)}</h2><div class="tile tE">${G.end.toUpperCase()}</div></div>${byTime ? `<p class="res-time">${t('timeUp')}</p>` : ''}
-      <div class="res-cols">${col(0)}<div class="rcolon">:</div>${col(1)}</div>${hintAnswers()}${byTime ? missedWords() : ''}
+      <div class="res-cols">${col(0)}<div class="rcolon">:</div>${col(1)}</div>${hintAnswers()}${byTime ? missedWords() : ''}${award ? awardHTML(award) : ''}
       ${isOnline() ? '<p id="rematchNote" style="font-size:15px"></p>' : ''}<div class="btns"><button class="go alt" type="button" id="resHome">${t('quit')}</button><button class="go" type="button" id="resAgain">${t('again')}</button></div>`);
       /* one word at a time: taps while a word is still being read are ignored */
       let saying = 0;
@@ -1931,6 +2135,7 @@ function finish(winner, byTime) {
         saying = Date.now() + 4000;
         sayWord(b.dataset.say, () => { saying = Date.now() + 150; });
       });
+      if (award && !award.shown) { award.shown = true; awardFx(award); }
       $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else newGame(G.mode, true); };
       $('resHome').onclick = () => {
         sfx('pick');
@@ -1983,7 +2188,7 @@ async function claimNick(n) {
   return true;
 }
 function setNick(n) { myNick = n; store('fl-nick', n); renderNick(); if (G.mode) renderNames(); }
-function renderNick() { const b = $('nickBtn'); if (b) b.innerHTML = `${ICON.user}<span>${esc(myNick || t('nickMake'))}</span>${ICON.pen}`; }
+function renderNick() { const b = $('nickBtn'); if (!b) return; let P = null; try { P = progState(); } catch (e) { /* progress code not loaded yet */ } b.innerHTML = `${P ? `<span class="lvchip">Lv.${levelOf(P.xp).lv}</span>` : ICON.user}<span>${esc(myNick || t('nickMake'))}</span>${P && !missionDone(P) ? '<i class="mdot" aria-hidden="true"></i>' : ''}`; }
 /* ask for a nickname; then() runs after it's saved, later() (optional) after "Later" */
 function askNick(then, later, cancel) {
   const draw = (val, err, busy) => {
@@ -2051,6 +2256,7 @@ async function fbConnect() {
   });
   let offset = 0; db.ref('.info/serverTimeOffset').on('value', s => { offset = s.val() || 0; });
   FB = { db, uid: cred.user.uid, now: () => Date.now() + offset, TS: firebase.database.ServerValue.TIMESTAMP };
+  setTimeout(progSync, 0);
   return FB;
 }
 function sheet(html, onClose) {
