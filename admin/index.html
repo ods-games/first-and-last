@@ -227,8 +227,8 @@ function render() {
     <div class="splitl"><span>솔로 <b>${tot.ai}</b> (${pct(tot.ai)}%)</span><span>듀오 <b>${tot.duo}</b> (${pct(tot.duo)}%)</span><span>온라인 <b>${tot.online}</b> (${pct(tot.online)}%)</span></div>
   </div>
   <div class="two">
-    <div class="card"><h2>날짜별 방문자 <span class="sub">최근 14일</span></h2>${stackChart(d14.map(d => ({ k: md(d), vals: [act(d)] })), ['방문'], ['var(--seq)'])}</div>
-    <div class="card"><h2>레벨 분포 <span class="sub">한 판 이상 한 사람</span></h2>${stackChart(lvBins.map(b => ({ k: b.k.replace('Lv.', ''), vals: [b.v] })), ['명'], ['var(--accent)'], b => 'Lv.' + b)}</div>
+    <div class="card"><h2>날짜별 방문자 <span class="sub">최근 14일</span></h2>${stackChart(d14.map(d => ({ k: md(d), vals: [act(d)] })), ['방문'], ['var(--seq)'], null, true)}</div>
+    <div class="card"><h2>레벨 분포 <span class="sub">한 판 이상 한 사람</span></h2>${stackChart(lvBins.map(b => ({ k: b.k.replace('Lv.', ''), vals: [b.v] })), ['명'], ['var(--accent)'], b => 'Lv.' + b, true)}</div>
   </div>
   <div class="card" style="margin-top:14px"><h2>사용자 <span class="sub">${users.length}명</span></h2>
     <div class="tools"><input id="q" placeholder="닉네임 또는 번호 검색" value="${esc(query)}">
@@ -244,9 +244,10 @@ function render() {
 }
 
 /* bar chart (stacked when there are several series); each column gets a hover target with a tooltip */
-function stackChart(cols, names, colors, labelOf) {
-  const W = 520, H = 170, L = 28, B = 22, T = 8, pw = W - L, ph = H - B - T;
+function stackChart(cols, names, colors, labelOf, half) {
+  const full = Math.min(innerWidth, 1040) - 66, W = Math.round(half && innerWidth > 720 ? (full - 14) / 2 : full), H = W < 420 ? 170 : 200, L = 28, B = 22, T = 8, pw = W - L, ph = H - B - T;
   const max = Math.max(1, ...cols.map(c => c.vals.reduce((a, b) => a + b, 0)));
+  if (!cols.some(c => c.vals.some(v => v > 0))) return '<div class="empty" style="padding:28px 0;text-align:center">아직 기록이 없어요.</div>';
   const step = max <= 4 ? 1 : Math.ceil(max / 4 / (max > 40 ? 10 : 1)) * (max > 40 ? 10 : 1), top = Math.ceil(max / step) * step;
   const y = v => T + ph - ph * v / top, cw = pw / cols.length, bw = Math.min(28, cw * .62);
   let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img">`;
@@ -268,6 +269,7 @@ function stackChart(cols, names, colors, labelOf) {
   });
   return s + `</svg>`;
 }
+let rz, lastW = innerWidth; addEventListener('resize', () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rz); rz = setTimeout(render, 200); });
 function bindTips() {
   const tip = $('tip');
   document.querySelectorAll('g.bar').forEach(g => {
