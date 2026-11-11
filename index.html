@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261109212126';
+  var BUILD = '20261111102628';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -381,7 +381,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261109212126) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261111102628) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -390,7 +390,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261109212126) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261111102628) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -426,7 +426,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261109212126) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261111102628) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -448,7 +448,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261109212126) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261111102628) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -606,7 +606,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261109212126" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261109212126" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261111102628" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261111102628" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -617,7 +617,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261109212126" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261111102628" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -642,7 +642,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261109212126" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261111102628" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -884,7 +884,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261109212126';
+const IMGV = '20261111102628';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -989,6 +989,7 @@ document.addEventListener('contextmenu', e => { if (!inField(e)) e.preventDefaul
 document.addEventListener('touchend', () => { try { const sel = getSelection(); if (sel && sel.rangeCount && !(document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName))) sel.removeAllRanges(); } catch (e) { } }, { passive: true });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) releaseAudio();
+  try { presUpdate(); if (!document.hidden) statsSeen(); } catch (e) { }
 });
 window.addEventListener('pagehide', releaseAudio);
 /* leaving the app: close the audio engine completely, so the phone's "playing" indicator goes away.
@@ -1303,7 +1304,7 @@ function goHome() {
   progQuit();
   document.documentElement.classList.remove('on-game');
   document.querySelectorAll('.minfo').forEach(o => { o.setAttribute('aria-expanded', 'false'); $(o.dataset.x).hidden = true; });
-  leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; renderNick(); renderEvent(); }
+  leaveRoom(); stopAll(); MUS.fast = false; setMusic('home'); try { speechSynthesis.cancel(); } catch (e) { } G.token = (G.token || 0) + 1; G.phase = 'quit'; G.mode = null; $('fx').innerHTML = ''; $('game').hidden = true; $('home').hidden = false; $('ov').hidden = true; renderNick(); renderEvent(); presUpdate(); }
 
 /* ---------- tutorial ---------- */
 let afterTut = null;
@@ -1345,7 +1346,7 @@ function newGame(mode, noTut, noReady) {
   const tutNext = (!noTut && mode !== 'online' && (TUT_EVERY_TIME || store('fl-tut') !== '1')) ? mode : null; if (tutNext) mode = 'ai';
   stopAll(); MUS.fast = false; setMusic('game');
   Object.assign(G, { tipOn: false, tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, oppLeft: false, pending: false, hints: [], hintDone: {}, faces: ['idle', 'idle'], token: (G.token || 0) + 1 });
-  $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true;
+  $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true; presUpdate();
   if (isDuo()) $('rail').parentNode.insertBefore($('tools'), $('rail').nextSibling); else $('hud').insertBefore($('tools'), $('clkW'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
   $('panel1').hidden = !isDuo();
@@ -2081,7 +2082,7 @@ function progAward(winner) {
   let lv = levelOf(P.xp).lv; if (lv >= 5) giveBadge(P, 'lv5', out); if (lv >= 10) giveBadge(P, 'lv10', out);
   if (out.badges.length) { out.gain += XP_BADGE * out.badges.length; out.parts.push(['badge', XP_BADGE * out.badges.length]); }
   out.lv = levelOf(P.xp).lv; out.mult = mult;
-  progSave(); renderNick();
+  progSave(); renderNick(); statGame(mode, mine.length);
   return out;
 }
 const badgeOf = id => BADGES.find(b => b.id === id);
@@ -2231,7 +2232,7 @@ async function claimNick(n) {
   if (old) FB.db.ref('nicks/' + old).remove().catch(() => { });
   return true;
 }
-function setNick(n) { myNick = n; store('fl-nick', n); renderNick(); if (G.mode) renderNames(); }
+function setNick(n) { myNick = n; store('fl-nick', n); renderNick(); if (G.mode) renderNames(); statsSeen(); presUpdate(); }
 function renderNick() { const b = $('nickBtn'); if (!b) return; let P = null; try { P = progState(); } catch (e) { /* progress code not loaded yet */ } b.innerHTML = `${P ? `<span class="lvchip">Lv.${levelOf(P.xp).lv}</span>` : ICON.user}<span>${esc(myNick || t('nickMake'))}</span>${P && !missionDone(P) ? '<i class="mdot" aria-hidden="true"></i>' : ''}`; }
 /* ask for a nickname; then() runs after it's saved, later() (optional) after "Later" */
 function askNick(then, later, cancel) {
@@ -2300,9 +2301,49 @@ async function fbConnect() {
   });
   let offset = 0; db.ref('.info/serverTimeOffset').on('value', s => { offset = s.val() || 0; });
   FB = { db, uid: cred.user.uid, now: () => Date.now() + offset, TS: firebase.database.ServerValue.TIMESTAMP };
-  setTimeout(progSync, 0);
+  setTimeout(progSync, 0); setTimeout(statsStart, 0);
   return FB;
 }
+/* ---------- usage stats for the admin page ----------
+   Everyone who opens the game gets an anonymous id (no personal data). Only the admin can read these:
+   users/{uid}/info: nick, first (first visit), last (last seen), lang, app (home-screen app)
+   presence/{uid}: where they are right now (home | ai | duo | online); removed when they leave or hide the app
+   stats/active/{day}/{uid}: visited that day;  stats/days/{day}/{ai|duo|online|words}: counters.  Days use Korean time. */
+const kday = () => new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+function presUpdate() {
+  try {
+    if (!FB) return; const ref = FB.db.ref('presence/' + FB.uid);
+    if (document.hidden) { ref.remove().catch(() => { }); return; }
+    ref.set({ s: G.mode || 'home', n: myNick || '', at: FB.TS }).catch(() => { });
+  } catch (e) { }
+}
+function statsSeen() {
+  try {
+    if (!FB) return;
+    FB.db.ref('users/' + FB.uid + '/info').update({ nick: myNick || '', last: FB.TS, lang, app: document.documentElement.classList.contains('standalone') }).catch(() => { });
+    FB.db.ref('stats/active/' + kday() + '/' + FB.uid).set(true).catch(() => { });
+  } catch (e) { }
+}
+function statsStart() {
+  try {
+    const db = FB.db, uid = FB.uid;
+    db.ref('users/' + uid + '/info/first').transaction(v => v || Date.now()).catch(() => { });
+    statsSeen();
+    db.ref('.info/connected').on('value', s => { if (!s.val()) return; db.ref('presence/' + uid).onDisconnect().remove(); presUpdate(); });
+  } catch (e) { }
+}
+/* one finished game (online games are counted once, by the host) */
+function statGame(mode, words) {
+  try {
+    if (!FB || !mode) return; const inc = firebase.database.ServerValue.increment, u = {};
+    if (mode !== 'online' || (ON && ON.role === 'host')) u[mode] = inc(1);
+    if (words) u.words = inc(Math.min(words, 20));
+    if (Object.keys(u).length) FB.db.ref('stats/days/' + kday()).update(u).catch(() => { });
+    statsSeen();
+  } catch (e) { }
+}
+/* connect quietly a moment after the game opens, so every visitor is counted */
+setTimeout(() => fbInit().catch(() => { }), 1200);
 function sheet(html, onClose) {
   $('sheet').innerHTML = (onClose ? `<button class="x" type="button" id="xBtn" aria-label="${esc(t('close'))}">${XICON}</button>` : '') + html;
   $('ov').hidden = false; if (onClose) $('xBtn').onclick = onClose;

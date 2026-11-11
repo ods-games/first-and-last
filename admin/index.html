@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>FnL 관리자</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F4EFE4;--card:#FFFDF8;--line:#E6DDCB;--grid:#EDE6D8;
+  --ink:#2B2620;--ink2:#5E564B;--muted:#8C8375;
+  --accent:#5E8C3A;--accent-ink:#fff;--live:#1E9E5A;
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--seq:#2a78d6;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#141412;--card:#1E1D1B;--line:#33312C;--grid:#2A2925;
+  --ink:#F0EFEC;--ink2:#C3C2B7;--muted:#8F8D85;
+  --accent:#7DB054;--accent-ink:#141412;--live:#3FC37C;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--seq:#3987e5;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#141412;--card:#1E1D1B;--line:#33312C;--grid:#2A2925;
+  --ink:#F0EFEC;--ink2:#C3C2B7;--muted:#8F8D85;
+  --accent:#7DB054;--accent-ink:#141412;--live:#3FC37C;
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--seq:#3987e5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+.wrap{max-width:1040px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 16px 40px}
+header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+header h1{font-size:20px;margin:0;flex:1;letter-spacing:-.01em}
+header h1 small{font-weight:500;color:var(--muted);font-size:13px;margin-left:6px}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 12px}
+button.pri{background:var(--accent);color:var(--accent-ink);border-color:transparent;font-weight:600;padding:11px 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card h2{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.card h2 .sub{font-weight:400;color:var(--muted);font-size:13px}
+.center{text-align:center;padding:40px 16px}
+.center p{color:var(--ink2)}
+.uid{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;word-break:break-all;display:inline-block;margin:6px 0}
+ol.steps{text-align:left;max-width:520px;margin:12px auto;color:var(--ink2);padding-left:20px}
+ol.steps li{margin:6px 0}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi .l{font-size:12.5px;color:var(--ink2);display:flex;align-items:center;gap:6px}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+.kpi .d{font-size:12px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--live);box-shadow:0 0 0 3px color-mix(in srgb,var(--live) 25%,transparent);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--live) 0%,transparent)}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.two>.card{margin-bottom:0}
+.livelist{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px;background:var(--bg)}
+.chip i{font-style:normal;color:var(--muted);font-size:12px}
+.empty{color:var(--muted);font-size:13.5px}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--ink2);margin:-4px 0 8px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend b{width:10px;height:10px;border-radius:3px;display:inline-block}
+svg.chart{width:100%;height:auto;display:block;overflow:visible}
+svg text{fill:var(--muted);font-size:11px}
+svg .gl{stroke:var(--grid);stroke-width:1}
+svg .hit{fill:transparent}
+svg .hit:hover+g rect,svg g.bar:hover rect{opacity:.85}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12.5px;border-radius:8px;padding:6px 9px;z-index:9;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));display:none}
+.split{display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px;margin:6px 0 10px}
+.split div{min-width:2px}
+.splitl{display:flex;gap:16px;font-size:13px;color:var(--ink2);flex-wrap:wrap}
+.splitl b{color:var(--ink);font-variant-numeric:tabular-nums}
+.tools{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.tools input{flex:1;min-width:140px;font:inherit;padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.tools select{font:inherit;padding:7px 8px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.tbl{overflow-x:auto;margin:0 -16px;padding:0 16px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:600;color:var(--ink2);font-size:12px;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid var(--grid);white-space:nowrap}
+td.n,th.n{text-align:right}
+td .anon{color:var(--muted)}
+.lv{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--ink);border-radius:6px;padding:0 6px;font-weight:600;font-size:12.5px}
+.on1{color:var(--live);font-weight:600}
+.more{margin-top:10px;width:100%}
+.err{color:#c0392b}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.kpi .v{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>First n Last <small>관리자</small></h1><button id="refresh" hidden>새로고침</button><button id="out" hidden>로그아웃</button></header>
+  <div id="view"><div class="card center"><p>불러오는 중…</p></div></div>
+</div>
+<div class="tip" id="tip"></div>
+<script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-app-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-auth-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-database-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey: 'AIzaSyCDiQ_1KN4KQTJUhmPpThGO7u9qf9dpzC8',
+  authDomain: 'first-and-last-bfa0d.firebaseapp.com',
+  databaseURL: 'https://first-and-last-bfa0d-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'first-and-last-bfa0d',
+  appId: '1:745432185860:web:2353fa940da1bf9aef0951'
+});
+const auth = firebase.auth(), db = firebase.database();
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const view = h => { $('view').innerHTML = h; };
+/* Korean dates, same as the game's counters */
+const kday = (t = Date.now()) => new Date(t + 9 * 3600e3).toISOString().slice(0, 10);
+const daysBack = n => Array.from({ length: n }, (_, i) => kday(Date.now() - (n - 1 - i) * 864e5));
+const md = d => +d.slice(5, 7) + '/' + +d.slice(8);
+function levelOf(xp) { let lv = 1, need = 50, left = xp || 0; while (left >= need) { left -= need; lv++; need = Math.round(50 * Math.pow(1.3, lv - 1)); } return lv; }
+function ago(t) {
+  if (!t) return '-'; const s = (Date.now() - t) / 1000;
+  if (s < 60) return '방금'; if (s < 3600) return Math.floor(s / 60) + '분 전'; if (s < 86400) return Math.floor(s / 3600) + '시간 전';
+  if (s < 86400 * 30) return Math.floor(s / 86400) + '일 전'; return kday(t);
+}
+const WHERE = { home: '홈', ai: '솔로', duo: '듀오', online: '온라인' };
+
+/* ---------- sign in ---------- */
+let unsub = [];
+function stopLive() { unsub.forEach(f => f()); unsub = []; }
+$('out').onclick = () => { stopLive(); auth.signOut(); };
+$('refresh').onclick = () => loadAll();
+auth.onAuthStateChanged(async u => {
+  stopLive(); $('out').hidden = $('refresh').hidden = true;
+  if (!u || u.isAnonymous) {
+    view(`<div class="card center"><h2 style="justify-content:center">관리자 로그인</h2><p>관리자로 등록된 구글 계정만 볼 수 있어요.</p><button class="pri" id="gIn">구글로 로그인</button><p id="gErr" class="err"></p></div>`);
+    $('gIn').onclick = () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e => { $('gErr').textContent = loginErr(e); });
+    return;
+  }
+  $('out').hidden = false;
+  let ok = false; try { ok = (await db.ref('admins/' + u.uid).once('value')).val() === true; } catch (e) { }
+  if (!ok) {
+    view(`<div class="card center"><h2 style="justify-content:center">아직 관리자로 등록되지 않았어요</h2>
+      <p>아래 번호를 Firebase에 한 번만 등록하면 돼요.</p><div class="uid" id="uid">${esc(u.uid)}</div><br><button id="cp">번호 복사</button>
+      <ol class="steps"><li>Firebase 콘솔 → Realtime Database → <b>데이터</b> 탭</li><li>맨 위 항목 옆 <b>+</b> 를 눌러 이름 <b>admins</b> 추가</li><li>그 아래에 이름은 위 번호, 값은 <b>true</b></li><li>이 페이지를 새로고침</li></ol></div>`);
+    $('cp').onclick = () => { navigator.clipboard.writeText(u.uid).then(() => { $('cp').textContent = '복사됨'; }); };
+    return;
+  }
+  $('refresh').hidden = false;
+  view(`<div class="card center"><p>불러오는 중…</p></div>`);
+  startLive(); loadAll();
+});
+function loginErr(e) {
+  const c = e && e.code || '';
+  if (c.includes('unauthorized-domain')) return 'Firebase 콘솔 → Authentication → 설정 → 승인된 도메인에 이 주소를 추가해 주세요.';
+  if (c.includes('operation-not-allowed')) return 'Firebase 콘솔 → Authentication → 로그인 방법에서 Google을 켜 주세요.';
+  if (c.includes('popup')) return '팝업이 막혔어요. 다시 눌러 주세요.';
+  return '로그인하지 못했어요 (' + c + ')';
+}
+
+/* ---------- data ---------- */
+let PRES = {}, USERS = null, DAYS = {}, ACTIVE = {};
+function startLive() {
+  const r = db.ref('presence'); const f = r.on('value', s => { PRES = s.val() || {}; if (USERS) render(); });
+  unsub.push(() => r.off('value', f));
+}
+async function loadAll() {
+  const from = daysBack(14)[0];
+  try {
+    const [u, d, a] = await Promise.all([
+      db.ref('users').once('value'),
+      db.ref('stats/days').orderByKey().startAt(from).once('value'),
+      db.ref('stats/active').orderByKey().startAt(daysBack(30)[0]).once('value')]);
+    USERS = u.val() || {}; DAYS = d.val() || {}; ACTIVE = a.val() || {};
+    render();
+  } catch (e) { view(`<div class="card center"><p class="err">불러오지 못했어요: ${esc(e.message)}</p><p>Firebase 규칙을 새 버전으로 게시했는지 확인해 주세요.</p></div>`); }
+}
+
+/* ---------- page ---------- */
+let sortBy = 'last', query = '', shown = 50;
+function render() {
+  if (!USERS) return;
+  const today = kday(), d14 = daysBack(14), d7 = d14.slice(7);
+  const live = Object.entries(PRES).map(([id, p]) => ({ id, ...p }));
+  const playing = live.filter(p => p.s && p.s !== 'home').length;
+  const users = Object.entries(USERS).map(([id, v]) => {
+    const p = v.prog || {}, i = v.info || {};
+    return { id, nick: i.nick || '', first: i.first || 0, last: i.last || 0, app: !!i.app, xp: p.xp || 0, lv: levelOf(p.xp), games: p.games || 0, og: p.ogames || 0, ow: p.owins || 0, words: p.words || 0, longest: p.longest || '', mission: p.day && p.day.k === today && p.day.done };
+  });
+  const act = d => Object.keys(ACTIVE[d] || {}).length;
+  const week = new Set(); d7.forEach(d => Object.keys(ACTIVE[d] || {}).forEach(k => week.add(k)));
+  const newToday = users.filter(u => u.first && kday(u.first) === today).length;
+  const td = DAYS[today] || {}, gamesToday = (td.ai || 0) + (td.duo || 0) + (td.online || 0);
+  const missions = users.filter(u => u.mission).length;
+  const kpi = (l, v, d, live) => `<div class="kpi"><div class="l">${live ? '<span class="dot"></span>' : ''}${l}</div><div class="v">${v}</div>${d ? `<div class="d">${d}</div>` : ''}</div>`;
+
+  const counts = { home: 0, ai: 0, duo: 0, online: 0 }; live.forEach(p => { counts[p.s] = (counts[p.s] || 0) + 1; });
+  const liveList = live.length ? live.sort((a, b) => (a.s === 'home') - (b.s === 'home')).map(p => `<span class="chip">${p.n ? esc(p.n) : `<span class="anon">#${esc(p.id.slice(0, 5))}</span>`}<i>${WHERE[p.s] || p.s}</i></span>`).join('') : '<div class="empty">지금은 아무도 없어요.</div>';
+
+  /* mode split over 14 days */
+  const tot = { ai: 0, duo: 0, online: 0 }; let words14 = 0; d14.forEach(d => { const x = DAYS[d] || {}; tot.ai += x.ai || 0; tot.duo += x.duo || 0; tot.online += x.online || 0; words14 += x.words || 0; });
+  const all = tot.ai + tot.duo + tot.online;
+  const pct = n => all ? Math.round(100 * n / all) : 0;
+
+  /* level distribution: 1..9 and 10+ */
+  const lvBins = Array.from({ length: 10 }, (_, i) => ({ k: i < 9 ? 'Lv.' + (i + 1) : 'Lv.10+', v: 0 }));
+  users.forEach(u => { if (u.games || u.xp) lvBins[Math.min(u.lv, 10) - 1].v++; });
+
+  /* user table */
+  const q = query.trim().toLowerCase();
+  const rows = users.filter(u => !q || u.nick.toLowerCase().includes(q) || u.id.toLowerCase().startsWith(q))
+    .sort((a, b) => sortBy === 'xp' ? b.xp - a.xp : sortBy === 'games' ? b.games - a.games : sortBy === 'first' ? b.first - a.first : b.last - a.last);
+  const onlineIds = new Set(live.map(p => p.id));
+  const tr = rows.slice(0, shown).map(u => `<tr><td>${u.nick ? esc(u.nick) : `<span class="anon">이름 없음 #${esc(u.id.slice(0, 5))}</span>`}${onlineIds.has(u.id) ? ' <span class="on1">●</span>' : ''}</td>
+    <td><span class="lv">${u.lv}</span></td><td class="n">${u.xp.toLocaleString()}</td><td class="n">${u.games}</td><td class="n">${u.og}</td><td class="n">${u.og >= 5 ? Math.round(100 * u.ow / u.og) + '%' : '-'}</td>
+    <td class="n">${u.words}</td><td>${u.longest ? esc(u.longest) : '-'}</td><td>${u.mission ? '✓' : ''}</td><td>${ago(u.last)}</td><td>${u.first ? kday(u.first) : '-'}</td><td>${u.app ? '앱' : '웹'}</td></tr>`).join('');
+
+  view(`
+  <div class="kpis">
+    ${kpi('지금 접속', live.length, `대결 중 ${playing}명`, true)}
+    ${kpi('오늘 방문', act(today), `신규 ${newToday}명`)}
+    ${kpi('최근 7일 방문', week.size, '')}
+    ${kpi('전체 사용자', users.length, '')}
+    ${kpi('오늘 판수', gamesToday, `찾은 단어 ${td.words || 0}개`)}
+    ${kpi('오늘 미션 완료', missions, '')}
+    ${kpi('14일 판수', all, `찾은 단어 ${words14}개`)}
+    ${kpi('지금 대결 중', `${counts.ai} · ${counts.duo} · ${counts.online}`, '솔로 · 듀오 · 온라인')}
+  </div>
+  <div class="card"><h2><span class="dot"></span>지금 접속 중 <span class="sub">${live.length}명 · 자동으로 바뀌어요</span></h2><div class="livelist">${liveList}</div></div>
+  <div class="card"><h2>날짜별 판수 <span class="sub">최근 14일</span></h2>
+    <div class="legend"><span><b style="background:var(--s1)"></b>솔로</span><span><b style="background:var(--s2)"></b>듀오</span><span><b style="background:var(--s3)"></b>온라인</span></div>
+    ${stackChart(d14.map(d => ({ k: md(d), vals: [(DAYS[d] || {}).ai || 0, (DAYS[d] || {}).duo || 0, (DAYS[d] || {}).online || 0] })), ['솔로', '듀오', '온라인'], ['var(--s1)', 'var(--s2)', 'var(--s3)'])}
+    <div class="split">${all ? `<div style="flex:${tot.ai};background:var(--s1)"></div><div style="flex:${tot.duo};background:var(--s2)"></div><div style="flex:${tot.online};background:var(--s3)"></div>` : '<div style="flex:1;background:var(--grid)"></div>'}</div>
+    <div class="splitl"><span>솔로 <b>${tot.ai}</b> (${pct(tot.ai)}%)</span><span>듀오 <b>${tot.duo}</b> (${pct(tot.duo)}%)</span><span>온라인 <b>${tot.online}</b> (${pct(tot.online)}%)</span></div>
+  </div>
+  <div class="two">
+    <div class="card"><h2>날짜별 방문자 <span class="sub">최근 14일</span></h2>${stackChart(d14.map(d => ({ k: md(d), vals: [act(d)] })), ['방문'], ['var(--seq)'])}</div>
+    <div class="card"><h2>레벨 분포 <span class="sub">한 판 이상 한 사람</span></h2>${stackChart(lvBins.map(b => ({ k: b.k.replace('Lv.', ''), vals: [b.v] })), ['명'], ['var(--accent)'], b => 'Lv.' + b)}</div>
+  </div>
+  <div class="card" style="margin-top:14px"><h2>사용자 <span class="sub">${users.length}명</span></h2>
+    <div class="tools"><input id="q" placeholder="닉네임 또는 번호 검색" value="${esc(query)}">
+      <select id="sort"><option value="last">마지막 접속순</option><option value="xp">경험치순</option><option value="games">판수순</option><option value="first">최근 가입순</option></select></div>
+    <div class="tbl"><table><thead><tr><th>이름</th><th>Lv</th><th class="n">XP</th><th class="n">판수</th><th class="n">온라인</th><th class="n">승률</th><th class="n">단어</th><th>가장 긴 단어</th><th>미션</th><th>마지막 접속</th><th>첫 방문</th><th>기기</th></tr></thead><tbody>${tr || '<tr><td colspan="12" class="empty">없어요</td></tr>'}</tbody></table></div>
+    ${rows.length > shown ? `<button class="more" id="more">더 보기 (${rows.length - shown}명)</button>` : ''}
+  </div>`);
+  $('sort').value = sortBy;
+  $('sort').onchange = e => { sortBy = e.target.value; render(); };
+  const qi = $('q'); qi.oninput = () => { query = qi.value; const pos = qi.selectionStart; render(); const n = $('q'); n.focus(); n.setSelectionRange(pos, pos); };
+  if ($('more')) $('more').onclick = () => { shown += 100; render(); };
+  bindTips();
+}
+
+/* bar chart (stacked when there are several series); each column gets a hover target with a tooltip */
+function stackChart(cols, names, colors, labelOf) {
+  const W = 520, H = 170, L = 28, B = 22, T = 8, pw = W - L, ph = H - B - T;
+  const max = Math.max(1, ...cols.map(c => c.vals.reduce((a, b) => a + b, 0)));
+  const step = max <= 4 ? 1 : Math.ceil(max / 4 / (max > 40 ? 10 : 1)) * (max > 40 ? 10 : 1), top = Math.ceil(max / step) * step;
+  const y = v => T + ph - ph * v / top, cw = pw / cols.length, bw = Math.min(28, cw * .62);
+  let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img">`;
+  for (let v = 0; v <= top; v += step) s += `<line class="gl" x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  const every = cols.length > 10 ? 2 : 1;
+  cols.forEach((c, i) => {
+    const x = L + i * cw + (cw - bw) / 2, sum = c.vals.reduce((a, b) => a + b, 0);
+    const tip = `${labelOf ? labelOf(c.k) : c.k}${names.length > 1 ? ' · 합계 ' + sum : ''}` + (names.length > 1 ? c.vals.map((v, j) => `<br>${names[j]} ${v}`).join('') : ` · ${sum}${names[0] === '명' ? '명' : ''}`);
+    s += `<g class="bar" data-tip="${esc(tip)}"><rect class="hit" x="${L + i * cw}" y="${T}" width="${cw}" height="${ph}"/>`;
+    let acc = 0; const nz = c.vals.map((v, j) => [v, j]).filter(([v]) => v > 0);
+    nz.forEach(([v, j], k) => {
+      const y0 = y(acc), y1 = y(acc + v), last = k === nz.length - 1, h = Math.max(1, y0 - y1 - (k ? 2 : 0));
+      const r = last ? Math.min(4, h / 2, bw / 2) : 0, yt = y1, yb = y1 + h;
+      s += r ? `<path d="M${x},${yb}V${yt + r}Q${x},${yt} ${x + r},${yt}H${x + bw - r}Q${x + bw},${yt} ${x + bw},${yt + r}V${yb}Z" fill="${colors[j]}"/>` : `<rect x="${x}" y="${yt}" width="${bw}" height="${h}" fill="${colors[j]}"/>`;
+      acc += v;
+    });
+    s += `</g>`;
+    if (i % every === (cols.length - 1) % every) s += `<text x="${x + bw / 2}" y="${H - 6}" text-anchor="middle">${esc(c.k)}</text>`;
+  });
+  return s + `</svg>`;
+}
+function bindTips() {
+  const tip = $('tip');
+  document.querySelectorAll('g.bar').forEach(g => {
+    const show = e => { const p = e.touches ? e.touches[0] : e; tip.innerHTML = g.dataset.tip; tip.style.display = 'block'; tip.style.left = Math.min(innerWidth - 70, Math.max(70, p.clientX)) + 'px'; tip.style.top = p.clientY + 'px'; };
+    g.addEventListener('mousemove', show); g.addEventListener('touchstart', show, { passive: true });
+    g.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+  });
+  document.addEventListener('touchstart', e => { if (!e.target.closest('g.bar')) tip.style.display = 'none'; }, { passive: true });
+}
+</script>
+</body>
+</html>
