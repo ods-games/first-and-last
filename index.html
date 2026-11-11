@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261111111054';
+  var BUILD = '20261111112013';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -284,7 +284,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .act.hint{background:var(--yellow);font-size:15px;padding:0 9px}
 .act.hint[data-cancel]{background:#D9CCFF}
 .act.del{background:var(--mint);min-width:84px;padding:0 10px;display:flex;align-items:center;justify-content:center}
-.act:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.act:active,.act.kdown{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 .act:disabled{opacity:.4;box-shadow:none}
 .kb{display:flex;flex-direction:column;gap:6px}
 .kb .r{display:flex;justify-content:center;gap:4px}
@@ -299,7 +299,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .kb.lc .key[data-k]:not(.ent){font-size:24px;padding-bottom:3px}
 .key{flex:1;max-width:40px;height:42px;padding:0;border:3px solid var(--ink);border-radius:10px;background:var(--paper);box-shadow:0 3px 0 var(--ink);font-size:19px;font-weight:600}
 .key.wide{max-width:60px;flex:1.5;font-size:15px}
-.key:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.key:active,.key.kdown{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
 .key:disabled{opacity:.3;box-shadow:none}
 .panel.pick .key:not(:disabled){animation:rainbow 1.6s linear infinite,twinkle .8s ease-in-out infinite alternate;animation-delay:calc(var(--i) * -90ms),calc(var(--i) * -60ms)}
 .panel.frozen .kb,.panel.frozen .row-in{opacity:.45;pointer-events:none;filter:saturate(.3)}
@@ -381,7 +381,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261111111054) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261111112013) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -390,7 +390,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261111111054) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261111112013) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -426,7 +426,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261111111054) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261111112013) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -448,7 +448,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261111111054) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261111112013) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -607,7 +607,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261111111054" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261111111054" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261111112013" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261111112013" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -618,7 +618,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261111111054" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261111112013" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -643,7 +643,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261111111054" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261111112013" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -886,7 +886,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261111111054';
+const IMGV = '20261111112013';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1021,24 +1021,27 @@ function noise(t0, dur, peak, type, f0, f1, q = 1, bus) {
   env(g, t0, .005, peak, dur); s.connect(f).connect(g).connect(bus || SFXBUS); s.start(t0); s.stop(t0 + dur + .05);
 }
 const now = () => (AC ? AC.currentTime : 0) + .01;
-/* one clicker snap: a near-instant broadband crack, two ringing metal tones and a short plastic knock */
-function snap(t0, r, v) {
-  const A = ac(); if (!A) return; const out = A.createGain(); out.gain.value = v * .7; out.connect(SFXBUS);
-  const hit = (dur, pk, type, f, q) => { const s = A.createBufferSource(), fl = A.createBiquadFilter(), g = A.createGain(); s.buffer = noiseBuf(); s.loop = true; fl.type = type; fl.frequency.value = f; fl.Q.value = q;
-    g.gain.setValueAtTime(pk, t0); g.gain.exponentialRampToValueAtTime(.0001, t0 + dur); s.connect(fl).connect(g).connect(out); s.start(t0, Math.random() * .5); s.stop(t0 + dur + .02); };
-  hit(.006, 1.4, 'highpass', 1800 * r, .7);   /* the crack */
-  hit(.045, 2.2, 'bandpass', 3400 * r, 18);   /* metal ring */
-  hit(.03, 1.6, 'bandpass', 5600 * r, 14);
-  const o = A.createOscillator(), g = A.createGain(); o.type = 'triangle'; o.frequency.setValueAtTime(1500 * r, t0); o.frequency.exponentialRampToValueAtTime(900 * r, t0 + .02);
-  g.gain.setValueAtTime(.35, t0); g.gain.exponentialRampToValueAtTime(.0001, t0 + .025); o.connect(g).connect(out); o.start(t0); o.stop(t0 + .04);
+/* keycap clicker ("blue switch"): bright noise layers. layer = [delay s, kind, freq Hz, Q, length s, level]
+   crack = very short bright noise, ring = narrow plastic ring, knock = wider body tone */
+const CLK_DOWN = [[0, 'crack', 4200, .7, .004, 1], [0, 'ring', 6800, 9, .018, 1.7], [.011, 'knock', 2300, 4, .012, .55]];
+const CLK_UP = [[0, 'crack', 4600, .7, .003, .6], [0, 'ring', 7300, 9, .013, 1]];
+function clickLayers(layers, r) {
+  const A = ac(); if (!A) return; const t = A.currentTime + .005; r *= .96 + Math.random() * .08;
+  if (!CLKBUS) { const lim = A.createDynamicsCompressor(); lim.threshold.value = -6; lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = .001; lim.release.value = .05; CLKBUS = A.createGain(); CLKBUS.gain.value = .7; CLKBUS.connect(lim).connect(SFXBUS); }
+  layers.forEach(([d, kind, f, q, len, lvl]) => {
+    const s = A.createBufferSource(), fl = A.createBiquadFilter(), g = A.createGain(), st = t + d;
+    s.buffer = noiseBuf(); s.loop = true; fl.type = kind === 'crack' ? 'highpass' : 'bandpass'; fl.frequency.value = f * r; fl.Q.value = q;
+    g.gain.setValueAtTime(lvl, st); g.gain.exponentialRampToValueAtTime(.0001, st + len); s.connect(fl).connect(g).connect(CLKBUS); s.start(st, Math.random() * .5); s.stop(st + len + .02);
+  });
 }
+let CLKBUS = null;
 
 /* sound effects */
 const SFX = {
   key: () => { const t = now(); osc('sine', 1500, t, .03, .05); },
-  /* toy clicker: a hard metal snap (press) and a lighter clack as the spring comes back */
-  clk: () => { const t = now(), r = .94 + Math.random() * .12; snap(t, r, 1); snap(t + .045, r * 1.12, .55); },
-  clkBack: () => { const t = now(), r = .94 + Math.random() * .12; snap(t, r * .8, .9); snap(t + .05, r * .9, .5); },
+  /* keycap clicker: the press sound; the release sound plays when the finger lifts (see clkPress) */
+  clk: () => clickLayers(CLK_DOWN, 1), clkUp: () => clickLayers(CLK_UP, 1),
+  clkBack: () => clickLayers(CLK_DOWN, .85), clkBackUp: () => clickLayers(CLK_UP, .85),
   pick: () => { const t = now(); osc('triangle', 660, t, .08, .14); osc('triangle', 990, t + .07, .12, .12); },
   roll: () => { const t = now(); osc('square', 1800, t, .02, .04); osc('sine', 900, t, .04, .08, { to: 600 }); },
   tick: () => { const t = now(); osc('sine', 1300, t, .05, .08); },
@@ -1492,10 +1495,19 @@ function renderPanels() {
       ${kbHTML(mode, allowed)}
       <button class="buzzer" type="button" data-buzz="1" ${mode !== 'buzz' || locked ? 'disabled' : ''}>${esc(buzzLabel)}</button>
       ${locked && !isDuo() ? `<div class="frost"><span>${esc(t('frozenTop'))}<b class="lockn">${esc(t('frozenN', { n: G.lockLeft[p] }))}</b></span></div>` : ''}`;
-    el.onpointerdown = e => { const b = e.target.closest('button'); if (!b || b.disabled) return; e.preventDefault(); onPanel(p, b); };
+    el.onpointerdown = e => { const b = e.target.closest('button'); if (!b || b.disabled) return; e.preventDefault(); onPanel(p, b); clkHold(e.pointerId, b); };
     el.onclick = e => { if (e.detail === 0) { const b = e.target.closest('button'); if (b && !b.disabled) onPanel(p, b); } };
   });
 }
+/* keycap clicker: "click" when a key goes down, "clack" when the finger lifts; the key stays pressed in between */
+let clkPending = null; const clkHeld = new Map();
+function clkPress(back) {
+  sfx(back ? 'clkBack' : 'clk'); clkPending = back ? 'clkBackUp' : 'clkUp';
+  setTimeout(() => { if (clkPending) { const u = clkPending; clkPending = null; setTimeout(() => sfx(u), 60); } }, 0); /* typed on a real keyboard: release right after */
+}
+function clkHold(id, b) { if (!clkPending) return; clkHeld.set(id, { b, up: clkPending }); clkPending = null; b.classList.add('kdown'); }
+function clkRelease(e) { const h = clkHeld.get(e.pointerId); if (!h) return; clkHeld.delete(e.pointerId); h.b.classList.remove('kdown'); sfx(h.up); }
+['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, clkRelease, true));
 function onPanel(p, b) {
   if (b.dataset.case) return toggleCase();
   if (b.dataset.buzz) return buzz(p);
@@ -1509,7 +1521,7 @@ function onPanel(p, b) {
   if (k === 'DEL') G.input[p] = G.input[p].slice(0, -1);
   else if (k === 'ENT') return submit(p);
   else if (G.input[p].length < 16) G.input[p] += k.toLowerCase();
-  sfx(k === 'DEL' ? 'clkBack' : 'clk'); const ty = $('typed' + p); if (ty) { ty.textContent = cs(G.input[p]); ty.classList.remove('bad'); }
+  clkPress(k === 'DEL'); const ty = $('typed' + p); if (ty) { ty.textContent = cs(G.input[p]); ty.classList.remove('bad'); }
 }
 document.addEventListener('keydown', e => {
   if (!G.mode || paused() || e.metaKey || e.ctrlKey || e.altKey) return;
