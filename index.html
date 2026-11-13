@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261113094126';
+  var BUILD = '20261113100157';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -381,7 +381,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261113094126) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261113100157) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -390,7 +390,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113094126) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113100157) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -416,8 +416,8 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .in-logo{width:min(78vw,340px);height:auto;max-width:none;filter:drop-shadow(0 8px 14px rgba(20,60,120,.28));animation:inBreathe 2.4s ease-in-out infinite}
 @keyframes inBreathe{50%{transform:scale(1.045)}}
 .in-tap{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;color:#fff;font:400 20px/1.2 "Jua","Apple SD Gothic Neo",system-ui,sans-serif;text-shadow:0 2px 6px rgba(20,60,120,.35);animation:inBlink 1.6s ease-in-out infinite}
-.in-dot{width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(20,60,120,.3)}
-.in-ring{position:absolute;top:-13px;left:50%;width:48px;height:48px;margin-left:-24px;border:3px solid #fff;border-radius:50%;animation:inRing 1.6s ease-out infinite}
+.in-dot{box-sizing:border-box;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(20,60,120,.3)}
+.in-ring{position:absolute;box-sizing:border-box;top:-13px;left:50%;width:48px;height:48px;margin-left:-24px;border:3px solid #fff;border-radius:50%;animation:inRing 1.6s ease-out infinite}
 @keyframes inRing{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.5);opacity:0}}
 @keyframes inBlink{50%{opacity:.55}}
 #inVid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:transparent;opacity:0;pointer-events:none}
@@ -425,7 +425,9 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 #intro.playing .in-splash{display:none}
 .in-shade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .5s linear}
 #intro.cut .in-shade{opacity:1}
-.in-ctl{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 14px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.in-ctl{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 10px) max(12px,env(safe-area-inset-left,0px))}
+html.standalone .in-ctl{padding-bottom:10px}
+.in-ctl .in-snd{margin-right:auto}
 .in-btn{font:600 14px/1 -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:10px 15px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .in-btn svg{width:20px;height:20px}
 .in-snd{padding:8px}
@@ -448,7 +450,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261113094126) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261113100157) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -470,7 +472,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261113094126) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261113100157) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -589,9 +591,9 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 </style>
 
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113094126" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113100157" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113094126"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113100157"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -641,7 +643,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113094126" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113094126" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113100157" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113100157" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -652,7 +654,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261113094126" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261113100157" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -677,7 +679,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261113094126" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261113100157" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -920,7 +922,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261113094126';
+const IMGV = '20261113100157';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -2745,6 +2747,11 @@ function friendLeft() {
 const INTRO_OFF = 'fl-intro-off';
 var introEdge = null;
 
+/* the phone can leave the page nudged after inline video: scroll everything back to the top and refit the home screen */
+function introReset() {
+  try { window.scrollTo(0, 0); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; $('app').scrollTop = 0; $('home').scrollTop = 0; if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); } catch (e) { }
+  requestAnimationFrame(() => { try { fitHome(); } catch (e) { } });
+}
 function introShow() {
   try {
     if (Date.now() < (+store(INTRO_OFF) || 0)) return false;
@@ -2761,7 +2768,7 @@ function introShow() {
   const finish = fast => {
     if (done) return; done = true; clearTimeout(guard);
     box.classList.add('playing');
-    const end = () => { introEdge = null; edge('#86A64B'); box.classList.add('out'); setMusic('home'); setTimeout(() => { box.hidden = true; try { vid.pause(); vid.removeAttribute('src'); vid.load(); } catch (e) { } }, 650); };
+    const end = () => { introEdge = null; edge('#86A64B'); box.classList.add('out'); setMusic('home'); setTimeout(() => { box.hidden = true; try { vid.pause(); vid.removeAttribute('src'); vid.load(); box.remove(); } catch (e) { } introReset(); }, 650); introReset(); };
     $('inCtl').hidden = true;
     if (fast && started) {
       /* skip: screen and sound fade out together, then home fades in */
