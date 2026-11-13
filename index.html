@@ -28,7 +28,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261113155407';
+  var BUILD = '20261113164549';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -392,7 +392,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261113155407) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261113164549) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -401,7 +401,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113155407) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113164549) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -461,7 +461,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261113155407) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261113164549) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -483,7 +483,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261113155407) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261113164549) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -560,6 +560,12 @@ html.standalone .in-ctl{padding-bottom:10px}
 .pf-event{font-family:var(--korean);font-size:15px;color:#fff;background:linear-gradient(180deg,#FF9F43,#F2551B);border-radius:12px;padding:6px 10px;text-align:center}
 .pf-box{background:#fff;border-radius:16px;padding:10px 12px;box-shadow:0 0 0 1.5px #EBDCCD,0 2px 0 1.5px #EBDCCD;display:flex;flex-direction:column;gap:7px}
 .pf-t{font-family:var(--korean);font-size:17px;display:flex;align-items:center;gap:8px}
+.wl-sw{display:flex;gap:4px;background:#F1E6D8;border-radius:999px;padding:4px;margin:2px auto 4px;max-width:280px}
+.wl-sw button{flex:1;font:inherit;font-size:15px;border:0;background:transparent;color:#7A6A5E;padding:9px 6px;border-radius:999px;cursor:pointer}
+.wl-sw button[aria-pressed="true"]{background:#fff;color:#3A2E26;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.wl-note{font-size:13px;color:#7A6A5E;margin:4px 0 8px;min-height:1em}
+.wl-note:empty{display:none}
+.kb.ko .key{font-family:"Jua","Apple SD Gothic Neo",system-ui,sans-serif}
 .chal-send{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:12px 0 2px;font:inherit;font-size:16px;color:#2F5FA8;background:#E6F0FF;border:1.5px solid #9DBCEB;border-radius:14px;padding:11px;cursor:pointer}
 .chal-send:active{transform:translateY(2px)}
 .chal-copy{width:100%;height:84px;margin-top:8px;font:13px/1.4 ui-monospace,Menlo,monospace;border-radius:10px;border:1px solid #ccc;padding:8px;-webkit-user-select:text;user-select:text}
@@ -657,7 +663,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113155407" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113155407" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113164549" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113164549" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -668,7 +674,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261113155407" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261113164549" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -693,7 +699,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261113155407" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261113164549" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -721,9 +727,9 @@ html.standalone #game .panel{padding-bottom:10px}
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113155407" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113164549" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113155407"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113164549"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -737,13 +743,77 @@ const W = {"t3":"abandon ability able aboard about above abroad absence abuse ac
 const T3 = W.t3.split(' '), T2 = W.t2.split(' '), T1 = W.t1.split(' ');
 const VALID = new Set(T3.concat(T2, T1));
 const PROPER = new Set(W.pn.split(' '));
-const IDX = {}, IDX_E = {};
+let IDX = {}, IDX_E = {};
 function addIdx(m, w) { const k = w[0] + w[w.length - 1]; (m[k] || (m[k] = [])).push(w); }
 T3.forEach(w => { addIdx(IDX, w); addIdx(IDX_E, w); });
 T2.forEach(w => addIdx(IDX, w));
-const LETTERS = 'abcdefghijklmnopqrstuvwxyz';
+let LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 const MINW = 10;
 const cnt = (a, b) => (IDX[a + b] || []).length;
+/* ---------- word language: English words (built in) or Korean nouns by 초성 (loaded on first use) ----------
+   Korean: the first syllable's initial consonant must be the start letter and the last syllable's the end letter
+   (된소리 count as the plain consonant: 까치 starts with ㄱ). Nouns of 2+ syllables from the Standard Korean Dictionary,
+   names of people and places left out. Word lists: 표준국어대사전 (국립국어원, CC BY-SA), 한국어 학습용 어휘 목록 (국립국어원),
+   frequencies from Korean Wikipedia (CC BY-SA 4.0), via the korean-noun and pd-korean-noun-list-for-wordles packages. */
+const WSET = { en: { IDX, IDX_E, LETTERS }, ko: null };
+let WL = 'en';
+let wordLang = (() => { try { return localStorage.getItem('fl-wl') === 'ko' ? 'ko' : 'en'; } catch (e) { return 'en'; } })();
+const KCHO = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ', KMERGE = { 'ㄲ': 'ㄱ', 'ㄸ': 'ㄷ', 'ㅃ': 'ㅂ', 'ㅆ': 'ㅅ', 'ㅉ': 'ㅈ' };
+const isSyl = ch => { const c = ch.charCodeAt(0); return c >= 0xAC00 && c <= 0xD7A3; };
+const choOf = ch => { const j = KCHO[Math.floor((ch.charCodeAt(0) - 0xAC00) / 588)]; return KMERGE[j] || j; };
+const isKo = () => WL === 'ko';
+function useWords(wl) {
+  if (wl === 'ko' && !WSET.ko) wl = 'en';
+  WL = wl; const X = WSET[wl]; IDX = X.IDX; IDX_E = X.IDX_E; LETTERS = X.LETTERS;
+}
+let KOP = null;
+function loadKo() {
+  if (WSET.ko) return Promise.resolve();
+  return KOP || (KOP = fetch('ko_words.json?v=' + IMGV).then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); }).then(d => {
+    const I = {}, E = {}, add = (m, w) => { const k = choOf(w[0]) + choOf(w[w.length - 1]); (m[k] || (m[k] = [])).push(w); };
+    const com = d.c.split(' '), easy = d.e.split(' ');
+    com.forEach(w => add(I, w)); easy.forEach(w => add(E, w));
+    WSET.ko = { IDX: I, IDX_E: E, LETTERS: 'ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ', VALID: new Set(com.concat(d.r.split(' '))) };
+  }).catch(e => { KOP = null; throw e; }));
+}
+/* ㄱ is read 기역, so it takes 으로; only ㄹ (리을) takes 로 */
+const koRo = L => L + (L === 'ㄹ' ? '로' : '으로');
+/* ---------- Hangul keyboard: keys are stored as jamo and put together into syllables as you type ---------- */
+const KV = 'ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ', KJONG = ' ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ';
+const KVMIX = { 'ㅗㅏ': 'ㅘ', 'ㅗㅐ': 'ㅙ', 'ㅗㅣ': 'ㅚ', 'ㅜㅓ': 'ㅝ', 'ㅜㅔ': 'ㅞ', 'ㅜㅣ': 'ㅟ', 'ㅡㅣ': 'ㅢ' };
+const KJMIX = { 'ㄱㅅ': 'ㄳ', 'ㄴㅈ': 'ㄵ', 'ㄴㅎ': 'ㄶ', 'ㄹㄱ': 'ㄺ', 'ㄹㅁ': 'ㄻ', 'ㄹㅂ': 'ㄼ', 'ㄹㅅ': 'ㄽ', 'ㄹㅌ': 'ㄾ', 'ㄹㅍ': 'ㄿ', 'ㄹㅎ': 'ㅀ', 'ㅂㅅ': 'ㅄ' };
+const KJSPLIT = Object.fromEntries(Object.entries(KJMIX).map(([k, v]) => [v, k]));
+const isV = j => KV.includes(j);
+function hangul(keys) {
+  let out = '', cho = '', jung = '', jong = '';
+  const flush = () => {
+    if (cho && jung) out += String.fromCharCode(0xAC00 + KCHO.indexOf(cho) * 588 + KV.indexOf(jung) * 28 + Math.max(0, KJONG.indexOf(jong)));
+    else out += cho + jung;
+    cho = jung = jong = '';
+  };
+  for (const j of keys) {
+    if (!isV(j)) {
+      if (cho && jung && !jong && KJONG.indexOf(j) > 0) jong = j;
+      else if (jong && KJMIX[jong + j]) jong = KJMIX[jong + j];
+      else { flush(); cho = j; }
+    } else {
+      if (cho && !jung) jung = j;
+      else if (jung && !jong && KVMIX[jung + j]) jung = KVMIX[jung + j];
+      else if (jong) { const sp = KJSPLIT[jong]; let next; if (sp) { jong = sp[0]; next = sp[1]; } else { next = jong; jong = ''; } flush(); cho = next; jung = j; }
+      else { flush(); jung = j; }
+    }
+  }
+  flush(); return out;
+}
+const KROWS = ['ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ', 'ㅁㄴㅇㄹㅎㅗㅓㅏㅣ', 'ㅋㅌㅊㅍㅠㅜㅡ'];
+const KSHIFT = { 'ㅂ': 'ㅃ', 'ㅈ': 'ㅉ', 'ㄷ': 'ㄸ', 'ㄱ': 'ㄲ', 'ㅅ': 'ㅆ', 'ㅐ': 'ㅒ', 'ㅔ': 'ㅖ' };
+const KPICK = ['ㄱㄴㄷㄹㅁㅂㅅ', 'ㅇㅈㅊㅋㅌㅍㅎ'];
+/* a PC keyboard in English layout types the standard 2-set Korean letters */
+const KQWERTY = { q: 'ㅂ', w: 'ㅈ', e: 'ㄷ', r: 'ㄱ', t: 'ㅅ', y: 'ㅛ', u: 'ㅕ', i: 'ㅑ', o: 'ㅐ', p: 'ㅔ', a: 'ㅁ', s: 'ㄴ', d: 'ㅇ', f: 'ㄹ', g: 'ㅎ', h: 'ㅗ', j: 'ㅓ', k: 'ㅏ', l: 'ㅣ', z: 'ㅋ', x: 'ㅌ', c: 'ㅊ', v: 'ㅍ', b: 'ㅠ', n: 'ㅜ', m: 'ㅡ', Q: 'ㅃ', W: 'ㅉ', E: 'ㄸ', R: 'ㄲ', T: 'ㅆ', O: 'ㅒ', P: 'ㅖ' };
+let kShift = false;
+/* what the typed box shows / what gets submitted */
+const shownInput = x => (isKo() ? hangul(x) : cs(x));
+const wordOf = x => (isKo() ? hangul(x) : x);
 /* the last 15 letter pairs played on this phone (e.g. "se" = S…E), so the game can steer toward fresh ones */
 const RECENT_N = 15;
 function recentPairs() { try { const r = JSON.parse(store('fl-recent') || '[]'); return Array.isArray(r) ? r : []; } catch (e) { return []; } }
@@ -861,7 +931,7 @@ let lang = (() => { const v = store('fl-lang'); if (v === 'en' || v === 'ko') re
 let soundOn = store('fl-sound') !== 'off';
 let musicOn = store('fl-music') !== 'off';
 let diff = ['easy', 'medium', 'hard'].includes(store('fl-diff')) ? store('fl-diff') : 'easy';
-function t(k, v) { let s = (STR[lang][k] ?? STR.ko[k] ?? k); if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
+function t(k, v) { let s = (STR[lang][k] ?? STR.ko[k] ?? k); if (WL === 'ko' && lang === 'ko' && !G.tut) s = s.split('알파벳').join('초성'); if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; }
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const XICON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg>';
@@ -951,7 +1021,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261113155407';
+const IMGV = '20261113164549';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1191,8 +1261,8 @@ function sayWord(w, done) {
   if (!soundOn || !('speechSynthesis' in window)) return fin();
   try {
     const go = plain => {
-      const u = new SpeechSynthesisUtterance(w); u.lang = 'en-US'; if (enVoice && !plain) u.voice = enVoice;
-      u.rate = .85; u.pitch = 1.75; u.volume = 1;
+      const u = new SpeechSynthesisUtterance(w); const kw = /[가-힣]/.test(w); u.lang = kw ? 'ko-KR' : 'en-US'; if (enVoice && !plain && !kw) u.voice = enVoice;
+      u.rate = kw ? .95 : .85; u.pitch = kw ? 1.4 : 1.75; u.volume = 1;
       speechNow = u; /* keep it alive until it finishes */
       u.onend = u.onerror = () => { if (speechNow === u) speechNow = null; if (started) fin(); };
       try { speechSynthesis.resume(); } catch (e) { }
@@ -1428,7 +1498,10 @@ function newGame(mode, noTut, noReady) {
   document.documentElement.classList.add('on-game');
   /* the very first game on this phone (solo or duo) is a short practice round against Lexi */
   const tutNext = (!noTut && mode !== 'online' && (TUT_EVERY_TIME || store('fl-tut') !== '1')) ? mode : null; if (tutNext) mode = 'ai';
-  stopAll(); MUS.fast = false; setMusic('game');
+  stopAll(); MUS.fast = false; setMusic('game'); kShift = false;
+  /* online and the tutorial use English words; a challenge link brings its own */
+  useWords(mode === 'online' || tutNext ? 'en' : CHAL.next ? (CHAL.next.l || 'en') : wordLang);
+  if (wordLang === 'ko' && !WSET.ko) loadKo().catch(() => { });
   Object.assign(G, { tipOn: false, tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, oppLeft: false, pending: false, hints: [], hintDone: {}, faces: ['idle', 'idle'], chal: null, token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true; presUpdate();
   if (isDuo()) $('rail').parentNode.insertBefore($('tools'), $('rail').nextSibling); else $('hud').insertBefore($('tools'), $('clkW'));
@@ -1526,27 +1599,31 @@ function panelMode(p) {
 function phText() {
   if (G.phase !== 'play' || !G.start || !G.end) return t('ph');
   const S = G.start.toUpperCase(), E = G.end.toUpperCase();
+  if (isKo()) return lang === 'ko' ? `${koRo(S)} 시작, ${koRo(E)} 끝` : `${S}… …${E}`;
   if (lang !== 'ko') return t('phSE', { S, E });
   const ro = L => ('MN'.includes(L) ? '으로' : '로');
   return `${S}${ro(S)} 시작, ${E}${ro(E)} 끝`;
 }
 function kbHTML(mode, allowed) {
   let ki = 0;
-  const key = c => `<button class="key" type="button" style="--i:${ki++}" data-k="${c}" ${allowed && !allowed.has(c.toLowerCase()) ? 'disabled' : ''}>${mode === 'pick' ? c : cs(c)}</button>`;
+  const ko = isKo(), kc = c => (ko && kShift && KSHIFT[c]) || c;
+  const key = c => `<button class="key" type="button" style="--i:${ki++}" data-k="${kc(c)}" ${allowed && !allowed.has(c.toLowerCase()) ? 'disabled' : ''}>${mode === 'pick' || ko ? kc(c) : cs(c)}</button>`;
   const row = r => [...r].map(key).join('');
-  if (mode === 'pick') return `<div class="kb">${ROWS.map(r => `<div class="r">${row(r)}</div>`).join('')}</div>`;
+  if (mode === 'pick') return `<div class="kb${ko ? ' ko' : ''}">${(ko ? KPICK : ROWS).map(r => `<div class="r">${row(r)}</div>`).join('')}</div>`;
+  const RW = ko ? KROWS : ROWS;
   /* typing: a 10-column grid so every letter key is the same size; Aa sits small at the left of the bottom row,
      and Enter fills the leftover space on the right as one L-shaped key (two halves drawn as one) */
   const at = (c, r, x) => key(c).replace('<button class="key"', `<button class="key" style="grid-row:${r};grid-column:${x}"`).replace(/ style="--i:\d+"/, '');
   let h = '';
   /* half-key columns, so the letters sit exactly where they were while picking (rows 2 and 3 centred);
      Aa and Enter fill the spare room at the two ends of the bottom row */
-  [...ROWS[0]].forEach((c, x) => h += at(c, 1, `${2 * x + 1}/span 2`));
-  [...ROWS[1]].forEach((c, x) => h += at(c, 2, `${2 * x + 2}/span 2`));
-  [...ROWS[2]].forEach((c, x) => h += at(c, 3, `${2 * x + 4}/span 2`));
-  h += `<button class="key case${lowerCase ? ' on' : ''}" type="button" style="grid-area:3/1/4/4" data-case="1" aria-label="Aa">Aa</button>`;
+  [...RW[0]].forEach((c, x) => h += at(c, 1, `${2 * x + 1}/span 2`));
+  [...RW[1]].forEach((c, x) => h += at(c, 2, `${2 * x + 2}/span 2`));
+  [...RW[2]].forEach((c, x) => h += at(c, 3, `${2 * x + 4}/span 2`));
+  if (ko) h += `<button class="key case${kShift ? ' on' : ''}" type="button" style="grid-area:3/1/4/4" data-case="1" aria-label="Shift">⇧</button>`;
+  else h += `<button class="key case${lowerCase ? ' on' : ''}" type="button" style="grid-area:3/1/4/4" data-case="1" aria-label="Aa">Aa</button>`;
   h += `<button class="key ent ent-b" type="button" style="grid-area:3/18/4/21" data-k="ENT">${esc(t('enter'))}</button>`;
-  return `<div class="kb${lowerCase ? ' lc' : ''}"><div class="kbg">${h}</div></div>`;
+  return `<div class="kb${lowerCase && !ko ? ' lc' : ''}${ko ? ' ko' : ''}"><div class="kbg">${h}</div></div>`;
 }
 function renderPanels() {
   [0, 1].forEach(p => {
@@ -1557,7 +1634,7 @@ function renderPanels() {
     const hintBtn = G.mode === 'ai' && !(G.tut && G.tut.next !== 'ai') ? `<button class="act hint" type="button" data-hint="1" ${G.hintUsed || G.phase !== 'play' ? 'disabled' : ''}>${t('hint')}</button>` : '';
     const who = G.phase === 'pick' ? G.picker : G.active;
     const buzzLabel = locked ? t('frozen', { n: G.lockLeft[p] }) : mode === 'buzz' ? t('buzz') : (who === 0 || who === 1) ? t('waiting', { name: nameOf(who) }) : '...';
-    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(phText())}">${cs(G.input[p])}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act del" type="button" data-k="DEL" aria-label="Delete">${ICON.del}</button></div>
+    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(phText())}">${esc(shownInput(G.input[p]))}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act del" type="button" data-k="DEL" aria-label="Delete">${ICON.del}</button></div>
       <div class="tbar"><i id="tbar${p}"></i></div>
       ${kbHTML(mode, allowed)}
       <button class="buzzer" type="button" data-buzz="1" ${mode !== 'buzz' || locked ? 'disabled' : ''}>${esc(buzzLabel)}</button>
@@ -1576,7 +1653,7 @@ function clkHold(id, b) { if (!clkPending) return; clkHeld.set(id, { b, up: clkP
 function clkRelease(e) { const h = clkHeld.get(e.pointerId); if (!h) return; clkHeld.delete(e.pointerId); h.b.classList.remove('kdown'); sfx(h.up); }
 ['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, clkRelease, true));
 function onPanel(p, b) {
-  if (b.dataset.case) return toggleCase();
+  if (b.dataset.case) { if (isKo()) { kShift = !kShift; return renderPanels(); } return toggleCase(); }
   if (b.dataset.buzz) return buzz(p);
   if (b.dataset.hint) return hint();
   if (b.dataset.cancel) return cancelBuzz(p);
@@ -1585,17 +1662,20 @@ function onPanel(p, b) {
   const k = b.dataset.k; if (!k) return;
   if (G.phase === 'pick') return pickLetter(p, k.toLowerCase());
   if (panelMode(p) !== 'type') return;
-  if (k === 'DEL') G.input[p] = G.input[p].slice(0, -1);
+  if (k === 'DEL') G.input[p] = [...G.input[p]].slice(0, -1).join('');
   else if (k === 'ENT') return submit(p);
+  else if (isKo()) { if (G.input[p].length < 24) G.input[p] += k; if (kShift) { kShift = false; clkPress(false); return renderPanels(); } }
   else if (G.input[p].length < 16) G.input[p] += k.toLowerCase();
-  clkPress(k === 'DEL'); const ty = $('typed' + p); if (ty) { ty.textContent = cs(G.input[p]); ty.classList.remove('bad'); }
+  clkPress(k === 'DEL'); const ty = $('typed' + p); if (ty) { ty.textContent = shownInput(G.input[p]); ty.classList.remove('bad'); }
 }
 document.addEventListener('keydown', e => {
   if (!G.mode || paused() || e.metaKey || e.ctrlKey || e.altKey) return;
   const k = e.key; let p = 0;
   if (G.phase === 'pick') p = G.picker; else if (isDuo()) { if (G.active === null) return; p = G.active; }
   if (p !== 0 && p !== 1) return;
-  if (/^[a-zA-Z]$/.test(k)) { if (G.phase === 'pick') { const b = $('panel' + p).querySelector(`[data-k="${k.toUpperCase()}"]`); if (b && !b.disabled) pickLetter(p, k.toLowerCase()); } else onPanel(p, { dataset: { k: k.toUpperCase() } }); e.preventDefault(); }
+  const kj = isKo() && (KQWERTY[k] || (/^[A-Z]$/.test(k) && KQWERTY[k.toLowerCase()]));
+  if (kj) { const j = kj; if (G.phase === 'pick') { const m = KMERGE[j] || j; const b = $('panel' + p).querySelector(`[data-k="${m}"]`); if (b && !b.disabled) pickLetter(p, m); } else onPanel(p, { dataset: { k: j } }); e.preventDefault(); }
+  else if (/^[a-zA-Z]$/.test(k)) { if (G.phase === 'pick') { const b = $('panel' + p).querySelector(`[data-k="${k.toUpperCase()}"]`); if (b && !b.disabled) pickLetter(p, k.toLowerCase()); } else onPanel(p, { dataset: { k: k.toUpperCase() } }); e.preventDefault(); }
   else if (k === 'Backspace') { onPanel(p, { dataset: { k: 'DEL' } }); e.preventDefault(); }
   else if (k === 'Enter') { if (!G.lock[p]) submit(p); e.preventDefault(); }
 });
@@ -1636,16 +1716,31 @@ function endTut(noReady) {
   go(noReady);
 }
 /* a "Ready?" card before the letter picking starts, so the countdown never starts by surprise */
+function wlNote() {
+  if (wordLang !== 'ko') return '';
+  return lang === 'ko' ? '첫 글자와 끝 글자의 초성으로 하는 명사 대결 (예: ㄱ…ㄷ → 구두, 기도, 경고등)' : 'Korean nouns by first and last initial consonant (ㄱ…ㄷ → 구두, 기도)';
+}
 function readyThen(go) {
   const tok = G.token;
   const solo = G.mode === 'ai';
-  sheet(`<h2>${esc(t('readyQ'))}</h2>${solo ? `<div class="diffs">${['easy', 'medium', 'hard'].map(d => `<button class="diff" type="button" data-d="${d}" aria-pressed="${d === diff}">${t(d)}</button>`).join('')}</div><p class="diff-note" id="diffNote">${esc(t('note_' + diff))}</p>` : ''}<div class="ready-row"><button class="ready-ok" type="button" id="readyOk" aria-label="OK"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div>`);
+  const wlBtns = `<div class="wl-sw" role="group"><button type="button" data-wl="en" aria-pressed="${wordLang === 'en'}">${lang === 'ko' ? '영어 단어' : 'English'}</button><button type="button" data-wl="ko" aria-pressed="${wordLang === 'ko'}">${lang === 'ko' ? '한글 단어' : 'Korean'}</button></div><p class="wl-note" id="wlNote">${esc(wlNote())}</p>`;
+  sheet(`<h2>${esc(t('readyQ'))}</h2>${wlBtns}${solo ? `<div class="diffs">${['easy', 'medium', 'hard'].map(d => `<button class="diff" type="button" data-d="${d}" aria-pressed="${d === diff}">${t(d)}</button>`).join('')}</div><p class="diff-note" id="diffNote">${esc(t('note_' + diff))}</p>` : ''}<div class="ready-row"><button class="ready-ok" type="button" id="readyOk" aria-label="OK"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div>`);
   $('sheet').querySelectorAll('.diff').forEach(b => b.onclick = () => {
     sfx('key'); diff = G.diff = b.dataset.d; store('fl-diff', diff);
     $('sheet').querySelectorAll('.diff').forEach(x => x.setAttribute('aria-pressed', x.dataset.d === diff ? 'true' : 'false'));
     $('diffNote').textContent = t('note_' + diff);
   });
-  $('readyOk').onclick = () => { if (tok !== G.token) return; sfx('pick'); $('ov').hidden = true; go(); };
+  $('sheet').querySelectorAll('[data-wl]').forEach(b => b.onclick = () => {
+    sfx('key'); const v = b.dataset.wl;
+    const set = () => { wordLang = v; store('fl-wl', v); useWords(v); $('sheet').querySelectorAll('[data-wl]').forEach(x => x.setAttribute('aria-pressed', x.dataset.wl === v ? 'true' : 'false')); $('wlNote').textContent = wlNote(); };
+    if (v === 'ko' && !WSET.ko) { $('wlNote').textContent = lang === 'ko' ? '한글 단어를 불러오는 중…' : 'Loading Korean words…'; loadKo().then(set).catch(() => { $('wlNote').textContent = lang === 'ko' ? '한글 단어를 불러오지 못했어요. 인터넷을 확인해 주세요.' : 'Could not load Korean words. Check your connection.'; }); }
+    else set();
+  });
+  $('readyOk').onclick = () => {
+    if (tok !== G.token) return; sfx('pick');
+    if (wordLang === 'ko' && !WSET.ko) { loadKo().then(() => { useWords('ko'); $('ov').hidden = true; go(); }).catch(() => { $('wlNote').textContent = lang === 'ko' ? '한글 단어를 불러오지 못했어요. 인터넷을 확인해 주세요.' : 'Could not load Korean words.'; }); return; }
+    useWords(wordLang); $('ov').hidden = true; go();
+  };
 }
 function tutSkipBtn(on) {
   let b = $('tutSkip');
@@ -1816,6 +1911,7 @@ function startClock() {
 
 /* ---------- words ---------- */
 function check(w, p) {
+  if (isKo()) return checkKo(w, p);
   const S = G.start.toUpperCase(), E = G.end.toUpperCase();
   if (w.length < 3) return { msg: t('short'), soft: true };
   if (w[0] !== G.start || w[w.length - 1] !== G.end) return { msg: t('mismatch', { S, E }) };
@@ -1825,9 +1921,18 @@ function check(w, p) {
   if (PROPER.has(w)) return { msg: t('proper') };
   return { msg: t('notword'), unknown: true };
 }
+function checkKo(w, p) {
+  const ko = lang === 'ko';
+  if (![...w].every(isSyl)) return { msg: ko ? '글자를 끝까지 완성해 주세요' : 'Finish the syllable first', soft: true };
+  if (w.length < 2) return { msg: ko ? '두 글자 이상만 돼요' : 'Two syllables or more', soft: true };
+  if (choOf(w[0]) !== G.start || choOf(w[w.length - 1]) !== G.end) return { msg: ko ? `${koRo(G.start)} 시작하고 ${koRo(G.end)} 끝나야 해요` : `Start with ${G.start}, end with ${G.end}` };
+  if (G.used.has(w)) return { msg: G.used.get(w) === p ? t('usedMe') : t('usedOpp'), used: true };
+  if (WSET.ko.VALID.has(w)) return null;
+  return { msg: ko ? '사전에 없는 명사예요' : 'Not a noun in the dictionary', unknown: true };
+}
 function submit(p) {
   if (G.phase !== 'play' || panelMode(p) !== 'type') return;
-  const w = G.input[p]; if (!w) return;
+  const w = wordOf(G.input[p]); if (!w) return;
   const err = check(w, p);
   if (!err) return isOnline() ? claimWord(w) : accept(p, w);
   /* 1-2 letters: probably Enter tapped by mistake. Keep the letters, just remind, no freeze */
@@ -1872,10 +1977,10 @@ function accept(p, w) {
    At most 2 letters are hidden, and two hints on screen never look the same. */
 function hintPattern(h) { return [...h.w].map((c, i) => (h.b.includes(i) ? '_' : c)).join(''); }
 function blanksFor(w) {
-  const n = w.length, inner = []; for (let i = 1; i < n - 1; i++) inner.push(i);
+  const n = w.length, inner = []; for (let i = 1; i < (isKo() ? n : n - 1); i++) inner.push(i);
   const taken = new Set((G.hints || []).map(hintPattern));
   /* blank two letters in longer words, but only one in a 4-letter word (C_ST, not C__T, which gives nothing away) */
-  const most = n <= 4 ? 1 : 2;
+  const most = isKo() ? (n <= 3 ? 1 : 2) : n <= 4 ? 1 : 2;
   for (let k = Math.min(most, inner.length); k >= 1; k--) {
     const combos = [];
     if (k === 1) inner.forEach(a => combos.push([a]));
@@ -2264,15 +2369,15 @@ const CHAL = { next: null };
 const CHAL_URL = 'https://ods-games.github.io/first-and-last/';
 const CT = {
   ko: { send: '“내 기록 깨 봐!” 보내기', sendBack: '내 기록으로 되받아치기', rival: '도전자', title: '{who}내 기록 깨 봐!', copied: '링크를 복사했어요. 친구에게 붙여넣어 보내 주세요.',
-    rule: '{Sro} 시작해서 {Ero} 끝나는 영어 단어를 먼저 3개 찾으면 이겨요.', rec: '{name}의 기록', recFull: '3단어 · {time}', recPart: '{n}단어 (3분 동안)', words: '{n}단어',
+    rule: '{Sro} 시작해서 {Ero} 끝나는 {kind}를 먼저 3개 찾으면 이겨요.', rec: '{name}의 기록', recFull: '3단어 · {time}', recPart: '{n}단어 (3분 동안)', words: '{n}단어',
     go: '도전하기', later: '나중에', ready: '{name}의 기록을 깨라!', beat: '{nameObj} 이겼어요!', lost: '{name}의 승리!',
-    you: '나', shareFull: '🏆 {who}내 기록 깨 봐!\n🔤 {Sro} 시작해서 {Ero} 끝나는 영어 단어 3개를\n⏱ {time} 만에 찾았어. 이길 수 있어?',
-    sharePart: '🏆 {who}내 기록 깨 봐!\n🔤 {Sro} 시작해서 {Ero} 끝나는 영어 단어를\n⏱ 3분 동안 {n}개 찾았어. 이길 수 있어?', bad: '링크가 올바르지 않아요.' },
+    you: '나', shareFull: '🏆 {who}내 기록 깨 봐!\n🔤 {Sro} 시작해서 {Ero} 끝나는 {kind} 3개를\n⏱ {time} 만에 찾았어. 이길 수 있어?',
+    sharePart: '🏆 {who}내 기록 깨 봐!\n🔤 {Sro} 시작해서 {Ero} 끝나는 {kind}를\n⏱ 3분 동안 {n}개 찾았어. 이길 수 있어?', bad: '링크가 올바르지 않아요.' },
   en: { send: 'Send “Beat my record!”', sendBack: 'Send my record back', rival: 'Challenger', title: '{whoEn}Beat my record!', copied: 'Link copied. Paste it to a friend.',
-    rule: 'Find 3 English words that start with {S} and end with {E} before they do.', rec: "{name}'s record", recFull: '3 words · {time}', recPart: '{n} word(s) in 3 min', words: '{n} word(s)',
+    rule: 'Find 3 {kind} that start with {S} and end with {E} before they do.', rec: "{name}'s record", recFull: '3 words · {time}', recPart: '{n} word(s) in 3 min', words: '{n} word(s)',
     go: 'Accept', later: 'Later', ready: "Beat {name}'s record!", beat: 'You beat {name}!', lost: '{name} wins!',
-    you: 'Me', shareFull: '🏆 {whoEn}Beat my record!\n🔤 I found 3 English words that start with {S} and end with {E}\n⏱ in {time}. Can you beat me?',
-    sharePart: '🏆 {whoEn}Beat my record!\n🔤 I found {n} English word(s) that start with {S} and end with {E}\n⏱ in 3 minutes. Can you beat me?', bad: 'This link is not valid.' }
+    you: 'Me', shareFull: '🏆 {whoEn}Beat my record!\n🔤 I found 3 {kind} that start with {S} and end with {E}\n⏱ in {time}. Can you beat me?',
+    sharePart: '🏆 {whoEn}Beat my record!\n🔤 I found {n} {kind} that start with {S} and end with {E}\n⏱ in 3 minutes. Can you beat me?', bad: 'This link is not valid.' }
 };
 const ct = (k, v) => String((CT[lang] || CT.ko)[k] || k).replace(/\{(\w+)\}/g, (_, x) => (v && v[x] != null ? v[x] : ''));
 /* Korean particles: 을/를 after a name, 로/으로 after a letter (M and N are read 엠, 엔, so they take 으로) */
@@ -2289,20 +2394,20 @@ function chalEncode(o) { return btoa(unescape(encodeURIComponent(JSON.stringify(
 function chalDecode(c) {
   try {
     const o = JSON.parse(decodeURIComponent(escape(atob(c.replace(/-/g, '+').replace(/_/g, '/')))));
-    const s = String(o.s || ''), e = String(o.e || '');
-    if (!/^[a-z]$/.test(s) || !/^[a-z]$/.test(e)) return null;
-    const ok = new Set(IDX[s + e] || []);
+    const s = String(o.s || ''), e = String(o.e || ''), l = o.l === 'ko' ? 'ko' : 'en', X = WSET[l];
+    if (!X || !X.LETTERS.includes(s) || !X.LETTERS.includes(e) || s.length !== 1 || e.length !== 1) return null;
+    const ok = new Set(X.IDX[s + e] || []);
     let last = 0;
     const w = (Array.isArray(o.w) ? o.w : []).slice(0, 3).filter(x => Array.isArray(x) && ok.has(String(x[0])) && x[1] >= last && x[1] <= 180 && (last = +x[1], true)).map(x => [String(x[0]), +x[1]]);
     if (!w.length) return null;
-    return { s, e, n: String(o.n || '').slice(0, 10), w };
+    return { s, e, n: String(o.n || '').slice(0, 10), w, l };
   } catch (err) { return null; }
 }
 async function chalShare() {
   const w = chalMine(), sec = w.length >= 3 ? w[w.length - 1][1] : 180;
-  const url = CHAL_URL + '?c=' + chalEncode({ s: G.start, e: G.end, n: myNick || '', w });
+  const url = CHAL_URL + '?c=' + chalEncode({ s: G.start, e: G.end, n: myNick || '', w, l: WL });
   const S = G.start.toUpperCase(), E = G.end.toUpperCase();
-  const v = { S, E, Sro: roLetter(S), Ero: roLetter(E), who: myNick ? myNick + ': ' : '', whoEn: myNick ? myNick + ': ' : '', time: mmss(sec), n: w.length };
+  const ko = isKo(), v = { S, E, Sro: ko ? koRo(S) : roLetter(S), Ero: ko ? koRo(E) : roLetter(E), kind: ko ? (lang === 'ko' ? '명사' : 'Korean nouns') : (lang === 'ko' ? '영어 단어' : 'English words'), who: myNick ? myNick + ': ' : '', whoEn: myNick ? myNick + ': ' : '', time: mmss(sec), n: w.length };
   const text = ct(w.length >= 3 ? 'shareFull' : 'sharePart', v);
   try { if (navigator.share) { await navigator.share({ title: 'First n Last', text, url }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
   try { await navigator.clipboard.writeText(text + '\n' + url); toast(0, ct('copied'), 2600); return; } catch (e) { }
@@ -2316,7 +2421,7 @@ function chalOffer(c) {
   const who = c.n ? c.n + ': ' : '';
   sheet(`<h2>${esc(ct('title', { who, whoEn: who }))}</h2>
     <div class="chal-tiles"><div class="tile tS">${S}</div><span>…</span><div class="tile tE">${E}</div></div>
-    <p>${esc(ct('rule', { S, E, Sro: roLetter(S), Ero: roLetter(E) }))}</p>
+    <p>${esc(ct('rule', { S, E, Sro: c.l === 'ko' ? koRo(S) : roLetter(S), Ero: c.l === 'ko' ? koRo(E) : roLetter(E), kind: c.l === 'ko' ? (lang === 'ko' ? '명사' : 'Korean nouns') : (lang === 'ko' ? '영어 단어' : 'English words') }))}</p>
     <div class="chal-rec"><b>${esc(ct('rec', { name }))}</b><span>${esc(recText(n, sec))}</span></div>
     <div class="btns"><button class="go alt" type="button" id="chNo">${esc(ct('later'))}</button><button class="go" type="button" id="chGo">${esc(ct('go'))}</button></div>`, () => { $('ov').hidden = true; });
   $('chNo').onclick = () => { sfx('key'); $('ov').hidden = true; };
@@ -3002,8 +3107,11 @@ if (!introShow()) setMusic('home');
   let c = null; try { c = new URLSearchParams(location.search).get('c'); } catch (e) { }
   if (!c) return;
   try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) { }
-  const o = chalDecode(c);
-  setTimeout(() => { if (o) chalOffer(o); else toast(0, ct('bad'), 2600); }, 400);
+  let ko = false; try { ko = JSON.parse(decodeURIComponent(escape(atob(c.replace(/-/g, '+').replace(/_/g, '/'))))).l === 'ko'; } catch (e) { }
+  (ko ? loadKo() : Promise.resolve()).then(() => {
+    const o = chalDecode(c);
+    setTimeout(() => { if (o) chalOffer(o); else toast(0, ct('bad'), 2600); }, 400);
+  }).catch(() => setTimeout(() => toast(0, ct('bad'), 2600), 400));
 })();
 </script>
 
