@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261113093055';
+  var BUILD = '20261113094126';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -381,7 +381,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261113093055) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261113094126) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -390,7 +390,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113093055) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113094126) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -408,26 +408,28 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 #home>.stage{z-index:0}
 .deco .dtile{position:absolute;width:52px;height:auto;opacity:.9;transform:rotate(var(--r));animation:bob 4s ease-in-out infinite}
 @keyframes bob{50%{transform:rotate(var(--r)) translateY(-6px)}}
-/* intro: sky splash with the logo; a tap plays the intro film with sound, then fades into the home screen */
-#intro{position:fixed;inset:0;z-index:1000;background:#47C5EE;transition:opacity .6s ease}
-#intro.playing{background:linear-gradient(#36B4EC 0 50%,#8DAA42 50% 100%)}
-.in-shade{position:absolute;inset:0;background:#000;opacity:0;transition:opacity 2.5s linear;pointer-events:none}
-#intro.dark .in-shade{opacity:1}
-#intro.cut .in-shade{opacity:1;transition-duration:.3s}
+/* intro: sky splash with the logo and a tap hint; a tap plays the film with sound (black bars like a cinema), then fades into home */
+#intro{position:fixed;inset:0;z-index:1000;background:#47C5EE;transition:opacity .6s ease;-webkit-user-select:none;user-select:none}
+#intro.playing{background:#000}
 #intro.out{opacity:0;pointer-events:none}
-.in-splash{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:radial-gradient(ellipse at 50% 40%,#7AD8F7 0%,#47C5EE 70%)}
+.in-splash{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9vh;cursor:pointer;background:radial-gradient(ellipse at 50% 40%,#7AD8F7 0%,#47C5EE 70%)}
 .in-logo{width:min(78vw,340px);height:auto;max-width:none;filter:drop-shadow(0 8px 14px rgba(20,60,120,.28));animation:inBreathe 2.4s ease-in-out infinite}
 @keyframes inBreathe{50%{transform:scale(1.045)}}
+.in-tap{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;color:#fff;font:400 20px/1.2 "Jua","Apple SD Gothic Neo",system-ui,sans-serif;text-shadow:0 2px 6px rgba(20,60,120,.35);animation:inBlink 1.6s ease-in-out infinite}
+.in-dot{width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(20,60,120,.3)}
+.in-ring{position:absolute;top:-13px;left:50%;width:48px;height:48px;margin-left:-24px;border:3px solid #fff;border-radius:50%;animation:inRing 1.6s ease-out infinite}
+@keyframes inRing{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.5);opacity:0}}
+@keyframes inBlink{50%{opacity:.55}}
 #inVid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:transparent;opacity:0;pointer-events:none}
 #intro.playing #inVid{opacity:1}
 #intro.playing .in-splash{display:none}
-.in-ctl{position:absolute;inset:0;pointer-events:none}
-.in-btn{pointer-events:auto;position:absolute;font:600 14px/1 var(--korean,system-ui);color:#fff;background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:9px 14px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.in-shade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .5s linear}
+#intro.cut .in-shade{opacity:1}
+.in-ctl{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 14px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.in-btn{font:600 14px/1 -apple-system,"Apple SD Gothic Neo",system-ui,sans-serif;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:10px 15px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .in-btn svg{width:20px;height:20px}
-.in-snd{top:calc(env(safe-area-inset-top,0px) + 14px);left:calc(env(safe-area-inset-left,0px) + 14px);padding:8px}
-.in-skip{top:calc(env(safe-area-inset-top,0px) + 14px);right:calc(env(safe-area-inset-right,0px) + 14px)}
-.in-week{bottom:calc(env(safe-area-inset-bottom,0px) + 18px);left:50%;transform:translateX(-50%);font-size:13px;white-space:nowrap}
-@media (prefers-reduced-motion:reduce){.in-logo{animation:none}}
+.in-snd{padding:8px}
+@media (prefers-reduced-motion:reduce){.in-logo,.in-tap,.in-ring{animation:none}}
 .logo-img{width:min(82vw,320px,calc((100dvh - 540px) * 1.3));min-width:190px;height:auto;filter:drop-shadow(0 6px 10px rgba(40,60,120,.25));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
 .ribbon{background:rgba(255,248,240,.92);border:2.5px solid #F2A7BC;border-radius:999px;padding:6px 18px;box-shadow:0 3px 8px rgba(80,60,40,.15);font-size:16px}
 .stage{--sh:min(215px,25dvh,calc((100vw - 8px) / 2.3));position:relative;z-index:0;flex:none;min-height:0;height:var(--sh);margin:-6px 0 -22px;align-items:flex-end;gap:0}
@@ -446,7 +448,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261113093055) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261113094126) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -468,7 +470,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261113093055) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261113094126) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -586,6 +588,17 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 .nick-pill span:not(.lvchip){min-width:0}
 </style>
 
+<div id="intro" hidden>
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113094126" alt="First n Last" draggable="false">
+    <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113094126"></video>
+  <div class="in-shade"></div>
+  <div class="in-ctl" id="inCtl" hidden>
+    <button type="button" class="in-btn in-snd" id="inSnd"></button>
+    <button type="button" class="in-btn" id="inWeek"></button>
+    <button type="button" class="in-btn" id="inSkip"></button>
+  </div>
+</div>
 <style>
 /* iPhone home-screen apps (see-through status bar) only draw the page down to the screen height minus the
    status bar; below that the phone just paints the page background. So: the game fits the drawn area, and the
@@ -624,20 +637,11 @@ html.standalone #game .panel{padding-bottom:10px}
 </head>
 <body>
 <div id="app">
-  <div id="intro" hidden>
-    <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113093055" alt="First n Last" draggable="false"></div>
-    <div class="in-shade"></div>
-    <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113093055"></video>
-    <div class="in-ctl" id="inCtl" hidden>
-      <button type="button" class="in-btn in-snd" id="inSnd"></button>
-      <button type="button" class="in-btn in-skip" id="inSkip"></button>
-      <button type="button" class="in-btn in-week" id="inWeek"></button>
-    </div>
   </div>
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113093055" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113093055" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113094126" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113094126" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -648,7 +652,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261113093055" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261113094126" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -673,7 +677,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261113093055" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261113094126" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -916,7 +920,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261113093055';
+const IMGV = '20261113094126';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1262,7 +1266,7 @@ function fitHome() {
   h.style.backgroundSize = size; h.style.backgroundPosition = pos; hill.style.height = H + 'px';
   /* the strip the phone paints under the page (home-screen app) takes the colour of the picture's bottom edge */
   const row = Math.min(BG.h - 1, (H - (y - BG.ridge * s)) / s), ci = Math.max(0, Math.min(EDGE.length - 1, Math.round((row - 1300) / 32)));
-  void ci; document.documentElement.style.setProperty('--edge', '#86A64B'); if (window.tintEdge) tintEdge();
+  void ci; if (!introEdge) { document.documentElement.style.setProperty('--edge', '#86A64B'); if (window.tintEdge) tintEdge(); }
   /* hillfg = the background from row BG.cut down, see-through above the grass edge */
   hill.style.backgroundSize = size; hill.style.backgroundPosition = `${bx}px ${(y - (BG.ridge - BG.cut) * s).toFixed(1)}px`;
 }
@@ -2739,6 +2743,8 @@ function friendLeft() {
    sound on/off, skip and "don't show for a week" sit on top. The film ends black, then the home screen fades in.
    Skipped when hidden for the week, or when opening a friend's invite link. */
 const INTRO_OFF = 'fl-intro-off';
+var introEdge = null;
+
 function introShow() {
   try {
     if (Date.now() < (+store(INTRO_OFF) || 0)) return false;
@@ -2749,24 +2755,30 @@ function introShow() {
   const ko = lang === 'ko';
   const drawSnd = () => { $('inSnd').innerHTML = snd ? ICON.sfxOn : ICON.sfxOff; $('inSnd').setAttribute('aria-label', ko ? (snd ? '소리 끄기' : '소리 켜기') : (snd ? 'Sound off' : 'Sound on')); };
   $('inSkip').textContent = ko ? '건너뛰기 ›' : 'Skip ›';
+  $('inTapTxt').textContent = ko ? '화면을 터치하세요' : 'Tap to start';
   $('inWeek').textContent = ko ? '일주일간 보지 않기' : "Don't show for a week";
   drawSnd();
   const finish = fast => {
     if (done) return; done = true; clearTimeout(guard);
     box.classList.add('playing');
-    const end = () => { box.classList.add('out'); setMusic('home'); setTimeout(() => { box.hidden = true; try { vid.pause(); vid.removeAttribute('src'); vid.load(); } catch (e) { } }, 650); };
-    if (fast) { box.classList.add('cut'); vid.style.transition = 'opacity .3s'; vid.style.opacity = '0'; setTimeout(end, 320); } else end();
+    const end = () => { introEdge = null; edge('#86A64B'); box.classList.add('out'); setMusic('home'); setTimeout(() => { box.hidden = true; try { vid.pause(); vid.removeAttribute('src'); vid.load(); } catch (e) { } }, 650); };
+    $('inCtl').hidden = true;
+    if (fast && started) {
+      /* skip: screen and sound fade out together, then home fades in */
+      box.classList.add('cut'); const v0 = vid.volume, t0 = performance.now();
+      const step = () => { const k = Math.min(1, (performance.now() - t0) / 500); try { vid.volume = v0 * (1 - k); } catch (e) { } if (k < 1) requestAnimationFrame(step); else { vid.pause(); end(); } };
+      requestAnimationFrame(step);
+    } else end();
   };
   const start = () => {
     if (started) return; started = true;
-    box.classList.add('playing'); $('inCtl').hidden = false;
+    box.classList.add('playing'); $('inCtl').hidden = false; edge('#000');
     vid.muted = !snd; vid.currentTime = 0;
     const p = vid.play();
     if (p && p.catch) p.catch(() => { vid.muted = true; snd = false; drawSnd(); vid.play().catch(() => finish(true)); });
     /* the film never got going (slow network, blocked): go straight to the game */
     guard = setTimeout(() => { if (vid.currentTime < .1) finish(true); }, 3500);
   };
-  vid.addEventListener('timeupdate', () => { if (vid.currentTime > 9.85) box.classList.add('dark'); });
   vid.addEventListener('ended', () => finish(false));
   vid.addEventListener('error', () => { if (started) finish(true); });
   box.addEventListener('click', e => { if (!e.target.closest('.in-btn')) start(); });
@@ -2774,6 +2786,8 @@ function introShow() {
   $('inSkip').onclick = e => { e.stopPropagation(); finish(true); };
   $('inWeek').onclick = e => { e.stopPropagation(); store(INTRO_OFF, String(Date.now() + 7 * 864e5)); finish(true); };
   document.addEventListener('visibilitychange', () => { if (!document.hidden && started && !done && vid.paused) vid.play().catch(() => { }); });
+  const edge = c => { if (c) document.documentElement.style.setProperty('--edge', c); else document.documentElement.style.removeProperty('--edge'); if (window.tintEdge) tintEdge(); };
+  introEdge = edge; edge('#47C5EE');
   vid.preload = 'auto'; vid.src = vid.dataset.src;
   box.hidden = false;
   return true;
