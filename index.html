@@ -28,7 +28,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261113165600';
+  var BUILD = '20261113165823';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -392,7 +392,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261113165600) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261113165823) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -401,7 +401,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113165600) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113165823) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -461,7 +461,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261113165600) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261113165823) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -483,7 +483,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261113165600) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261113165823) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -663,7 +663,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113165600" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113165600" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113165823" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113165823" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -674,7 +674,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261113165600" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261113165823" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -699,7 +699,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261113165600" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261113165823" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -727,9 +727,9 @@ html.standalone #game .panel{padding-bottom:10px}
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113165600" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113165823" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113165600"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113165823"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -1021,7 +1021,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261113165600';
+const IMGV = '20261113165823';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1465,16 +1465,23 @@ let afterTut = null;
 /* '|' in a string marks phrases that must stay on one line */
 function nbHTML(v) { return v.includes('|') ? v.split('|').map(c => `<span class="nb">${esc(c.trim())}</span>`).join(' ') : esc(v); }
 function tutorial(first) {
-  let i = 0; const arts = [
+  let i = 0, rl = first ? 'en' : wordLang;
+  const ko = lang === 'ko', word = (w, x) => `<div class="tile" style="background:var(--${x || 'yellow'});font-size:22px;width:auto;padding:0 10px${x === 'muted' ? ';text-decoration:line-through' : ''}">${w}</div>`;
+  const KO_ARTS = [`<div class="tile tS">ㄱ</div><div class="tile tE">ㄷ</div>`, word('구두') + word('경고등'), word('서울', 'muted') + word('까치', 'mint')];
+  const KO_TXT = ko ? ['두 사람이 초성을 하나씩 고르면,|룰렛이 시작 초성과 끝 초성을 정해요', '첫 글자와 끝 글자의 초성이 맞는|명사를 3개 먼저 쓰면 승리!|상대가 쓴 단어는 못 써요', '두 글자 이상 명사만 돼요.|사람 이름·지명은 안 돼요.|ㄲ·ㄸ 같은 된소리는 ㄱ·ㄷ으로 쳐요.|제한 시간은 3분이에요']
+    : ['Each player picks an initial consonant.|The roulette decides|which one starts the word|and which one ends it', 'Be the first to write 3 nouns whose first and last syllables start with those consonants!', 'Nouns of 2+ syllables only.|No names of people or places.|Double consonants (ㄲ, ㄸ…)|count as single (ㄱ, ㄷ).|Each game lasts 3 minutes'];
+  const arts0 = [
     `<div class="tile tS">B</div><div class="tile tE">N</div>`,
     `<div class="tile" style="background:var(--yellow);font-size:22px;width:auto;padding:0 10px">BACON</div><div class="tile" style="background:var(--yellow);font-size:22px;width:auto;padding:0 10px">BRAIN</div>`,
     `<div class="tile" style="background:var(--muted);font-size:20px;width:auto;padding:0 10px;text-decoration:line-through">CATS</div><div class="tile" style="background:var(--mint);font-size:22px;width:auto;padding:0 10px">CAT</div>`];
+  const art = () => (rl === 'ko' ? KO_ARTS : arts0)[i], txt = () => (rl === 'ko' ? KO_TXT[i] : t('tut' + (i + 1)));
   const done = () => { store('fl-tut', '1'); $('ov').hidden = true; if (afterTut) { const f = afterTut; afterTut = null; f(); } };
   const draw = () => {
-    $('sheet').innerHTML = `<button class="x" type="button" id="xBtn" aria-label="${esc(t('close'))}">${XICON}</button><h2>${t('ruleTitle')}</h2><div class="tut-art">${arts[i]}</div><p>${nbHTML(t('tut' + (i + 1)))}</p>
+    $('sheet').innerHTML = `<button class="x" type="button" id="xBtn" aria-label="${esc(t('close'))}">${XICON}</button><h2>${t('ruleTitle')}</h2>${first ? '' : `<div class="wl-sw" role="group"><button type="button" data-rl="en" aria-pressed="${rl === 'en'}">${ko ? '영어 단어' : 'English'}</button><button type="button" data-rl="ko" aria-pressed="${rl === 'ko'}">${ko ? '한글 단어' : 'Korean'}</button></div>`}<div class="tut-art">${art()}</div><p>${nbHTML(txt())}</p>
       <div class="dots">${[0, 1, 2].map(j => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div>
       <div class="btns"><button class="go alt" type="button" id="tPrev" ${i === 0 ? 'disabled' : ''}>${t('prev')}</button><button class="go" type="button" id="tNext">${i < 2 ? t('next') : (first ? t('letsgo') : t('close'))}</button></div>`;
     $('xBtn').onclick = done;
+    $('sheet').querySelectorAll('[data-rl]').forEach(b => b.onclick = () => { if (rl === b.dataset.rl) return; sfx('key'); rl = b.dataset.rl; i = 0; draw(); });
     $('tPrev').onclick = () => { if (i > 0) { i--; draw(); sfx('key'); } };
     $('tNext').onclick = () => { if (i < 2) { i++; draw(); sfx('key'); } else done(); };
   };
@@ -1719,7 +1726,7 @@ function endTut(noReady) {
 }
 /* a "Ready?" card before the letter picking starts, so the countdown never starts by surprise */
 function wlNote() {
-  if (wordLang !== 'ko') return '';
+  return '';
   return lang === 'ko' ? '첫 글자와 끝 글자의 초성으로 하는 명사 대결 (예: ㄱ…ㄷ → 구두, 기도, 경고등)' : 'Korean nouns by first and last initial consonant (ㄱ…ㄷ → 구두, 기도)';
 }
 function readyThen(go) {
