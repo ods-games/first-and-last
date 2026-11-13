@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261113143750';
+  var BUILD = '20261113144449';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -383,7 +383,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261113143750) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261113144449) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -392,7 +392,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113143750) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113144449) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -452,7 +452,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261113143750) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261113144449) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -474,7 +474,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261113143750) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261113144449) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -551,6 +551,14 @@ html.standalone .in-ctl{padding-bottom:10px}
 .pf-event{font-family:var(--korean);font-size:15px;color:#fff;background:linear-gradient(180deg,#FF9F43,#F2551B);border-radius:12px;padding:6px 10px;text-align:center}
 .pf-box{background:#fff;border-radius:16px;padding:10px 12px;box-shadow:0 0 0 1.5px #EBDCCD,0 2px 0 1.5px #EBDCCD;display:flex;flex-direction:column;gap:7px}
 .pf-t{font-family:var(--korean);font-size:17px;display:flex;align-items:center;gap:8px}
+.pf-foot{display:flex;justify-content:center;align-items:center;gap:14px;margin:10px 0 2px}
+.pf-policy{font-size:13px;color:#7A6A5E;text-decoration:underline;text-underline-offset:3px}
+.pf-wipe{font:inherit;font-size:12px;color:#B3A79C;background:none;border:0;padding:4px;cursor:pointer}
+.wipe-list{text-align:left;margin:8px auto 4px;max-width:300px;padding-left:20px;font-size:14px;line-height:1.6}
+.wipe-hold{position:relative;overflow:hidden;width:100%;max-width:300px;margin:12px auto 0;display:block;font:inherit;font-size:16px;color:#fff;background:#C9465E;border:0;border-radius:14px;padding:14px 10px;cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none}
+.wipe-hold i{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(0,0,0,.28)}
+.wipe-hold span{position:relative}
+.wipe-note{font-size:12.5px;color:#8C7F74;margin-top:8px}
 .pf-dot{width:9px;height:9px;border-radius:50%;background:#FF4D6D;flex:none;margin-left:-3px}
 .pf-streak,.pf-cnt{margin-left:auto;font-size:14px;color:#E07A00}
 .pf-cnt{font-family:var(--display);font-weight:600;color:#8A7466}
@@ -633,7 +641,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113143750" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113143750" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113144449" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113144449" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -644,7 +652,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261113143750" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261113144449" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -669,7 +677,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261113143750" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261113144449" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -697,9 +705,9 @@ html.standalone #game .panel{padding-bottom:10px}
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113143750" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113144449" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113143750"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113144449"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -923,7 +931,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261113143750';
+const IMGV = '20261113144449';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -2187,8 +2195,10 @@ function openProfile() {
       <div class="stg wd"><div class="stg-h">📖 ${esc(pt('words'))}</div><div class="stg-c"><div><b>${P.words}</b><span>${esc(pt('found'))}</span></div><div class="wide"><b class="pf-long">${P.longest ? esc(cs(P.longest)) : '-'}</b><span>${esc(pt('longest'))}</span></div></div></div></div>
     <div class="pf-box"><div class="pf-t">${esc(pt('badges'))} <span class="pf-cnt">${Object.keys(P.badges).length} / ${BADGES.length}</span></div><div class="bdgs">${badges}</div></div>
     <div class="pf-box"><div class="pf-t">${esc(pt('language'))}</div><div class="pf-lang"><button type="button" data-lang="ko" aria-pressed="${lang === 'ko'}">한국어</button><button type="button" data-lang="en" aria-pressed="${lang === 'en'}">English</button></div></div>
+    <div class="pf-foot"><a class="pf-policy" href="https://ods-games.github.io/first-and-last/privacy/?lang=${lang}" target="_blank" rel="noopener">${lang === 'ko' ? '개인정보처리방침' : 'Privacy Policy'}</a><button type="button" class="pf-wipe" id="pfWipe">${lang === 'ko' ? '내 기록 삭제' : 'Delete my data'}</button></div>
     <div class="btns"><button class="go alt" type="button" id="pfNick">${esc(pt('editNick'))}</button><button class="go" type="button" id="pfClose">${esc(pt('close'))}</button></div></div>`, () => { sfx('key'); $('ov').hidden = true; });
   $('pfClose').onclick = () => { sfx('key'); $('ov').hidden = true; };
+  $('pfWipe').onclick = () => { sfx('key'); wipeAsk(); };
   $('pfNick').onclick = () => { sfx('key'); $('ov').hidden = true; editNick(); };
   $('sheet').querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { if (lang === b.dataset.lang) return; sfx('pick'); lang = b.dataset.lang; store('fl-lang', lang); applyLang(); openProfile(); });
 }
@@ -2350,6 +2360,49 @@ async function deleteNick() {
   try { await fbInit(); await FB.db.ref('nicks/' + key).remove(); } catch (e) { }
 }
 const delLink = () => ''; /* the test-only "delete nickname" link is switched off */
+/* "Delete my data": wipes this device's record on the server and on the phone, then starts fresh.
+   Tucked away as a faint link in the profile, and the button must be held for 3 seconds so it cannot happen by accident. */
+function wipeAsk() {
+  const ko = lang === 'ko';
+  sheet(`<h2>${ko ? '내 기록 삭제' : 'Delete my data'}</h2>
+    <p>${ko ? '이 기기의 기록이 모두 지워지고 처음 상태로 돌아가요. 되돌릴 수 없어요.' : 'Everything this device has saved is removed and the game starts fresh. This cannot be undone.'}</p>
+    <ul class="wipe-list">${(ko ? ['닉네임', '레벨·경험치·배지·미션', '전적과 찾은 단어 기록', '설정(소리·언어 등)'] : ['Nickname', 'Level, XP, badges and missions', 'Game history and words found', 'Settings (sound, language…)']).map(x => `<li>${x}</li>`).join('')}</ul>
+    <button type="button" class="wipe-hold" id="wipeHold"><i></i><span>${ko ? '3초 동안 꾹 눌러서 삭제' : 'Hold for 3 seconds to delete'}</span></button>
+    <p class="wipe-note" id="wipeNote"></p>
+    <div class="btns"><button class="go alt" type="button" id="wipeNo">${ko ? '취소' : 'Cancel'}</button></div>`, () => { sfx('key'); openProfile(); });
+  $('wipeNo').onclick = () => { sfx('key'); openProfile(); };
+  const b = $('wipeHold'), bar = b.querySelector('i');
+  let t0 = 0, raf = 0;
+  const stop = () => { cancelAnimationFrame(raf); t0 = 0; bar.style.width = '0'; };
+  const step = () => { const k = Math.min(1, (performance.now() - t0) / 3000); bar.style.width = (k * 100) + '%'; if (k < 1) raf = requestAnimationFrame(step); else { b.disabled = true; wipeNow(); } };
+  b.addEventListener('pointerdown', e => { e.preventDefault(); if (b.disabled) return; t0 = performance.now(); raf = requestAnimationFrame(step); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, () => { if (!b.disabled) stop(); }));
+  b.addEventListener('contextmenu', e => e.preventDefault());
+}
+async function wipeNow() {
+  const ko = lang === 'ko', note = $('wipeNote');
+  note.textContent = ko ? '지우는 중…' : 'Deleting…';
+  try {
+    await Promise.race([fbInit(), new Promise((_, no) => setTimeout(() => no(new Error('timeout')), 8000))]);
+    const db = FB.db, uid = FB.uid, del = {};
+    let first = 0; try { first = (await db.ref('users/' + uid + '/info/first').once('value')).val() || 0; } catch (e) { }
+    del['users/' + uid] = null; del['presence/' + uid] = null;
+    if (myNick) del['nicks/' + myNick.toLowerCase()] = null;
+    /* the visit marks (one per day since the first visit) */
+    const from = first ? Math.max(first, Date.now() - 400 * 864e5) : Date.now() - 60 * 864e5;
+    for (let t = Date.now(); t >= from - 864e5; t -= 864e5) del['stats/active/' + kday(t) + '/' + uid] = null;
+    await db.ref().update(del);
+    try { await firebase.auth().currentUser.delete(); } catch (e) { try { await firebase.auth().signOut(); } catch (e2) { } }
+    try { db.goOffline(); } catch (e) { }
+  } catch (e) {
+    note.textContent = ko ? '인터넷에 연결된 상태에서 다시 해 주세요.' : 'Please try again while online.';
+    $('wipeHold').disabled = false; $('wipeHold').querySelector('i').style.width = '0';
+    return;
+  }
+  try { Object.keys(localStorage).filter(k => k.startsWith('fl-')).forEach(k => localStorage.removeItem(k)); } catch (e) { }
+  note.textContent = ko ? '삭제했어요. 처음 화면으로 돌아가요.' : 'Deleted. Starting fresh.';
+  setTimeout(() => location.reload(), 1200);
+}
 const ensureNick = f => (myNick ? f() : askNick(f, f, () => goHome()));
 
 /* one shared connection attempt at a time */
@@ -2376,7 +2429,7 @@ async function fbConnect() {
    users/{uid}/info: nick, first (first visit), last (last seen), lang, app (home-screen app)
    presence/{uid}: where they are right now (home | ai | duo | online); removed when they leave or hide the app
    stats/active/{day}/{uid}: visited that day;  stats/days/{day}/{ai|duo|online|words}: counters.  Days use Korean time. */
-const kday = () => new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+const kday = (t = Date.now()) => new Date(t + 9 * 3600e3).toISOString().slice(0, 10);
 function presUpdate() {
   try {
     if (!FB) return; const ref = FB.db.ref('presence/' + FB.uid);
