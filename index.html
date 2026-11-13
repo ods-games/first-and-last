@@ -28,7 +28,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261113181027';
+  var BUILD = '20261114021838';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -290,6 +290,7 @@ button.chip{cursor:pointer;color:var(--ink)}
 .hw.used{opacity:.35;text-decoration:line-through}
 .typed{flex:1;min-width:0;height:46px;box-sizing:border-box;border:4px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;padding:0 12px;font-size:22px;font-weight:600;letter-spacing:2px;overflow:hidden;white-space:nowrap}
 .typed:empty::before{content:attr(data-ph);font-family:var(--korean);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0;color:#8A7466}
+.typed.ko{font-weight:800} /* Jua lacks rare syllables like 댇 that show while typing; the phone's own font fills in, so ask it for its heavy weight to match Jua */
 .typed.bad{animation:shake .35s linear;border-color:var(--red)}
 .act{height:46px;border:4px solid var(--ink);border-radius:14px;background:var(--pink);box-shadow:0 4px 0 var(--ink);padding:0 12px;font-family:var(--korean);font-size:18px;white-space:nowrap}
 .act.hint{background:var(--yellow);font-size:15px;padding:0 9px}
@@ -392,7 +393,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261113181027) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261114021838) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -401,7 +402,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113181027) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261114021838) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -467,7 +468,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261113181027) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261114021838) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -489,7 +490,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261113181027) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261114021838) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -676,7 +677,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113181027" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113181027" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261114021838" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261114021838" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -687,7 +688,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261113181027" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261114021838" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -712,7 +713,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261113181027" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261114021838" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -740,10 +741,10 @@ html.standalone #game .panel{padding-bottom:10px}
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113181027" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261114021838" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
   <div class="in-fill in-ft" id="inFt"></div><div class="in-fill in-fb" id="inFb"></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113181027"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261114021838"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -1035,7 +1036,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261113181027';
+const IMGV = '20261114021838';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1117,9 +1118,12 @@ let speechPrimed = false;
    other sound for a moment, so this runs when a game starts rather than on the first tap anywhere. */
 function primeSpeech() {
   if (!speechPrimed) dlog('speech warm-up');
-  if (speechPrimed || !soundOn || !('speechSynthesis' in window)) return;
-  speechPrimed = true;
-  try { if (!enVoice) pickVoice(); const u = new SpeechSynthesisUtterance('hi'); u.lang = 'en-US'; u.volume = 0; u.rate = 2; speechSynthesis.speak(u); } catch (e) { }
+  /* warm up the voice of the word language in play: the phone loads a voice the first time it is used, which can
+     freeze the page for a moment, so do it now rather than in the middle of a game while the player is typing */
+  const want = wordLang === 'ko' ? 'ko' : 'en';
+  if (speechPrimed === want || !soundOn || !('speechSynthesis' in window)) return;
+  speechPrimed = want;
+  try { if (!enVoice) pickVoice(); const u = new SpeechSynthesisUtterance(want === 'ko' ? '가' : 'hi'); u.lang = want === 'ko' ? 'ko-KR' : 'en-US'; u.volume = 0; u.rate = 2; speechSynthesis.speak(u); } catch (e) { }
 }
 function unlockAudio(e) {
   if (e && e.type) { if (!unlockAudio.seen) dlog('first tap (' + e.type + ')'); unlockAudio.seen = true; }
@@ -1668,7 +1672,7 @@ function renderPanels() {
     const hintBtn = G.mode === 'ai' && !(G.tut && G.tut.next !== 'ai') ? `<button class="act hint" type="button" data-hint="1" ${G.hintUsed || G.phase !== 'play' ? 'disabled' : ''}>${t('hint')}</button>` : '';
     const who = G.phase === 'pick' ? G.picker : G.active;
     const buzzLabel = locked ? t('frozen', { n: G.lockLeft[p] }) : mode === 'buzz' ? t('buzz') : (who === 0 || who === 1) ? t('waiting', { name: nameOf(who) }) : '...';
-    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed" id="typed${p}" data-ph="${esc(phText())}">${esc(shownInput(G.input[p]))}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act del" type="button" data-k="DEL" aria-label="Delete">${ICON.del}</button></div>
+    el.innerHTML = `${hintBar()}<div class="row-in"><div class="typed${isKo() ? ' ko' : ''}" id="typed${p}" data-ph="${esc(phText())}">${esc(shownInput(G.input[p]))}</div>${hintBtn}${isDuo() ? `<button class="act hint" type="button" data-cancel="1">${t('cancel')}</button>` : ''}<button class="act del" type="button" data-k="DEL" aria-label="Delete">${ICON.del}</button></div>
       <div class="tbar"><i id="tbar${p}"></i></div>
       ${kbHTML(mode, allowed)}
       <button class="buzzer" type="button" data-buzz="1" ${mode !== 'buzz' || locked ? 'disabled' : ''}>${esc(buzzLabel)}</button>
