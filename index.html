@@ -19,7 +19,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261113150136';
+  var BUILD = '20261113152044';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -383,7 +383,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261113150136) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261113152044) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -392,7 +392,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113150136) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113152044) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -452,7 +452,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261113150136) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261113152044) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -474,7 +474,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261113150136) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261113152044) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -551,6 +551,13 @@ html.standalone .in-ctl{padding-bottom:10px}
 .pf-event{font-family:var(--korean);font-size:15px;color:#fff;background:linear-gradient(180deg,#FF9F43,#F2551B);border-radius:12px;padding:6px 10px;text-align:center}
 .pf-box{background:#fff;border-radius:16px;padding:10px 12px;box-shadow:0 0 0 1.5px #EBDCCD,0 2px 0 1.5px #EBDCCD;display:flex;flex-direction:column;gap:7px}
 .pf-t{font-family:var(--korean);font-size:17px;display:flex;align-items:center;gap:8px}
+.chal-send{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:12px 0 2px;font:inherit;font-size:16px;color:#2F5FA8;background:#E6F0FF;border:1.5px solid #9DBCEB;border-radius:14px;padding:11px;cursor:pointer}
+.chal-send:active{transform:translateY(2px)}
+.chal-copy{width:100%;height:84px;margin-top:8px;font:13px/1.4 ui-monospace,Menlo,monospace;border-radius:10px;border:1px solid #ccc;padding:8px;-webkit-user-select:text;user-select:text}
+.chal-tiles{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0 4px}
+.chal-tiles .tile{width:54px;height:54px;font-size:30px}
+.chal-rec{display:flex;justify-content:space-between;gap:10px;background:#FFF6E8;border-radius:12px;padding:10px 14px;margin:10px 0 4px;font-size:15px}
+.chal-cmp{font-size:14px;color:#6B5E54;margin:8px 0 0}
 .pf-foot{display:flex;justify-content:center;align-items:center;gap:14px;margin:10px 0 2px}
 .pf-policy{font-size:13px;color:#7A6A5E;text-decoration:underline;text-underline-offset:3px}
 .pf-wipe{font:inherit;font-size:12px;color:#B3A79C;background:none;border:0;padding:4px;cursor:pointer}
@@ -641,7 +648,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113150136" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113150136" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113152044" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113152044" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -652,7 +659,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261113150136" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261113152044" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -677,7 +684,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261113150136" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261113152044" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -705,9 +712,9 @@ html.standalone #game .panel{padding-bottom:10px}
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113150136" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113152044" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113150136"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113152044"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -931,7 +938,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261113150136';
+const IMGV = '20261113152044';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1401,7 +1408,7 @@ function stopAll() { tutSkipBtn(false); timers.forEach(clearTimeout); timers = [
 const other = p => 1 - p;
 const charEl = p => $('char' + p);
 const isDuo = () => G.mode === 'duo';
-function nameOf(p) { if (G.mode === 'ai') return p === 0 ? (myNick || t('me')) : t('ai'); if (G.mode === 'online') return p === 0 ? (myNick || t('me')) : ((ON && ON.room && ON.room.names && ON.room.names[oppRole()]) || t(ON && ON.random ? 'rival' : 'friend')); return p === 0 ? t('p1') : t('p2'); }
+function nameOf(p) { if (G.mode === 'ai') return p === 0 ? (myNick || t('me')) : (G.chal ? G.chal.n || ct('rival') : t('ai')); if (G.mode === 'online') return p === 0 ? (myNick || t('me')) : ((ON && ON.room && ON.room.names && ON.room.names[oppRole()]) || t(ON && ON.random ? 'rival' : 'friend')); return p === 0 ? t('p1') : t('p2'); }
 const paused = () => !$('ov').hidden;
 
 function newGame(mode, noTut, noReady) {
@@ -1409,7 +1416,7 @@ function newGame(mode, noTut, noReady) {
   /* the very first game on this phone (solo or duo) is a short practice round against Lexi */
   const tutNext = (!noTut && mode !== 'online' && (TUT_EVERY_TIME || store('fl-tut') !== '1')) ? mode : null; if (tutNext) mode = 'ai';
   stopAll(); MUS.fast = false; setMusic('game');
-  Object.assign(G, { tipOn: false, tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, oppLeft: false, pending: false, hints: [], hintDone: {}, faces: ['idle', 'idle'], token: (G.token || 0) + 1 });
+  Object.assign(G, { tipOn: false, tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, oppLeft: false, pending: false, hints: [], hintDone: {}, faces: ['idle', 'idle'], chal: null, token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true; presUpdate();
   if (isDuo()) $('rail').parentNode.insertBefore($('tools'), $('rail').nextSibling); else $('hud').insertBefore($('tools'), $('clkW'));
   $('game').classList.toggle('duo', isDuo()); $('game').classList.toggle('online', mode === 'online');
@@ -1421,6 +1428,8 @@ function newGame(mode, noTut, noReady) {
   setTiles('?', '?'); renderClock(); renderNames(); renderHearts();
   if (mode === 'online') return; // the room drives the online flow
   if (G.tut) return tutPick();
+  G.chal = CHAL.next; CHAL.next = null;
+  if (G.chal) return chalStart();
   setCenter(''); G.picker = -1; renderPanels();
   if (noReady) beginPick(); else readyThen(beginPick);
 }
@@ -1823,7 +1832,7 @@ function penalize(p, msg) {
 }
 function accept(p, w) {
   sayWord(w);
-  G.used.set(w, p); G.order.push([w, p]); G.input[p] = ''; G.scores[p]++;
+  G.used.set(w, p); G.order.push([w, p, 180 - G.time]); G.input[p] = ''; G.scores[p]++;
   const n = G.scores[p];
   if (isDuo()) { clearTimeout(G.buzzId); G.active = null; }
   if (n >= 3) { G.phase = 'ko'; clearInterval(G.clockId); clearTimeout(G.aiId); }
@@ -1900,6 +1909,7 @@ function timedHints() {
 function scheduleAI() {
   clearTimeout(G.aiId);
   if (G.mode !== 'ai' || G.phase !== 'play') return;
+  if (G.chal) return chalGhost();
   const cfg = AI_CFG[G.diff], n = Math.max(1, cnt(G.start, G.end));
   const f = Math.min(2, Math.max(.7, Math.sqrt(40 / n)));
   G.aiDue = Date.now() + cfg.base * f * (.75 + Math.random() * .5) * 1000;
@@ -2222,6 +2232,103 @@ function missedWords() {
   if (!pool.length) return '';
   return `<div class="res-hints"><b>${esc(t('missed'))}</b>${pool.map(w => `<button type="button" class="chip" data-say="${w}">${cs(w)}</button>`).join('')}</div>`;
 }
+
+/* ---------- challenge links ("도전장") ----------
+   After a game you can send a link with your letters and when you found each word.
+   Whoever opens it plays the same letters against a replay of you: your character finds the same words at the same moments. */
+const CHAL = { next: null };
+const CHAL_URL = 'https://ods-games.github.io/first-and-last/';
+const CT = {
+  ko: { send: '도전장 보내기', sendBack: '되받아치기 도전장 보내기', rival: '도전자', title: '{name}의 도전장!', copied: '링크를 복사했어요. 친구에게 붙여넣어 보내 주세요.',
+    rule: '{Sro} 시작해서 {Ero} 끝나는 영어 단어를 먼저 3개 찾으면 이겨요.', rec: '{name}의 기록', recFull: '3단어 · {time}', recPart: '{n}단어 (3분 동안)', words: '{n}단어',
+    go: '도전하기', later: '나중에', ready: '{name}의 기록에 도전!', beat: '{nameObj} 이겼어요!', lost: '{name}의 승리!',
+    you: '나', shareFull: '{who}도전장! {Sro} 시작해서 {Ero} 끝나는 영어 단어 3개를 {time}에 찾았어. 이길 수 있어?',
+    sharePart: '{who}도전장! {Sro} 시작해서 {Ero} 끝나는 영어 단어를 3분 동안 {n}개 찾았어. 이길 수 있어?', bad: '도전장 링크가 올바르지 않아요.' },
+  en: { send: 'Send a challenge', sendBack: 'Send one back', rival: 'Challenger', title: 'A challenge from {name}!', copied: 'Link copied. Paste it to a friend.',
+    rule: 'Find 3 English words that start with {S} and end with {E} before they do.', rec: "{name}'s record", recFull: '3 words · {time}', recPart: '{n} word(s) in 3 min', words: '{n} word(s)',
+    go: 'Accept', later: 'Later', ready: "Beat {name}'s record!", beat: 'You beat {name}!', lost: '{name} wins!',
+    you: 'Me', shareFull: '{whoEn}I found 3 English words that start with {S} and end with {E} in {time}. Can you beat me?',
+    sharePart: '{whoEn}I found {n} English word(s) that start with {S} and end with {E} in 3 minutes. Can you beat me?', bad: 'This challenge link is not valid.' }
+};
+const ct = (k, v) => String((CT[lang] || CT.ko)[k] || k).replace(/\{(\w+)\}/g, (_, x) => (v && v[x] != null ? v[x] : ''));
+/* Korean particles: 을/를 after a name, 로/으로 after a letter (M and N are read 엠, 엔, so they take 으로) */
+const jong = w => { const c = String(w).slice(-1).charCodeAt(0); return c >= 0xAC00 && c <= 0xD7A3 ? (c - 0xAC00) % 28 : -1; };
+const eulReul = w => { const j = jong(w); return w + (j < 0 ? '을(를)' : j ? '을' : '를'); };
+const roLetter = L => L + ('MN'.includes(L) ? '으로' : '로');
+const ICON_SEND = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"/><path d="M11 13l9-9"/></svg>';
+const mmss = s => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+/* a record: how many words and when the last one landed (3 words) */
+const recText = (n, sec) => n >= 3 ? ct('recFull', { time: mmss(sec) }) : ct('recPart', { n });
+function chalMine() { return G.order.filter(x => x[1] === 0).slice(0, 3).map(x => [x[0], Math.max(1, Math.min(180, x[2] | 0))]); }
+function chalCanSend() { return !G.tut && !isDuo() && G.start && G.end && chalMine().length > 0; }
+function chalEncode(o) { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+function chalDecode(c) {
+  try {
+    const o = JSON.parse(decodeURIComponent(escape(atob(c.replace(/-/g, '+').replace(/_/g, '/')))));
+    const s = String(o.s || ''), e = String(o.e || '');
+    if (!/^[a-z]$/.test(s) || !/^[a-z]$/.test(e)) return null;
+    const ok = new Set(IDX[s + e] || []);
+    let last = 0;
+    const w = (Array.isArray(o.w) ? o.w : []).slice(0, 3).filter(x => Array.isArray(x) && ok.has(String(x[0])) && x[1] >= last && x[1] <= 180 && (last = +x[1], true)).map(x => [String(x[0]), +x[1]]);
+    if (!w.length) return null;
+    return { s, e, n: String(o.n || '').slice(0, 10), w };
+  } catch (err) { return null; }
+}
+async function chalShare() {
+  const w = chalMine(), sec = w.length >= 3 ? w[w.length - 1][1] : 180;
+  const url = CHAL_URL + '?c=' + chalEncode({ s: G.start, e: G.end, n: myNick || '', w });
+  const S = G.start.toUpperCase(), E = G.end.toUpperCase();
+  const v = { S, E, Sro: roLetter(S), Ero: roLetter(E), who: myNick ? myNick + '의 ' : '', whoEn: myNick ? myNick + ' challenges you! ' : 'A challenge for you! ', time: mmss(sec), n: w.length };
+  const text = ct(w.length >= 3 ? 'shareFull' : 'sharePart', v);
+  try { if (navigator.share) { await navigator.share({ title: 'First n Last', text, url }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+  try { await navigator.clipboard.writeText(text + '\n' + url); toast(0, ct('copied'), 2600); return; } catch (e) { }
+  /* last resort: show the link to copy by hand */
+  const box = document.createElement('textarea'); box.value = text + '\n' + url; box.className = 'chal-copy'; box.readOnly = true;
+  const at = $('chalSend'); if (at) { at.after(box); box.focus(); box.select(); }
+}
+/* someone opened a challenge link */
+function chalOffer(c) {
+  const S = c.s.toUpperCase(), E = c.e.toUpperCase(), name = c.n || ct('rival'), n = c.w.length, sec = c.w[n - 1][1];
+  sheet(`<h2>${esc(ct('title', { name }))}</h2>
+    <div class="chal-tiles"><div class="tile tS">${S}</div><span>…</span><div class="tile tE">${E}</div></div>
+    <p>${esc(ct('rule', { S, E, Sro: roLetter(S), Ero: roLetter(E) }))}</p>
+    <div class="chal-rec"><b>${esc(ct('rec', { name }))}</b><span>${esc(recText(n, sec))}</span></div>
+    <div class="btns"><button class="go alt" type="button" id="chNo">${esc(ct('later'))}</button><button class="go" type="button" id="chGo">${esc(ct('go'))}</button></div>`, () => { $('ov').hidden = true; });
+  $('chNo').onclick = () => { sfx('key'); $('ov').hidden = true; };
+  $('chGo').onclick = () => { sfx('pick'); CHAL.next = c; newGame('ai', true, true); };
+}
+function chalStart() {
+  const c = G.chal; G.diff = 'medium';
+  G.picks = [c.s, c.e]; G.start = c.s; G.end = c.e; G.picker = -1; G.phase = 'roulette';
+  setTiles(c.s.toUpperCase(), c.e.toUpperCase()); renderPanels(); renderNames();
+  const n = c.w.length;
+  setCenter(`<div class="msg">${esc(ct('ready', { name: nameOf(1) }))}<br><small>${esc(recText(n, c.w[n - 1][1]))}</small></div>`);
+  later(() => { if (G.chal === c) startPlay(); }, 2200);
+}
+/* the challenger's replay: each recorded word lands at its recorded second (another valid word if you already took it) */
+function chalGhost() {
+  const c = G.chal, key = G.start + G.end;
+  const tick = () => {
+    if (G.phase !== 'play') return;
+    if (!paused()) {
+      const i = G.scores[1], due = c.w[i];
+      if (!due) return; /* no more recorded words */
+      const el = 180 - G.time;
+      if (el >= due[1]) {
+        let w = due[0];
+        if (G.used.has(w)) { let pool = (IDX_E[key] || []).filter(x => !G.used.has(x)); if (!pool.length) pool = (IDX[key] || []).filter(x => !G.used.has(x)); w = pool[Math.floor(Math.random() * pool.length)]; }
+        if (w) { document.querySelectorAll('.bubble.b1').forEach(x => x.remove()); accept(1, w); if (G.phase !== 'play') return; }
+      } else if (due[1] - el <= 2 && !document.querySelector('.bubble.b1')) { bubble(1, t('thinking'), 2000); }
+    }
+    G.aiId = setTimeout(tick, 400);
+  };
+  G.aiId = setTimeout(tick, 400);
+}
+function chalCompare() {
+  const c = G.chal, n = c.w.length, mine = chalMine(), m = mine.length;
+  return `<p class="chal-cmp">${esc(ct('you'))} ${esc(m >= 3 ? recText(3, mine[2][1]) : ct('words', { n: m }))} · ${esc(nameOf(1))} ${esc(recText(n, c.w[n - 1][1]))}</p>`;
+}
+
 function finish(winner, byTime) {
   if (G.phase === 'over') return;
   G.phase = 'over'; stopAll(); G.lock = [false, false]; renderPanels(); renderClock();
@@ -2240,6 +2347,7 @@ function finish(winner, byTime) {
   else if (!isDuo()) title = winner === 0 ? t('winYou') : t('loseYou');
   else title = t('winName', { name: nameOf(winner) });
   if (G.oppLeft && winner === 0) title = t(G.oppLeft === 'R' ? 'oppLeftWinR' : 'oppLeftWin');
+  if (G.chal) title = winner === 0 ? ct('beat', { name: nameOf(1), nameObj: eulReul(nameOf(1)) }) : winner === 1 ? ct('lost', { name: nameOf(1) }) : t('draw');
   const list = p => { const ws = G.order.filter(x => x[1] === p).map(x => `<button type="button" class="chip p${p}" data-say="${x[0]}">${cs(x[0])} <svg viewBox="0 0 16 16" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg></button>`).join(''); return ws || `<span style="font-family:var(--korean)">${t('none')}</span>`; };
   setTimeout(() => {
     if (tok !== G.token) return;
@@ -2247,6 +2355,7 @@ function finish(winner, byTime) {
     const show = () => {
       sheet(`<div class="res-head"><div class="tile tS">${G.start.toUpperCase()}</div><h2>${esc(title)}</h2><div class="tile tE">${G.end.toUpperCase()}</div></div>${byTime ? `<p class="res-time">${t('timeUp')}</p>` : ''}
       <div class="res-cols">${col(0)}<div class="rcolon">:</div>${col(1)}</div>${hintAnswers()}${byTime ? missedWords() : ''}${award ? awardHTML(award) : ''}
+      ${G.chal ? chalCompare() : ''}${chalCanSend() ? `<button type="button" class="chal-send" id="chalSend">${ICON_SEND}<span>${esc(ct(G.chal ? 'sendBack' : 'send'))}</span></button>` : ''}
       ${isOnline() ? '<p id="rematchNote" style="font-size:15px"></p>' : ''}<div class="btns"><button class="go alt" type="button" id="resHome">${t('quit')}</button><button class="go" type="button" id="resAgain">${t('again')}</button></div>`);
       /* one word at a time: taps while a word is still being read are ignored */
       let saying = 0;
@@ -2258,7 +2367,8 @@ function finish(winner, byTime) {
       });
       if (award && !award.shown) { award.shown = true; awardFx(award); }
       if (G.oppLeft) $('resAgain').hidden = true;
-      $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else newGame(G.mode, true); };
+      if ($('chalSend')) $('chalSend').onclick = () => { sfx('pick'); chalShare(); };
+      $('resAgain').onclick = () => { sfx('pick'); if (isOnline()) requestRematch(); else { if (G.chal) CHAL.next = G.chal; newGame(G.mode, true); } };
       $('resHome').onclick = () => {
         sfx('pick');
         sheet(`<h2>${esc(t('endQ'))}</h2><div class="btns"><button class="go alt" type="button" id="qNo">${t('no')}</button><button class="go" type="button" id="qYes">${t('yes')}</button></div>`);
@@ -2816,7 +2926,7 @@ function introReset1() {
 function introShow() {
   try {
     if (Date.now() < (+store(INTRO_OFF) || 0)) return false;
-    if (new URLSearchParams(location.search).get('r')) return false;
+    if (new URLSearchParams(location.search).get('r') || new URLSearchParams(location.search).get('c')) return false;
     if (navigator.onLine === false) return false; /* no connection: the film cannot load, go straight to the game */
   } catch (e) { }
   const box = $('intro'), vid = $('inVid'); if (!box || !vid) return false;
@@ -2863,6 +2973,13 @@ function introShow() {
 }
 applyLang();
 if (!introShow()) setMusic('home');
+(function () {
+  let c = null; try { c = new URLSearchParams(location.search).get('c'); } catch (e) { }
+  if (!c) return;
+  try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) { }
+  const o = chalDecode(c);
+  setTimeout(() => { if (o) chalOffer(o); else toast(0, ct('bad'), 2600); }, 400);
+})();
 </script>
 
 </body>
