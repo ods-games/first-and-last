@@ -9,7 +9,7 @@
         ".validate": "$code.matches(/^[A-Z0-9]{6}$/)",
         "used": {
           "$word": {
-            ".validate": "!data.exists() && $word.matches(/^[a-z]{3,16}$/)"
+            ".validate": "!data.exists() && ($word.matches(/^[a-z]{3,16}$/) || ($word.length >= 2 && $word.length <= 7 && !$word.matches(/[a-zA-Z0-9 ]/)))"
           }
         }
       }
@@ -23,6 +23,11 @@
     },
     "match": {
       "waiting": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+        ".validate": "newData.child('uid').val() === auth.uid && newData.child('code').isString()"
+      },
+      "waiting_ko": {
         ".read": "auth != null",
         ".write": "auth != null",
         ".validate": "newData.child('uid').val() === auth.uid && newData.child('code').isString()"

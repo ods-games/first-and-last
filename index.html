@@ -28,7 +28,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261113170621';
+  var BUILD = '20261113170903';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -392,7 +392,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261113170621) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261113170903) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -401,7 +401,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113170621) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261113170903) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -461,7 +461,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261113170621) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261113170903) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -483,7 +483,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261113170621) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
+.fly{background:url(img/block.webp?v=20261113170903) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding-top:3px;box-sizing:border-box}
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -563,6 +563,8 @@ html.standalone .in-ctl{padding-bottom:10px}
 .wl-sw{display:flex;gap:4px;background:#F1E6D8;border-radius:999px;padding:4px;margin:2px auto 4px;max-width:300px}
 .wl-sw button{flex:1;white-space:nowrap;font:inherit;font-size:15px;border:0;background:transparent;color:#7A6A5E;padding:9px 6px;border-radius:999px;cursor:pointer}
 .wl-sw button[aria-pressed="true"]{background:linear-gradient(#FF8FB0,#EE5A86);color:#fff;font-weight:600;box-shadow:0 2px 0 #C93F6A,inset 0 1px 0 rgba(255,255,255,.55);text-shadow:0 1px 1px rgba(150,30,70,.35)}
+.wl-tag-row{text-align:center;margin:0 0 6px}
+.wl-tag{display:inline-block;font-size:13px;color:#fff;background:#EE5A86;border-radius:999px;padding:3px 12px}
 .wl-note{font-size:13px;color:#7A6A5E;margin:4px 0 8px;min-height:1em}
 .wl-note:empty{display:none}
 .kb.ko .key{font-family:"Jua","Apple SD Gothic Neo",system-ui,sans-serif}
@@ -667,7 +669,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113170621" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113170621" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261113170903" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261113170903" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -678,7 +680,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261113170621" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261113170903" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -703,7 +705,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261113170621" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261113170903" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -731,9 +733,9 @@ html.standalone #game .panel{padding-bottom:10px}
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113170621" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261113170903" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113170621"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261113170903"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -1025,7 +1027,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261113170621';
+const IMGV = '20261113170903';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
@@ -1511,7 +1513,7 @@ function newGame(mode, noTut, noReady) {
   const tutNext = (!noTut && mode !== 'online' && (TUT_EVERY_TIME || store('fl-tut') !== '1')) ? mode : null; if (tutNext) mode = 'ai';
   stopAll(); MUS.fast = false; setMusic('game'); kShift = false;
   /* online and the tutorial use English words; a challenge link brings its own */
-  useWords(mode === 'online' || tutNext ? 'en' : CHAL.next ? (CHAL.next.l || 'en') : wordLang);
+  useWords(mode === 'online' ? ((ON && ON.wl) || 'en') : tutNext ? 'en' : CHAL.next ? (CHAL.next.l || 'en') : wordLang);
   if (wordLang === 'ko' && !WSET.ko) loadKo().catch(() => { });
   Object.assign(G, { tipOn: false, tutWait: null, tut: tutNext ? { next: tutNext } : null, mode, diff, phase: 'pick', picks: [null, null], picker: 0, start: null, end: null, used: new Map(), order: [], scores: [0, 0], time: 180, active: null, passed: false, input: ['', ''], lock: [false, false], lockId: [null, null], lockLeft: [0, 0], hintUsed: false, oppLeft: false, pending: false, hints: [], hintDone: {}, faces: ['idle', 'idle'], chal: null, token: (G.token || 0) + 1 });
   $('home').hidden = true; $('game').hidden = false; $('ov').hidden = true; presUpdate();
@@ -2734,12 +2736,12 @@ const inviteUrl = code => location.origin + location.pathname + '?r=' + code;
 
 async function createRoom() {
   sheetMsg(t('connecting'));
-  try { await fbInit(); } catch (e) { return sheetError(t('cantConnect')); }
+  try { await fbInit(); if (wordLang === 'ko') await loadKo(); } catch (e) { return sheetError(t('cantConnect')); }
   try {
     const code = makeCode(), ref = FB.db.ref('rooms/' + code);
-    await ref.set({ host: FB.uid, status: 'waiting', created: FB.TS, round: 0, names: { host: myNick } });
+    await ref.set({ host: FB.uid, status: 'waiting', created: FB.TS, round: 0, wl: wordLang, names: { host: myNick } });
     ref.onDisconnect().remove();
-    ON = { code, role: 'host', ref, joined: false, key: '' };
+    ON = { code, role: 'host', ref, joined: false, key: '', wl: wordLang };
     listenRoom(); showInvite();
   } catch (e) { sheetError(t('cantConnect')); }
 }
@@ -2782,6 +2784,7 @@ async function joinRoom(code, random) {
     if (!r) return fail(t('roomGone'));
     if (r.host === FB.uid) return fail(t('ownLink'));
     if (r.guest && r.guest !== FB.uid) return fail(t('roomFull'));
+    if (r.wl === 'ko') { try { await loadKo(); } catch (e) { return fail(t('cantConnect')); } }
     if (!r.guest) {
       if (r.status !== 'waiting' || FB.now() - r.created > ROOM_TTL) return fail(t('roomGone'));
       const res = await ref.child('guest').transaction(g => (g ? undefined : FB.uid));
@@ -2790,16 +2793,21 @@ async function joinRoom(code, random) {
     }
     ref.child('names/guest').set(myNick).catch(() => { });
     ref.child('left/guest').onDisconnect().set(true);
-    ON = { code, role: 'guest', ref, joined: true, key: '', random: !!random || !!r.random };
+    ON = { code, role: 'guest', ref, joined: true, key: '', random: !!random || !!r.random, wl: r.wl === 'ko' ? 'ko' : 'en' };
     listenRoom(); return true;
   } catch (e) { return fail(t('roomGone')); }
 }
 
 /* ---------- online menu: random match or invite a friend ---------- */
 function onlineMenu() {
-  sheet(`<h2>${esc(t('online'))}</h2>
+  const wlB = `<div class="wl-sw" role="group"><button type="button" data-wl="en" aria-pressed="${wordLang === 'en'}">${lang === 'ko' ? '영어 단어' : 'English'}</button><button type="button" data-wl="ko" aria-pressed="${wordLang === 'ko'}">${lang === 'ko' ? '한글 단어' : 'Korean'}</button></div>`;
+  sheet(`<h2>${esc(t('online'))}</h2>${wlB}
     <button class="omode" type="button" id="oRandom"><b>${esc(t('randomTitle'))}</b><small>${esc(t('randomSub'))}</small></button>
     <button class="omode alt" type="button" id="oInvite"><b>${esc(t('inviteMode'))}</b><small>${esc(t('inviteSub'))}</small></button>`, () => { sfx('key'); $('ov').hidden = true; });
+  $('sheet').querySelectorAll('[data-wl]').forEach(b => b.onclick = () => {
+    sfx('key'); wordLang = b.dataset.wl; store('fl-wl', wordLang); if (wordLang === 'ko') loadKo().catch(() => { });
+    $('sheet').querySelectorAll('[data-wl]').forEach(x => x.setAttribute('aria-pressed', x.dataset.wl === wordLang ? 'true' : 'false'));
+  });
   $('oRandom').onclick = () => { sfx('pick'); randomMatch(); };
   $('oInvite').onclick = () => { sfx('pick'); createRoom(); };
   fbInit().catch(() => { });
@@ -2809,14 +2817,16 @@ function onlineMenu() {
    if someone fresh is there, I take them out of the slot and join their room. So two players can never both
    grab the same person. The waiting player refreshes the slot every few seconds so a vanished player goes stale. */
 const MATCH_STALE = 20000, MATCH_OFFER = 15;
+const slotRef = wl => FB.db.ref(wl === 'ko' ? 'match/waiting_ko' : 'match/waiting');
 async function randomMatch() {
   sheetMsg(t('connecting'));
-  try { await fbInit(); } catch (e) { return sheetError(t('cantConnect')); }
+  try { await fbInit(); if (wordLang === 'ko') await loadKo(); } catch (e) { return sheetError(t('cantConnect')); }
   try {
     const code = makeCode(), ref = FB.db.ref('rooms/' + code);
-    await ref.set({ host: FB.uid, status: 'waiting', created: FB.TS, round: 0, random: true, names: { host: myNick } });
+    const wl = wordLang;
+    await ref.set({ host: FB.uid, status: 'waiting', created: FB.TS, round: 0, random: true, wl, names: { host: myNick } });
     ref.onDisconnect().remove();
-    const slot = FB.db.ref('match/waiting');
+    const slot = slotRef(wl);
     let seen = null;
     const res = await slot.transaction(cur => {
       seen = cur;
@@ -2829,13 +2839,13 @@ async function randomMatch() {
       if (await joinRoom(seen.code, true)) return;
       return randomMatch(); /* their room was gone: try again */
     }
-    ON = { code, role: 'host', ref, joined: false, key: '', random: true };
+    ON = { code, role: 'host', ref, joined: false, key: '', random: true, wl };
     listenRoom(); showSearching();
   } catch (e) { sheetError(t('cantConnect')); }
 }
 function showSearching() {
   let sec = 0, offered = false;
-  const slot = FB.db.ref('match/waiting');
+  const slot = slotRef(ON.wl);
   const draw = () => {
     if (!ON || ON.joined) return;
     sheet(`<h2>${esc(t('searching'))}</h2><div class="tut-art lobby"><img src="${img('panda_f2')}" alt=""></div>
@@ -2861,7 +2871,7 @@ function showSearching() {
 async function keepSpot() {
   if (!ON || ON.joined || ON.keeping) return;
   ON.keeping = true;
-  const me = FB.uid, code = ON.code, slot = FB.db.ref('match/waiting');
+  const me = FB.uid, code = ON.code, slot = slotRef(ON.wl);
   try {
     const v = (await slot.once('value')).val();
     if (!ON || ON.joined || ON.code !== code) return;
@@ -2880,7 +2890,7 @@ async function keepSpot() {
 }
 /* leave the waiting slot (only if it's still mine) and close my empty room */
 function stopSearch() {
-  if (FB) { const sl = FB.db.ref('match/waiting'); sl.once('value').then(sn => { const v = sn.val(); if (v && v.uid === FB.uid) sl.remove(); }).catch(() => { }); }
+  if (FB) { const sl = slotRef(ON && ON.wl); sl.once('value').then(sn => { const v = sn.val(); if (v && v.uid === FB.uid) sl.remove(); }).catch(() => { }); }
   if (ON) clearInterval(ON.searchId);
   leaveRoom();
 }
@@ -2953,6 +2963,7 @@ function drawLobby() {
   const rd = (ON.room && ON.room.ready) || {}, me = !!rd[ON.role], friend = !!rd[oppRole()];
   sheet(`<h2>${esc(ON.random ? t('lobbyRival') : ON.role === 'host' ? t('lobbyHost') : t('lobbyGuest'))}</h2>
     <div class="tut-art lobby"><img src="${img('panda_f2')}" alt=""></div>
+    <div class="wl-tag-row"><span class="wl-tag">${ON.wl === 'ko' ? (lang === 'ko' ? '한글 단어 대결' : 'Korean words') : (lang === 'ko' ? '영어 단어 대결' : 'English words')}</span></div>
     <p>${esc(me ? tf('waitFriend') : friend ? tf('friendReady') : t('lobbyReady'))}</p>
     ${me ? '<div class="spin" aria-hidden="true"></div>' : `<button class="go start-big" type="button" id="readyOk">${esc(t('startMatch'))}</button>`}
     <button class="leave-x" type="button" id="leaveBtn">✕ ${esc(t('leaveX'))}</button>`);
