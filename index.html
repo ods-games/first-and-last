@@ -28,7 +28,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261114212845';
+  var BUILD = '20261114213409';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -393,7 +393,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261114212845) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261114213409) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -402,7 +402,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261114212845) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261114213409) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -437,7 +437,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
   #pcbg .cl::after{width:40%;height:120%;right:12%;bottom:25%}
   #pcbg .bk{position:absolute;width:var(--s);height:var(--s);margin:calc(var(--s) / -2) 0 0 calc(var(--s) / -2);opacity:var(--o);animation:pcbob var(--t) ease-in-out infinite alternate}
   #pcbg .bk em{position:absolute;inset:0;transform:rotate(var(--r))}
-  #pcbg .bk i{position:absolute;inset:0;background:url(img/block.webp?v=20261114212845) center/contain no-repeat}
+  #pcbg .bk i{position:absolute;inset:0;background:url(img/block.webp?v=20261114213409) center/contain no-repeat}
   /* the letter sits on the cube's front face (its centre is left of and below the picture's centre, and the face leans) */
   #pcbg .bk b{position:absolute;left:37.5%;top:57%;transform:translate(-50%,-50%) skewY(12deg);font:700 calc(var(--s) * .36)/1 'Fredoka','Jua',sans-serif;color:#7A5320}
   #pcbg .ground{position:absolute;left:0;right:0;bottom:0;height:22vh;background:linear-gradient(rgba(140,205,95,0),#8CCD5F 45%,#79BD4E)}
@@ -500,12 +500,13 @@ html.standalone .in-ctl{padding-bottom:10px}
 #intro.playing .in-ctl{background:linear-gradient(transparent,rgba(0,0,0,.28));padding-top:18px}
 @media (prefers-reduced-motion:reduce){.in-logo,.in-tap,.in-ring{animation:none}}
 .logo-img{width:min(82vw,320px,calc((100dvh - 540px) * 1.3));min-width:190px;height:auto;filter:drop-shadow(0 6px 10px rgba(40,60,120,.25));animation:tileIn .6s cubic-bezier(.2,1.6,.4,1) both}
-/* the slogan: a cream pill, tilted a little, with a yellow burst and a star (same look as the cover art) */
-.ribbon{position:relative;display:inline-block;background:linear-gradient(#FFF6E8,#FBE6CC);border:0;border-radius:999px;padding:7px 22px;color:#4A2E1E;font-weight:700;transform:rotate(-2.5deg);box-shadow:0 3px 0 rgba(170,120,70,.25),0 6px 14px rgba(80,60,40,.18);font-size:16px}
-html:not([lang="ko"]) .ribbon{font-family:'Fredoka',var(--korean);font-weight:600;letter-spacing:.3px}
-.ribbon::before,.ribbon::after{content:"";position:absolute;top:50%;background:center/contain no-repeat;pointer-events:none}
-.ribbon::before{left:-24px;width:26px;height:26px;margin-top:-16px;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cg%20stroke%3D%22%23FFC92E%22%20stroke-width%3D%225.5%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M30%2010%2021%203%22/%3E%3Cpath%20d%3D%22M27%2020%2013%2019%22/%3E%3Cpath%20d%3D%22M30%2030%2021%2036%22/%3E%3C/g%3E%3C/svg%3E")}
-.ribbon::after{right:-14px;width:24px;height:24px;margin-top:2px;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%203.5l4.6%2010%2010.9%201.2-8.2%207.4%202.3%2010.8L20%2027.4l-9.6%205.5%202.3-10.8-8.2-7.4%2010.9-1.2z%22%20fill%3D%22%23FFCE3A%22%20stroke%3D%22%23F2A812%22%20stroke-width%3D%222%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");transform:rotate(12deg)}
+/* the slogan: a puffy cream pill, tilted a little, with a yellow burst and a star (the cover art's look) */
+.ribbon{position:relative;display:inline-block;font-size:16px;background:linear-gradient(#FFFAF0,#FCF0DC 70%,#F5E2C4);color:#4A3326;border:0;border-radius:999px;padding:.5em 1.25em .56em;font-weight:700;line-height:1.3;transform:rotate(-3deg);box-shadow:inset 0 -.14em .1em rgba(214,184,145,.45),inset 0 .1em .15em #fff,0 .22em .5em rgba(30,80,130,.2)}
+.ribbon::before,.ribbon::after{content:"";position:absolute;background:center/contain no-repeat;pointer-events:none}
+.ribbon::before{width:2.3em;height:2.5em;left:-2.65em;top:50%;margin-top:-1.35em;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20140%20150%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FFE470%22/%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%23FFC93A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23F4A51C%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20d%3D%22M77.1%2029.8%20L129.3%2095.7%20A6%206%200%200%200%20139.6%2089.9%20L109.8%2011.3%20A19%2019%200%201%200%2077.1%2029.8Z%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M15.3%2093.5%20L100.6%20113.8%20A6%206%200%200%200%20105.1%20102.9%20L30.5%2057.0%20A20%2020%200%201%200%2015.3%2093.5Z%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M64%20136%20L108%20138%22%20stroke%3D%22url%28%23g%29%22%20stroke-width%3D%2217%22%20stroke-linecap%3D%22round%22/%3E%3Cg%20fill%3D%22%23fff%22%20opacity%3D%22.7%22%3E%3Cellipse%20cx%3D%2288%22%20cy%3D%2212%22%20rx%3D%225%22%20ry%3D%228%22%20transform%3D%22rotate%28-30%2088%2012%29%22/%3E%3Cellipse%20cx%3D%2214%22%20cy%3D%2267%22%20rx%3D%228%22%20ry%3D%224.5%22%20transform%3D%22rotate%2820%2014%2067%29%22/%3E%3Cellipse%20cx%3D%2272%22%20cy%3D%22133%22%20rx%3D%226%22%20ry%3D%222.5%22/%3E%3C/g%3E%3C/svg%3E")}
+.ribbon::after{width:2em;height:2em;right:-.85em;top:62%;margin-top:-1em;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FFE470%22/%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%23FFC93A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23F4A51C%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg%20transform%3D%22rotate%2810%2050%2052%29%22%3E%3Cpolygon%20points%3D%2250.0%2C19.0%2060.6%2C37.4%2081.4%2C41.8%2067.1%2C57.6%2069.4%2C78.7%2050.0%2C70.0%2030.6%2C78.7%2032.9%2C57.6%2018.6%2C41.8%2039.4%2C37.4%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22url%28%23g%29%22%20stroke-width%3D%2222%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3Cellipse%20cx%3D%2238%22%20cy%3D%2234%22%20rx%3D%227%22%20ry%3D%224.5%22%20fill%3D%22%23fff%22%20opacity%3D%22.75%22%20transform%3D%22rotate%28-30%2038%2034%29%22/%3E%3C/svg%3E")}
+html:not([lang="ko"]) .ribbon{font-family:'Fredoka',var(--korean);font-weight:700;letter-spacing:.2px}
+html[lang="ko"] .ribbon{font-weight:400}
 .stage{--sh:min(215px,25dvh,calc((100vw - 8px) / 2.3));position:relative;z-index:0;flex:none;min-height:0;height:var(--sh);margin:-6px 0 -22px;align-items:flex-end;gap:0}
 .stage img.hcast{display:block;width:100%;height:auto;max-height:min(180px,19dvh);object-fit:contain;object-position:center bottom;animation:none}
 /* same height for both */
@@ -522,7 +523,7 @@ html:not([lang="ko"]) .ribbon{font-family:'Fredoka',var(--korean);font-weight:60
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261114212845) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261114213409) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -544,7 +545,7 @@ html:not([lang="ko"]) .ribbon{font-family:'Fredoka',var(--korean);font-weight:60
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261114212845) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding:5px 9px 0 0;box-sizing:border-box} /* letter on the cube's front face, not the picture's centre */
+.fly{background:url(img/block.webp?v=20261114213409) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding:5px 9px 0 0;box-sizing:border-box} /* letter on the cube's front face, not the picture's centre */
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -733,7 +734,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261114212845" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261114212845" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261114213409" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261114213409" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -744,7 +745,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261114212845" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261114213409" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -769,7 +770,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261114212845" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261114213409" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -797,10 +798,10 @@ html.standalone #game .panel{padding-bottom:10px}
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261114212845" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261114213409" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
   <div class="in-fill in-ft" id="inFt"></div><div class="in-fill in-fb" id="inFb"></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261114212845"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261114213409"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -1092,7 +1093,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261114212845';
+const IMGV = '20261114213409';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 /* PC scene beside the game (shown by CSS only on wide screens). The note follows the computer's language. */
 (function pcScene() {
