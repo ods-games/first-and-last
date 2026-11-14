@@ -28,7 +28,7 @@ body{margin:0;font:14px system-ui,sans-serif}
 </style>
 <script>
 (function () {
-  var BUILD = '20261114144654';
+  var BUILD = '20261114155049';
   function check() {
     fetch('version.txt?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : BUILD; }).then(function (v) {
       v = (v || '').trim();
@@ -393,7 +393,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 @media (prefers-reduced-motion: reduce){*{animation-duration:1ms!important;animation-iteration-count:1!important}}
 
 /* ===== 3D redesign (backup of the previous look: backup/game.template.pre-redesign.html, git branch backup-pre-redesign) ===== */
-#home{background:#8FD3FF url(img/bg.webp?v=20261114144654) center bottom/cover no-repeat;background-attachment:local}
+#home{background:#8FD3FF url(img/bg.webp?v=20261114155049) center bottom/cover no-repeat;background-attachment:local}
 /* glancing over the shoulder: the art looks right, flipped half the time to look left */
 .char.peek.pl img.cimg{scale:-1 1}
 /* never squeeze the art to its box (some hosts add img{max-width:100%}) */
@@ -402,7 +402,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 /* duo: both seen from behind, and the capybara's back art reads smaller than the red panda's */
 #game.duo .char.capy img.cimg{scale:1.04}
 #game.duo .char.capy.peek.pl img.cimg{scale:-1.04 1.04}
-.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261114144654) center bottom/100% auto no-repeat}
+.fghill{position:absolute;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;background:url(img/hillfg.webp?v=20261114155049) center bottom/100% auto no-repeat}
 #home>.home-top,#home>.title,#home>.field{position:relative;z-index:2}
 #home>.fghill{position:absolute;flex:none;z-index:1}
 /* the bottom of the picture melts into one grass colour, the same colour the phone paints below the page */
@@ -424,7 +424,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
    The space above and below the film is painted with the film's own top and bottom edge colours, read live while it plays */
 /* ---------- PC: wide screens get a sky scene beside the phone-sized game (clouds, letter cubes, the cast, logo, a note) ---------- */
 #pcbg{display:none}
-@media (min-width:700px) and (min-height:480px){
+@media (min-width:700px){
   html,body,html.ov-on,html.ov-on body{background:linear-gradient(#6EC8F5,#A9E0FB 62%,#D6F2C8)!important}
   #pcbg{display:block;position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;-webkit-user-select:none;user-select:none}
   #pcbg::after{content:"";position:absolute;inset:0;background:#281E3C;opacity:0;transition:opacity .25s}
@@ -437,7 +437,7 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
   #pcbg .cl::after{width:40%;height:120%;right:12%;bottom:25%}
   #pcbg .bk{position:absolute;width:var(--s);height:var(--s);margin:calc(var(--s) / -2) 0 0 calc(var(--s) / -2);opacity:var(--o);animation:pcbob var(--t) ease-in-out infinite alternate}
   #pcbg .bk em{position:absolute;inset:0;transform:rotate(var(--r))}
-  #pcbg .bk i{position:absolute;inset:0;background:url(img/block.webp?v=20261114144654) center/contain no-repeat}
+  #pcbg .bk i{position:absolute;inset:0;background:url(img/block.webp?v=20261114155049) center/contain no-repeat}
   /* the letter sits on the cube's front face (its centre is left of and below the picture's centre, and the face leans) */
   #pcbg .bk b{position:absolute;left:37.5%;top:57%;transform:translate(-50%,-50%) skewY(12deg);font:700 calc(var(--s) * .36)/1 'Fredoka','Jua',sans-serif;color:#7A5320}
   #pcbg .ground{position:absolute;left:0;right:0;bottom:0;height:22vh;background:linear-gradient(rgba(140,205,95,0),#8CCD5F 45%,#79BD4E)}
@@ -454,6 +454,18 @@ p.res-tap{display:flex;align-items:center;justify-content:center;gap:4px;font-fa
 }
 @media (min-width:700px) and (max-width:979px){ #pcbg .ch,#pcbg .sh,#pcbg .logo{display:none} }
 @media (min-width:700px) and (max-width:1199px){ #pcbg .note{display:none} }
+/* a short window: only the sky and the letter cubes */
+@media (min-width:700px) and (max-height:640px){ #pcbg .ch,#pcbg .sh,#pcbg .logo,#pcbg .note,#pcbg .ground{display:none} }
+#pcbtns{display:none}
+@media (min-width:700px){
+  #pcbtns{display:flex;position:fixed;top:20px;right:24px;z-index:50;gap:10px}
+  #pcbtns button{display:flex;align-items:center;gap:7px;font:400 16px/1 'Jua','Fredoka',sans-serif;color:var(--ink);background:rgba(255,255,255,.92);border:3px solid var(--ink);border-radius:999px;padding:8px 14px 8px 11px;box-shadow:0 3px 0 var(--ink);cursor:pointer}
+  #pcbtns button:hover{background:#fff}
+  #pcbtns button:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+  #pcbtns svg{width:20px;height:20px;flex:none}
+  #pcbg .note{top:84px}
+}
+@media (min-width:700px) and (max-width:1023px){ #pcbtns span{display:none} #pcbtns button{padding:8px} }
 @keyframes pcbob{to{transform:translateY(-14px)}}
 @keyframes pcdrift{to{transform:translateX(26px)}}
 @media (prefers-reduced-motion:reduce){ #pcbg .bk,#pcbg .cl{animation:none} }
@@ -503,7 +515,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 .copy{color:#fff;opacity:.9;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 @media (max-height:700px){.mmain{padding-block:6px}.micon{width:40px;height:40px}.mtext b{font-size:20px}.field{gap:9px;padding-top:8px}}
 /* game arena: the painted meadow; the opponent stands on the grassy ledge */
-#arena{background:#8FD3FF url(img/bg.webp?v=20261114144654) center 66%/cover no-repeat}
+#arena{background:#8FD3FF url(img/bg.webp?v=20261114155049) center 66%/cover no-repeat}
 #arena .sun,#arena .cloud,#arena .ground,#arena .ground2,#arena .groundT,#arena .groundT2,#arena .hill{display:none}
 .char img.cimg{height:100%;width:auto;display:block;animation:breathe 2.6s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 6px 5px rgba(30,50,20,.3));-webkit-user-drag:none;user-select:none}
 #char1 img.cimg{animation-delay:-1.3s}
@@ -525,7 +537,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 @keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
 .tut-art.lobby img{height:100%;width:auto}
 /* letter tiles thrown on the first hit look like the toy block */
-.fly{background:url(img/block.webp?v=20261114144654) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding:5px 9px 0 0;box-sizing:border-box} /* letter on the cube's front face, not the picture's centre */
+.fly{background:url(img/block.webp?v=20261114155049) center/contain no-repeat;border:0;width:38px;height:38px;margin:-19px 0 0 -19px;box-shadow:none;color:#6B4A1E;padding:5px 9px 0 0;box-sizing:border-box} /* letter on the cube's front face, not the picture's centre */
 
 /* ===== game + popups dressed like the home screen (keyboard keeps its look) ===== */
 /* name cards, clock and top buttons: the home menu's glossy pills */
@@ -668,6 +680,7 @@ html.standalone .in-ctl{padding-bottom:10px}
 </style>
 
 <div id="pcbg" aria-hidden="true"></div>
+<div id="pcbtns"></div>
 <style>
 /* iPhone home-screen apps (see-through status bar) only draw the page down to the screen height minus the
    status bar; below that the phone just paints the page background. So: the game fits the drawn area, and the
@@ -713,7 +726,7 @@ html.standalone #game .panel{padding-bottom:10px}
   <section id="home" class="screen">
     <div class="fghill" id="homeHill" aria-hidden="true"></div>
     <div class="homefade" aria-hidden="true"></div>
-    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261114144654" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261114144654" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
+    <div class="deco" aria-hidden="true"><img class="dtile" src="img/tileA.webp?v=20261114155049" alt="" style="left:3%;top:31%;--r:-8deg"><img class="dtile" src="img/tileQ.webp?v=20261114155049" alt="" style="right:3%;top:29%;--r:9deg;animation-delay:-1.2s"></div>
     <div class="home-top gut">
       <div class="lt-grp"><button class="pill" id="langBtn" type="button" hidden></button><button class="pill nick-pill" id="nickBtn" type="button"></button></div>
       <div class="rt">
@@ -724,7 +737,7 @@ html.standalone #game .panel{padding-bottom:10px}
       </div>
     </div>
     <h1 class="title gut" aria-label="First n Last">
-      <img class="logo-img" src="img/logo.webp?v=20261114144654" alt="" draggable="false">
+      <img class="logo-img" src="img/logo.webp?v=20261114155049" alt="" draggable="false">
       <span class="ribbon" data-t="tagline"></span>
     </h1>
     <div class="stage" id="homeCast"><div class="ev-banner" id="evBanner" hidden></div></div>
@@ -749,7 +762,7 @@ html.standalone #game .panel{padding-bottom:10px}
       <div class="ground"></div><div class="ground2"></div><div class="groundT"></div><div class="groundT2"></div><div class="hill"></div>
       <div class="card" id="card1"><div class="nm" id="name1"></div><div class="hearts" id="hearts1"></div></div>
       <div class="hud" id="hud"><div class="clkwrap" id="clkW"><div class="clock" id="clock">2:00</div><div class="hint-cd" id="hintCd"></div></div></div>
-      <img class="plat" src="img/plat.webp?v=20261114144654" alt="" draggable="false"><div class="char" id="char1"></div>
+      <img class="plat" src="img/plat.webp?v=20261114155049" alt="" draggable="false"><div class="char" id="char1"></div>
       <div class="mid">
         <div class="side"><div class="tile tS">?</div><span data-t="startLbl"></span></div>
         <div id="center"></div>
@@ -777,10 +790,10 @@ html.standalone #game .panel{padding-bottom:10px}
   <div class="overlay" id="ov" hidden><div class="sheet" id="sheet"></div></div>
 </div>
 <div id="intro" hidden>
-  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261114144654" alt="First n Last" draggable="false">
+  <div class="in-splash" id="inSplash"><img class="in-logo" src="img/logo.webp?v=20261114155049" alt="First n Last" draggable="false">
     <div class="in-tap" id="inTap"><span class="in-ring" aria-hidden="true"></span><span class="in-dot" aria-hidden="true"></span><b id="inTapTxt"></b></div></div>
   <div class="in-fill in-ft" id="inFt"></div><div class="in-fill in-fb" id="inFb"></div>
-  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261114144654"></video>
+  <video id="inVid" playsinline webkit-playsinline preload="none" data-src="img/intro.mp4?v=20261114155049"></video>
   <div class="in-shade"></div>
   <div class="in-ctl" id="inCtl" hidden>
     <button type="button" class="in-btn in-snd" id="inSnd"></button>
@@ -1072,7 +1085,7 @@ const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-
 /* ---------- 3D character art (img/*.webp) ----------
    Each animal has 8 poses, seen from the front (f) and from behind (b):
    1 relaxed, 2 joyful jump, 3 puzzled scratch, 4 flinch, 5 one bandage, 6 two bandages, 7 knocked out, 8 wind-up throw */
-const IMGV = '20261114144654';
+const IMGV = '20261114155049';
 const img = n => `img/${n}.webp?v=${IMGV}`;
 /* PC scene beside the game (shown by CSS only on wide screens). The note follows the computer's language. */
 (function pcScene() {
@@ -1090,6 +1103,27 @@ const img = n => `img/${n}.webp?v=${IMGV}`;
     <div class="side r"><img class="ch" src="${img('cast_panda34')}" alt=""><div class="sh"></div></div>
     <div class="note">${ko ? '📱 모바일에서도 플레이 가능<br>✈️ 솔로, 듀오 모드는 인터넷 없이도 가능' : '📱 Play on mobile too<br>✈️ Solo &amp; Duo modes work offline'}</div>`;
   el.innerHTML = h;
+  /* PC buttons (top right): open the game in a window shaped like the game, and full screen */
+  const bt = $('pcbtns'), d = document, root = d.documentElement;
+  const canFs = !!(d.fullscreenEnabled || d.webkitFullscreenEnabled);
+  const inWin = window.name === 'fnl_win';
+  const L = { win: ko ? '게임 크기 창' : 'Game-size window', fs: ko ? '전체화면' : 'Full screen', fsx: ko ? '전체화면 끝' : 'Exit full screen' };
+  const isFs = () => !!(d.fullscreenElement || d.webkitFullscreenElement);
+  const draw = () => {
+    bt.innerHTML = (inWin ? '' : `<button type="button" id="pcWin" title="${L.win}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg><span>${L.win}</span></button>`)
+      + (canFs ? `<button type="button" id="pcFs" title="${isFs() ? L.fsx : L.fs}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isFs() ? '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>' : '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'}</svg><span>${isFs() ? L.fsx : L.fs}</span></button>` : '');
+    const w = $('pcWin'); if (w) w.onclick = () => {
+      /* a page can't reshape the browser's own window, so open the game in a new window sized like a phone */
+      const W = 480, H = Math.max(600, Math.min((screen.availHeight || 900) - 80, 940));
+      const x = Math.max(0, ((screen.availWidth || 1280) - W) / 2 + (screen.availLeft || 0)), y = Math.max(0, ((screen.availHeight || 900) - H) / 2 + (screen.availTop || 0) - 20);
+      let win = null; try { win = window.open(location.href.split('#')[0], 'fnl_win', `popup=yes,width=${W},height=${H},left=${Math.round(x)},top=${Math.round(y)}`); } catch (e) { }
+      if (win) { try { win.focus(); } catch (e) { } try { if (musicOn) stopMusic(); } catch (e) { } }
+    };
+    const f = $('pcFs'); if (f) f.onclick = () => {
+      try { if (isFs()) (d.exitFullscreen || d.webkitExitFullscreen).call(d); else { const r = (root.requestFullscreen || root.webkitRequestFullscreen).call(root); if (r && r.catch) r.catch(() => { }); } } catch (e) { }
+    };
+  };
+  draw(); d.addEventListener('fullscreenchange', draw); d.addEventListener('webkitfullscreenchange', draw);
 })();
 const ANIMALS = ['capy', 'panda'];
 function preloadArt() {
