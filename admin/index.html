@@ -95,14 +95,17 @@ td .anon{color:var(--muted)}
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-auth-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-database-compat.js"></script>
 <script>
-firebase.initializeApp({
+/* own named app: its sign-in is stored apart from the game's anonymous sign-in on the same site,
+   so playing the game (or a game tab reconnecting) never replaces the admin's Google session */
+const APP = firebase.initializeApp({
   apiKey: 'AIzaSyCDiQ_1KN4KQTJUhmPpThGO7u9qf9dpzC8',
   authDomain: 'first-and-last-bfa0d.firebaseapp.com',
   databaseURL: 'https://first-and-last-bfa0d-default-rtdb.asia-southeast1.firebasedatabase.app',
   projectId: 'first-and-last-bfa0d',
   appId: '1:745432185860:web:2353fa940da1bf9aef0951'
-});
-const auth = firebase.auth(), db = firebase.database();
+}, 'admin');
+const auth = APP.auth(), db = APP.database();
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => { });
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const view = h => { $('view').innerHTML = h; };
