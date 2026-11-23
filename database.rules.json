@@ -71,6 +71,70 @@
           }
         }
       }
+    },
+    "bugs": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$id": {
+        ".write": "auth != null && !data.exists() && newData.child('uid').val() === auth.uid && newData.parent().parent().child('bugLast').child(auth.uid).val() === now && (!root.child('bugLast').child(auth.uid).exists() || root.child('bugLast').child(auth.uid).val() < now - 55000)",
+        ".validate": "newData.hasChildren(['uid','t','kind','text','status'])",
+        "uid": {
+          ".validate": "newData.isString()"
+        },
+        "t": {
+          ".validate": "newData.isNumber()"
+        },
+        "kind": {
+          ".validate": "newData.isString() && newData.val().matches(/^(word|bug|screen|sound|etc)$/)"
+        },
+        "text": {
+          ".validate": "newData.isString() && newData.val().length <= 1000"
+        },
+        "status": {
+          ".validate": "newData.isString() && newData.val().matches(/^(new|seen|done)$/)"
+        },
+        "word": {
+          ".validate": "newData.isString() && newData.val().length <= 30"
+        },
+        "wordIs": {
+          ".validate": "newData.isString() && newData.val().matches(/^(missing|wrong)$/)"
+        },
+        "wl": {
+          ".validate": "newData.isString() && newData.val().length <= 4"
+        },
+        "lang": {
+          ".validate": "newData.isString() && newData.val().length <= 4"
+        },
+        "contact": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "nick": {
+          ".validate": "newData.isString() && newData.val().length <= 20"
+        },
+        "shot": {
+          ".validate": "newData.isBoolean()"
+        },
+        "info": {
+          ".validate": "newData.isString() && newData.val().length <= 3000"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "bugShots": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$id": {
+        ".write": "auth != null && !data.exists() && newData.parent().parent().child('bugs').child($id).child('uid').val() === auth.uid && !root.child('bugs').child($id).exists()",
+        ".validate": "newData.isString() && newData.val().length <= 400000 && newData.val().beginsWith('data:image/jpeg;base64,')"
+      }
+    },
+    "bugLast": {
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid",
+        ".validate": "newData.val() === now"
+      }
     }
   }
 }
